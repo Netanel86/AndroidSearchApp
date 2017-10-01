@@ -1,6 +1,7 @@
 package com.freelance.netanel.androidsearchapp;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +18,14 @@ import butterknife.ButterKnife;
 
 public class SearchResultRVAdapter extends RecyclerView.Adapter<SearchResultRVAdapter.ViewHolder>
 {
-    private List<String> results;
+    private List<ResultItem> results;
 
-    public void setResults(List<String> results)
+    public void setResults(List<ResultItem> results)
     {
         this.results = results;
     }
 
-    public SearchResultRVAdapter(List<String> results)
+    public SearchResultRVAdapter(List<ResultItem> results)
     {
         this.results = results;
     }
@@ -51,14 +52,19 @@ public class SearchResultRVAdapter extends RecyclerView.Adapter<SearchResultRVAd
         @BindView(R.id.tv_result)
         TextView textView;
 
+        @BindView(R.id.tv_result_link)
+        TextView textViewURL;
+
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
 
-        public void bind(String result, int position)
+        public void bind(ResultItem result, int position)
         {
-            textView.setText(result + " " + position);
+            textView.setText(result.Name + " " + position);
+            textViewURL.setText(result.ImageUrl);
         }
     }
 }

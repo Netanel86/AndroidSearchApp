@@ -8,22 +8,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Collections;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
 {
-    private static final int MAX_RESULTS = 50;
-
-    private List<String> results;
+    private List<ResultItem> results;
     private SearchResultRVAdapter resultAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    private IListItemParser listParser;
 
     @BindView(R.id.rv_results)
     RecyclerView rvResults;
@@ -38,6 +44,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listParser = new ListItemParser();
 
         initButterknife();
 
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                results = Collections.nCopies(MAX_RESULTS,etSearch.getText().toString());
+                results = getData();
                 populateResults(results);
             }});
 
@@ -74,7 +82,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void populateResults(List<String> results) {
+    private List<ResultItem> getData()
+    {
+        return listParser.parse(this);
+    }
+
+    private void populateResults(List<ResultItem> results) {
         if(resultAdapter == null){
             resultAdapter = new SearchResultRVAdapter(results);
             rvResults.setAdapter(resultAdapter);
