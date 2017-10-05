@@ -16,9 +16,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import javax.net.ssl.HttpsURLConnection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 
     private List<ResultItem> getData()
     {
-        return listParser.parse(this);
+        return listParser.parse(this.getApplicationContext());//new API().get();
     }
 
     private void populateResults(List<ResultItem> results) {

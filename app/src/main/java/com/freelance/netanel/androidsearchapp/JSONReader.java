@@ -13,6 +13,7 @@ public class JSONReader implements IJSONReader
     @Override
     public JSONObject read(InputStream inputStream) {
         JSONObject jsonObject = null;
+
         try
         {
             int size = inputStream.available();

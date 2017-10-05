@@ -15,13 +15,11 @@ import java.util.List;
 
 public class ListItemParser implements IListItemParser
 {
+    private JSONObject object;
     @Override
     public List parse(Context context)
     {
-
         JSONObject object = new JSONReader().read(context.getResources().openRawResource(R.raw.search));
-
-
         List<ResultItem> items = new ArrayList<>();
         try
         {
