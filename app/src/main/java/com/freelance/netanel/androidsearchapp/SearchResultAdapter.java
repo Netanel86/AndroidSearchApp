@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.ImageLoadTask;
+import com.freelance.netanel.androidsearchapp.services.GetImageAsyncTask;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public int getItemCount() {
-        return results == null ? null : results.size();
+        return results == null ? 0 : results.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder
@@ -71,7 +71,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         @BindView(R.id.tv_description)
         TextView textViewDescription;
 
-        ImageLoadTask imageLoadTask;
+        GetImageAsyncTask imageLoadTask;
 
 
         public ViewHolder(View itemView) {
@@ -92,7 +92,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
                 {
                     imageLoadTask.cancel(true);
                 }
-                imageLoadTask = new ImageLoadTask(imageView,imageCache);
+                imageLoadTask = new GetImageAsyncTask(imageView,imageCache);
                 imageLoadTask.execute(imageURL);
             }
         }

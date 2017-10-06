@@ -1,5 +1,6 @@
 package com.freelance.netanel.androidsearchapp;
 
+import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.freelance.netanel.androidsearchapp.model.Product;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,11 +23,10 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
 {
-    private List<Product> results;
+    private API api;
+    private List<Product> searchResults;
     private SearchResultAdapter resultAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
-    private IListItemParser listParser;
 
     @BindView(R.id.rv_results)
     RecyclerView rvResults;
@@ -39,11 +41,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        listParser = new ListItemParser();
-
         initButterknife();
 
+        api = new API();
         buildUI();
     }
 
@@ -52,23 +52,25 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
     }
-    private void buildUI()
-    {
-        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+
+    private void buildUI() {
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvResults.setLayoutManager(layoutManager);
 
-        btnSearch.setOnClickListener(new View.OnClickListener(){
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                results = getData();
-                populateResults(results);
-            }});
+                searchResults = new ArrayList();
+                GetDataAsyncTask getDataAsyncTask = new GetDataAsyncTask();
+                getDataAsyncTask.execute(MainActivity.this.api);
+            }
+        });
 
         rvResults.addOnItemTouchListener(new SearchListItemListener(getApplicationContext(), rvResults,
                 new SearchListItemListener.IRecyclerTouchListener() {
                     @Override
                     public void onClickItem(View view, int position) {
-                        Toast.makeText(view.getContext(), results.get(position).name + " " + position, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), searchResults.get(position).name + " " + position, Toast.LENGTH_SHORT).show();
                     }
                 }));
 
@@ -77,19 +79,35 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private List<Product> getData()
-    {
-        return listParser.parse(this.getApplicationContext());//new API().get();
-    }
-
-    private void populateResults(List<Product> results) {
-        if(resultAdapter == null){
+    private void setSearchResults(List<Product> results) {
+        searchResults = results;
+        if (resultAdapter == null) {
             resultAdapter = new SearchResultAdapter(results);
             rvResults.setAdapter(resultAdapter);
-        }
-        else {
+        } else {
             resultAdapter.setResults(results);
             resultAdapter.notifyDataSetChanged();
         }
     }
+
+    class GetDataAsyncTask extends AsyncTask<API,Void,List<Product>> {
+
+        @Override
+        protected void onPostExecute(List<Product> products) {
+            setSearchResults(products);
+        }
+
+        @Override
+        protected List<Product> doInBackground(API... params) {
+            API api = params[0];
+            List products = null;
+            try {
+                products = api.get();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return products;
+        }
+    }
+
 }

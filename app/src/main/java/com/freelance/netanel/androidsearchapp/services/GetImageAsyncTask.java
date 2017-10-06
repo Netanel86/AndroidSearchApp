@@ -12,13 +12,13 @@ import com.freelance.netanel.androidsearchapp.R;
  * An Async Task for loading images in a different thread
  */
 
-public class ImageLoadTask extends AsyncTask<String,Void,Bitmap> {
+public class GetImageAsyncTask extends AsyncTask<String,Void,Bitmap> {
     private LruCache<String,Bitmap> imageCache;
     private ImageView imageView;
     private int maxImageSize;
     private String imageUrl;
 
-    public ImageLoadTask(ImageView imageView, LruCache<String,Bitmap> imageCache)
+    public GetImageAsyncTask(ImageView imageView, LruCache<String,Bitmap> imageCache)
     {
         this.imageView = imageView;
         this.imageCache = imageCache;
