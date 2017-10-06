@@ -10,27 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.freelance.netanel.androidsearchapp.model.Product;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 
-
-import javax.net.ssl.HttpsURLConnection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
 {
-    private List<ResultItem> results;
-    private SearchResultRVAdapter resultAdapter;
+    private List<Product> results;
+    private SearchResultAdapter resultAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private IListItemParser listParser;
@@ -73,11 +64,11 @@ public class MainActivity extends AppCompatActivity
                 populateResults(results);
             }});
 
-        rvResults.addOnItemTouchListener(new RecyclerItemListener(getApplicationContext(), rvResults,
-                new RecyclerItemListener.IRecyclerTouchListener() {
+        rvResults.addOnItemTouchListener(new SearchListItemListener(getApplicationContext(), rvResults,
+                new SearchListItemListener.IRecyclerTouchListener() {
                     @Override
                     public void onClickItem(View view, int position) {
-                        Toast.makeText(view.getContext(), results.get(position) + " " + position, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), results.get(position).name + " " + position, Toast.LENGTH_SHORT).show();
                     }
                 }));
 
@@ -86,14 +77,14 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private List<ResultItem> getData()
+    private List<Product> getData()
     {
         return listParser.parse(this.getApplicationContext());//new API().get();
     }
 
-    private void populateResults(List<ResultItem> results) {
+    private void populateResults(List<Product> results) {
         if(resultAdapter == null){
-            resultAdapter = new SearchResultRVAdapter(results);
+            resultAdapter = new SearchResultAdapter(results);
             rvResults.setAdapter(resultAdapter);
         }
         else {

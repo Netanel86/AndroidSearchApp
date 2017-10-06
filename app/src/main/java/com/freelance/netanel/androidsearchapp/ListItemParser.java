@@ -2,6 +2,8 @@ package com.freelance.netanel.androidsearchapp;
 
 import android.content.Context;
 
+import com.freelance.netanel.androidsearchapp.model.Product;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,24 +17,25 @@ import java.util.List;
 
 public class ListItemParser implements IListItemParser
 {
-    private JSONObject object;
     @Override
     public List parse(Context context)
     {
         JSONObject object = new JSONReader().read(context.getResources().openRawResource(R.raw.search));
-        List<ResultItem> items = new ArrayList<>();
+        List<Product> items = new ArrayList<>();
         try
         {
             JSONArray array = object.getJSONArray("products");
             for(int i =0; i < array.length();i++)
             {
                 JSONObject current = array.getJSONObject(i);
-                ResultItem item = new ResultItem();
+                Product product = new Product();
 
-                item.Name = current.getString("name");
-                item.ImageUrl = current.getString("imageUrl");
+                product.id = current.getInt("id");
+                product.name = current.getString("name");
+                product.imageUrl = current.getString("imageUrl");
+                product.description = current.getString("description");
 
-                items.add(item);
+                items.add(product);
             }
         }
         catch (JSONException ex)

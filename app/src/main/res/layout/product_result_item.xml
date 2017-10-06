@@ -5,26 +5,29 @@
 
 
     <ImageView
-        android:id="@+id/iv_result"
+        android:id="@+id/iv_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/android"
+        android:maxHeight="100dp"
+        android:maxWidth="100dp"
+        android:layout_margin="5dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/tv_result"
+            android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15dp"
+            android:textStyle="bold"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2" />
         <TextView
-            android:id="@+id/tv_result_link"
+            android:id="@+id/tv_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15dp"
