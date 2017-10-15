@@ -9,22 +9,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark">
         <EditText
+            android:inputType="numberDecimal"
             android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:background="@color/LightGray"
-            android:text="@string/button_search" />
+            android:layout_margin="10dp"
+            android:background="@color/colorLightGray"
+            android:hint="@string/hint_search"/>
         <Button
             android:id="@+id/btn_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:layout_margin="5dp"
-            android:text="@string/button_search"/>
+            android:text="@string/hint_search"/>
 
     </LinearLayout>
 

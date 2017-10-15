@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity
     private API api;
     private List<Product> searchResults;
     private SearchResultAdapter resultAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @BindView(R.id.rv_results)
     RecyclerView rvResults;
@@ -36,6 +35,8 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.btn_search)
     Button btnSearch;
+
+    int page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,23 +55,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void buildUI() {
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvResults.setLayoutManager(layoutManager);
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchResults = new ArrayList();
-                GetDataAsyncTask getDataAsyncTask = new GetDataAsyncTask();
-                getDataAsyncTask.execute(MainActivity.this.api);
+                page = parseInt(etSearch.getText().toString());
+                if(page != 0) {
+                    toast("Loading results...");
+                    searchResults = new ArrayList();
+                    GetDataAsyncTask getDataAsyncTask = new GetDataAsyncTask();
+                    getDataAsyncTask.execute(MainActivity.this.api);
+                }
             }
         });
 
-        rvResults.addOnItemTouchListener(new SearchListItemListener(getApplicationContext(), rvResults,
-                new SearchListItemListener.IRecyclerTouchListener() {
+        rvResults.addOnItemTouchListener(new SearchListItemTouchListener(getApplicationContext(), rvResults,
+                new SearchListItemTouchListener.IRecyclerTouchListener() {
                     @Override
                     public void onClickItem(View view, int position) {
-                        Toast.makeText(view.getContext(), searchResults.get(position).name + " " + position, Toast.LENGTH_SHORT).show();
+                        toast(searchResults.get(position).name + " " + position);
                     }
                 }));
 
@@ -79,7 +84,31 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void toast(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    private int parseInt(String integerString)
+    {
+        int value = 0;
+        try {
+            value = Integer.parseInt(integerString);
+            if(value == 0)
+            {
+                throw new NumberFormatException("Value can't be zero");
+            }
+        }
+        catch (NumberFormatException ex)
+        {
+            ex.printStackTrace();
+            toast("Error: value should be a number bigger than zero");
+        }
+
+        return value;
+    }
+
     private void setSearchResults(List<Product> results) {
+        toast("Results Loaded!");
         searchResults = results;
         if (resultAdapter == null) {
             resultAdapter = new SearchResultAdapter(results);
@@ -102,12 +131,11 @@ public class MainActivity extends AppCompatActivity
             API api = params[0];
             List products = null;
             try {
-                products = api.get();
+                products = api.get(page);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
             return products;
         }
     }
-
 }

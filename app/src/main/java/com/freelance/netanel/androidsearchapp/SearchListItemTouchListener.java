@@ -10,18 +10,16 @@ import android.view.View;
  * Created by Netanel on 22/09/2017.
  */
 
-public class SearchListItemListener implements RecyclerView.OnItemTouchListener {
+public class SearchListItemTouchListener implements RecyclerView.OnItemTouchListener {
 
-    private IRecyclerTouchListener listener;
     private GestureDetector gestureDetector;
 
     public interface IRecyclerTouchListener{
-        public void onClickItem(View view,int position);
+        void onClickItem(View view,int position);
     }
 
-    public SearchListItemListener(Context context, final RecyclerView rv, final IRecyclerTouchListener listener)
+    public SearchListItemTouchListener(Context context, final RecyclerView rv, final IRecyclerTouchListener listener)
     {
-        this.listener = listener;
         gestureDetector = new GestureDetector(context,
                 new GestureDetector.SimpleOnGestureListener(){
                     @Override

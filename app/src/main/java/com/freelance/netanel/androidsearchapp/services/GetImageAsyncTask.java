@@ -34,7 +34,7 @@ public class GetImageAsyncTask extends AsyncTask<String,Void,Bitmap> {
 
     @Override
     protected void onPreExecute() {
-        imageView.setImageResource(R.color.DarkBlue);
+        imageView.setImageResource(R.color.colorDarkBlue);
         super.onPreExecute();
     }
 

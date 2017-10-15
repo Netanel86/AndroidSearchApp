@@ -11,7 +11,6 @@ import java.io.InputStream;
 public interface IJSONReader
 {
     JSONObject read(InputStream inputStream);
-//    JSONObject read(String inputString);
 }
 
 
