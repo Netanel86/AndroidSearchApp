@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.freelance.netanel.androidsearchapp.MainActivity"
+    tools:context="com.freelance.netanel.androidsearchapp.SearchActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,26 +12,26 @@
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark">
         <EditText
+            android:id="@+id/activity_search_et_search"
             android:inputType="numberDecimal"
-            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:background="@color/colorLightGray"
-            android:hint="@string/hint_search"/>
+            android:hint="@string/hint.search"/>
         <Button
-            android:id="@+id/btn_search"
+            android:id="@+id/activity_search_btn_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:layout_margin="5dp"
-            android:text="@string/hint_search"/>
+            android:text="@string/hint.search"/>
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_results"
+        android:id="@+id/activity_search_rv_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"/>

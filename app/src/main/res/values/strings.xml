@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android Search App</string>v
-    <string name="hint_search">Search</string>
-    <string name="title_activity_second">SecondActivity</string>
+    <string name="title.app_name">Android Search App</string>v
+    <string name="hint.search">Search</string>
+    <string name="btn.buy">Buy</string>
 </resources>

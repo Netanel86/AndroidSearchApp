@@ -14,7 +14,8 @@ public class SearchListItemTouchListener implements RecyclerView.OnItemTouchList
 
     private GestureDetector gestureDetector;
 
-    public interface IRecyclerTouchListener{
+    public interface IRecyclerTouchListener
+    {
         void onClickItem(View view,int position);
     }
 

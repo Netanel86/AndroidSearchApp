@@ -43,7 +43,9 @@ public class GetImageAsyncTask extends AsyncTask<String,Void,Bitmap> {
         if(bitmap != null)
         {
             imageView.setImageBitmap(bitmap);
-            imageCache.put(imageUrl,bitmap);
+            if(imageCache != null) {
+                imageCache.put(imageUrl, bitmap);
+            }
         }
     }
 }

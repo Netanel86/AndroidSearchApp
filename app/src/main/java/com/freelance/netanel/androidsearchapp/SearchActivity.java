@@ -1,5 +1,6 @@
 package com.freelance.netanel.androidsearchapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,19 +22,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity
+public class SearchActivity extends AppCompatActivity
 {
     private API api;
     private List<Product> searchResults;
     private SearchResultAdapter resultAdapter;
 
-    @BindView(R.id.rv_results)
+    @BindView(R.id.activity_search_rv_results)
     RecyclerView rvResults;
 
-    @BindView(R.id.et_search)
+    @BindView(R.id.activity_search_et_search)
     EditText etSearch;
 
-    @BindView(R.id.btn_search)
+    @BindView(R.id.activity_search_btn_search)
     Button btnSearch;
 
     int page;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_search);
         initButterknife();
 
         api = new API();
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity
                     toast("Loading results...");
                     searchResults = new ArrayList();
                     GetDataAsyncTask getDataAsyncTask = new GetDataAsyncTask();
-                    getDataAsyncTask.execute(MainActivity.this.api);
+                    getDataAsyncTask.execute(SearchActivity.this.api);
                 }
             }
         });
@@ -75,12 +76,20 @@ public class MainActivity extends AppCompatActivity
                 new SearchListItemTouchListener.IRecyclerTouchListener() {
                     @Override
                     public void onClickItem(View view, int position) {
-                        toast(searchResults.get(position).name + " " + position);
+                        Intent intentProductView = new Intent(getApplicationContext(),ProductActivity.class);
+                        Bundle bundle = new Bundle();
+
+                        bundle.putString("image",searchResults.get(position).imageUrl);
+                        bundle.putString("description",searchResults.get(position).description);
+                        bundle.putInt("id",searchResults.get(position).id);
+
+                        intentProductView.putExtra("product_bundle",bundle);
+                        startActivity(intentProductView);
                     }
                 }));
 
         rvResults.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(),
-                R.drawable.recycler_divider)));
+                R.drawable.divider_horizontal)));
 
     }
 
