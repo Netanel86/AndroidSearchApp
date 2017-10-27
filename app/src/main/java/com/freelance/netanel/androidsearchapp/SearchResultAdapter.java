@@ -21,37 +21,42 @@ import butterknife.ButterKnife;
  * Created by Netanel on 22/09/2017.
  */
 
-public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder>
-{
+public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
+    public static final int LIST = 0;
+    public static final int GRID = 1;
+
+    private int currentLayout = LIST;
     private List<Product> results;
-    private LruCache<String,Bitmap> imageCache = new LruCache<String, Bitmap>(14440000 * 15)
-    {
+    private LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(14440000 * 15) {
         @Override
         protected int sizeOf(String key, Bitmap value) {
             return value.getByteCount();
         }
     };
 
-    public void setResults(List<Product> results)
-    {
-        this.results = results;
-    }
-
-    public SearchResultAdapter(List<Product> results)
-    {
+    public SearchResultAdapter(List<Product> results) {
         this.results = results;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_result_item,parent,false);
+
+        int layout = 0;
+        switch (viewType) {
+            case LIST:
+                layout = R.layout.rv_item_product_list;
+                break;
+            case GRID:
+                layout = R.layout.rv_item_product_grid;
+        }
+        View root = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
 
         return new ViewHolder(root);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(results.get(position),position);
+        holder.bind(results.get(position), position);
     }
 
     @Override
@@ -59,46 +64,53 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         return results == null ? 0 : results.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder
-    {
+    @Override
+    public int getItemViewType(int position) {
+        return currentLayout;
+    }
 
-        @BindView(R.id.iv_image)
-        ImageView imageView;
+    public void setLayout(int layout) {
+        this.currentLayout = layout;
+        notifyDataSetChanged();
+    }
 
-        @BindView(R.id.tv_name)
-        TextView textViewName;
+    public void setResults(List<Product> results) {
+        this.results = results;
+        notifyDataSetChanged();
+    }
 
-        @BindView(R.id.tv_description)
-        TextView textViewDescription;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.rv_item_product_iv_image)
+        public ImageView imageView;
 
-        GetImageAsyncTask imageLoadTask;
+        @BindView(R.id.rv_item_product_tv_name)
+        public TextView textViewName;
+
+        @BindView(R.id.rv_item_product_tv_description)
+        public TextView textViewDescription;
+
+        private GetImageAsyncTask imageLoadTask;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
-        private void setImage(String imageURL)
-        {
+        private void setImage(String imageURL) {
             Bitmap bmp = imageCache.get(imageURL);
-            if(bmp != null)
-            {
+            if (bmp != null) {
                 imageView.setImageBitmap(bmp);
-            }
-            else
-            {
-                if(imageLoadTask != null)
-                {
+            } else {
+                if (imageLoadTask != null) {
                     imageLoadTask.cancel(true);
                 }
-                imageLoadTask = new GetImageAsyncTask(imageView,imageCache);
+                imageLoadTask = new GetImageAsyncTask(imageView, imageCache);
                 imageLoadTask.execute(imageURL);
             }
         }
 
-        public void bind(Product result, int position)
-        {
+        public void bind(Product result, int position) {
             textViewName.setText(result.name);
             textViewDescription.setText(result.description);
             setImage(result.imageUrl);
