@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,7 +9,7 @@
     </style>
 
     <style name="SplashTheme" parent="AppTheme.NoActionBar">
-        <item name="android:windowBackground">@drawable/background</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>
     </style>
 
@@ -22,4 +22,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Button.Image" parent="@android:style/Widget.ImageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 </resources>

@@ -2,6 +2,6 @@
     <string name="title.app_name">Android Search App</string>v
     <string name="hint.search">Search</string>
     <string name="btn.buy">Buy</string>
-    <string name="btn.horizontal">List</string>
-    <string name="btn.vertical">Grid</string>
+    <string name="btn.list">List</string>
+    <string name="btn.grid">Grid</string>
 </resources>

@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.freelance.netanel.androidsearchapp.activities.SearchActivity"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            android:background="@color/colorLightGray"
+            android:background="@color/colorEditText"
             android:hint="@string/hint.search"/>
         <Button
             android:id="@+id/activity_search_btn_search"
@@ -31,19 +41,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginBottom="14dp">
+        <ImageButton
             android:id="@+id/activity_search_btn_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/btn.horizontal"/>
-        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="7dp"
+            android:background="@color/colorWhite"
+            android:src="@drawable/ic_list_view"
+            android:hint="@string/btn.list"/>
+        <ImageButton
             android:id="@+id/activity_search_btn_grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/btn.vertical"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_grid_view"
+            android:background="@color/colorWhite"
+            android:hint="@string/btn.grid"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

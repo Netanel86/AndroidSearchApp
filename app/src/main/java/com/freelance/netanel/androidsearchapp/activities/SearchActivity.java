@@ -8,9 +8,14 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.freelance.netanel.androidsearchapp.API;
@@ -46,10 +51,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public Button btnSearch;
 
     @BindView(R.id.activity_search_btn_list)
-    public Button btnHorizontal;
+    public ImageButton btnList;
 
     @BindView(R.id.activity_search_btn_grid)
-    public Button btnVertical;
+    public ImageButton btnGrid;
+
+    @BindView(R.id.search_toolbar)
+    public Toolbar tbSearch;
 
     @Override
     public void onClick(View v) {
@@ -74,9 +82,29 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         initButterknife();
-
+        setSupportActionBar(tbSearch);
         api = new API();
         buildUI();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_toolbar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_search:
+                initiateSearch();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void initButterknife() {
@@ -94,8 +122,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         rvResults.setAdapter(resultAdapter);
 
         btnSearch.setOnClickListener(this);
-        btnHorizontal.setOnClickListener(this);
-        btnVertical.setOnClickListener(this);
+        btnList.setOnClickListener(this);
+        btnGrid.setOnClickListener(this);
 
         rvResults.addOnItemTouchListener(
                 new SearchListItemTouchListener(getApplicationContext(), rvResults,
