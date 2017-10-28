@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp;
+package com.freelance.netanel.androidsearchapp.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.freelance.netanel.androidsearchapp.API;
+import com.freelance.netanel.androidsearchapp.DividerItemDecoration;
+import com.freelance.netanel.androidsearchapp.R;
+import com.freelance.netanel.androidsearchapp.SearchListItemTouchListener;
+import com.freelance.netanel.androidsearchapp.SearchResultAdapter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 
 import java.io.IOException;
@@ -65,7 +70,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        setTheme(R.style.AppTheme);
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         initButterknife();
