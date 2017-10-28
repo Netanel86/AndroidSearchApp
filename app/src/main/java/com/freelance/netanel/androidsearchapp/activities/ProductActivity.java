@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp;
+package com.freelance.netanel.androidsearchapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
 import com.freelance.netanel.androidsearchapp.services.GetImageAsyncTask;
 

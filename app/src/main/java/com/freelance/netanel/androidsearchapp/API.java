@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
 /**
  * Created by Netanel on 01/10/2017.
  */
- class API {
+ public class API {
 
     private final String DATA_ENDPOINT = "https://platform.shopyourway.com/products/search?" +
             "q=shirt&" +
