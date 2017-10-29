@@ -1,13 +1,17 @@
 package com.freelance.netanel.androidsearchapp.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,11 +48,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.activity_search_rv_results)
     public RecyclerView rvResults;
 
-    @BindView(R.id.activity_search_et_search)
-    public EditText etSearch;
-
-    @BindView(R.id.activity_search_btn_search)
-    public Button btnSearch;
+//    @BindView(R.id.activity_search_et_search)
+//    public EditText etSearch;
+//
+//    @BindView(R.id.activity_search_btn_search)
+//    public Button btnSearch;
 
     @BindView(R.id.activity_search_btn_list)
     public ImageButton btnList;
@@ -62,10 +66,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.activity_search_btn_search:
-                initiateSearch();
-                break;
-
             case R.id.activity_search_btn_list:
                 setLayoutManager(listLayoutManager,SearchResultAdapter.LIST);
                 break;
@@ -83,29 +83,54 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_search);
         initButterknife();
         setSupportActionBar(tbSearch);
+
         api = new API();
         buildUI();
+
+        handleIntent(getIntent());
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent)
+    {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            //use the query to search your data somehow
+
+            initiateSearch(query);
+
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_toolbar,menu);
-        return true;
+        inflater.inflate(R.menu.menu_toolbar, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
+
+        return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.action_search:
-                initiateSearch();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId())
+//        {
+//            case R.id.action_search:
+//                initiateSearch();
+//                return true;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     private void initButterknife() {
         ButterKnife.setDebug(true);
@@ -121,7 +146,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         rvResults.setLayoutManager(listLayoutManager);
         rvResults.setAdapter(resultAdapter);
 
-        btnSearch.setOnClickListener(this);
+//        btnSearch.setOnClickListener(this);
         btnList.setOnClickListener(this);
         btnGrid.setOnClickListener(this);
 
@@ -170,8 +195,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void initiateSearch() {
-        page = parseInt(etSearch.getText().toString());
+    private void initiateSearch(String query) {
+        page = parseInt(query);
         if (page != 0) {
             toast("Loading results...", Toast.LENGTH_SHORT);
             searchResults = new ArrayList();

@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+       <!--?<item name="android:windowBackground">@color/colorWhite</item>-->
     </style>
 
     <style name="SplashTheme" parent="AppTheme.NoActionBar">
@@ -18,13 +19,17 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.CustomSearchView" parent="Theme.AppCompat.NoActionBar">
+        <item name="searchViewStyle" >@style/CustomSearchViewStyle</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="Button.Image" parent="@android:style/Widget.ImageButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/colorWhite</item>
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView" >
+        <!-- Background for the search query section (e.g. EditText) -->
+        <item name="queryBackground">@color/colorEditText</item>
+        <!--<item name="searchIcon">@drawable/ic_search</item>-->
+    </style>
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#000000</item>
+        <item name="android:typeface">monospace</item>
     </style>
 </resources>
