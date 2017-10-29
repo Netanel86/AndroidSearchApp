@@ -12,30 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:elevation="4dp"/>
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:background="@color/colorPrimaryDark">-->
-        <!--<EditText-->
-            <!--android:id="@+id/activity_search_et_search"-->
-            <!--android:inputType="numberDecimal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:background="@color/colorEditText"-->
-            <!--android:hint="@string/hint.search"/>-->
-        <!--<Button-->
-            <!--android:id="@+id/activity_search_btn_search"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="3"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="@string/hint.search"/>-->
-    <!--</LinearLayout>-->
+        android:elevation="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     <LinearLayout
         android:layout_width="match_parent"
