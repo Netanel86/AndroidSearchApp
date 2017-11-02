@@ -3,6 +3,7 @@ package com.freelance.netanel.androidsearchapp.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -13,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +26,8 @@ import android.widget.Toast;
 
 import com.freelance.netanel.androidsearchapp.API;
 import com.freelance.netanel.androidsearchapp.DividerItemDecoration;
+import com.freelance.netanel.androidsearchapp.HistoryRepository;
+import com.freelance.netanel.androidsearchapp.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.SearchListItemTouchListener;
 import com.freelance.netanel.androidsearchapp.SearchResultAdapter;
@@ -31,7 +35,10 @@ import com.freelance.netanel.androidsearchapp.model.Product;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 
 import butterknife.BindView;
@@ -47,12 +54,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.activity_search_rv_results)
     public RecyclerView rvResults;
-
-//    @BindView(R.id.activity_search_et_search)
-//    public EditText etSearch;
-//
-//    @BindView(R.id.activity_search_btn_search)
-//    public Button btnSearch;
 
     @BindView(R.id.activity_search_btn_list)
     public ImageButton btnList;
@@ -76,6 +77,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+//    private IHistoryRepository history;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -84,10 +87,22 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         initButterknife();
         setSupportActionBar(tbSearch);
 
+//        history = new HistoryRepository(this);
         api = new API();
         buildUI();
 
         handleIntent(getIntent());
+
+
+
+//        Set<String> set = history.getSearchHistory();
+//        if(set != null) {
+//            for (Iterator<String> iterator = set.iterator(); iterator.hasNext(); ) {
+//                String query = iterator.next();
+//                Log.i("SHARED", query);
+//            }
+//        }
+
     }
 
     @Override
@@ -96,14 +111,14 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         handleIntent(intent);
     }
 
+
     private void handleIntent(Intent intent)
     {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
-
+//            history.addSearchQuery(query);
             initiateSearch(query);
-
         }
     }
     @Override
