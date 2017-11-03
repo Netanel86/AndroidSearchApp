@@ -39,7 +39,7 @@ public class BitmapLoader {
     }
 
     /**
-     * get the bounds and details of a bitmap resource without loading it.
+     * searchData the bounds and details of a bitmap resource without loading it.
      * @param input a Bitmap {@link InputStream}
      * @return an {@link android.graphics.BitmapFactory.Options} object containing image details
      */

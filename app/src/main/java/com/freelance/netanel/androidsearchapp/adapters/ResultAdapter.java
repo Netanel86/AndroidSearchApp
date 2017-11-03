@@ -23,18 +23,21 @@ import butterknife.ButterKnife;
  */
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
-    public static final int VIEWYPE_LIST = 0;
-    public static final int VIEWTYPE_GRID = 1;
+    public static final int LAYOUT_TYPE_LIST = 0;
+    public static final int LAYOUT_TYPE_GRID = 1;
 
-    private int currentLayout = VIEWYPE_LIST;
+    private int currentLayout = LAYOUT_TYPE_LIST;
 
     private List<Product> results;
+
     private LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(14440000 * 15) {
         @Override
         protected int sizeOf(String key, Bitmap value) {
             return value.getByteCount();
         }
     };
+
+    private IListAdapterCallback<Product> callback;
 
     public ResultAdapter(List<Product> results) {
         this.results = results;
@@ -45,10 +48,10 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
         int layout = 0;
         switch (viewType) {
-            case VIEWYPE_LIST:
+            case LAYOUT_TYPE_LIST:
                 layout = R.layout.rv_item_product_list;
                 break;
-            case VIEWTYPE_GRID:
+            case LAYOUT_TYPE_GRID:
                 layout = R.layout.rv_item_product_grid;
         }
         View root = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
@@ -86,7 +89,17 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void setCallback(IListAdapterCallback<Product> callback) {
+        ResultAdapter.this.callback = callback;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
+
+        /**
+         * position of current item in the collection
+         */
+        private int position;
+
         @BindView(R.id.rv_item_product_iv_image)
         public ImageView imageView;
 
@@ -98,10 +111,18 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
         private GetImageAsyncTask imageLoadTask;
 
-
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(callback != null ){
+                        callback.onItemClick(results.get(position));
+                    }
+                }
+            });
         }
 
         private void setImage(String imageURL) {
@@ -118,6 +139,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         }
 
         public void bind(Product result, int position) {
+            ViewHolder.this.position = position;
             textViewName.setText(result.name);
             textViewDescription.setText(result.description);
             setImage(result.imageUrl);

@@ -24,23 +24,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEWTYPE_ITEM = 3;
 
     private ArrayList<String> items;
-    private IHistoryAdapterCallback callback;
+    private IListAdapterCallback<String> callback;
 
-    public interface IHistoryAdapterCallback
-    {
-        void onItemClick(String query);
-    }
-
-    public HistoryAdapter()
-    {
+    public HistoryAdapter() {
         super();
         this.items = new ArrayList<>();
     }
 
-    public void setCallBack(IHistoryAdapterCallback callback)
-    {
-        this.callback = callback;
-    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -103,12 +93,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void setCallBack(IListAdapterCallback<String> callback)
+    {
+        this.callback = callback;
+    }
+
     class ViewHolderItem extends RecyclerView.ViewHolder{
 
         @BindView(R.id.rv_item_history_tv)
         TextView textViewHistory;
 
-        public ViewHolderItem(View itemView, final IHistoryAdapterCallback callback) {
+        public ViewHolderItem(View itemView, final IListAdapterCallback<String> callback) {
             super(itemView);
             ButterKnife.bind(this,itemView);
 
@@ -127,13 +122,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         {
             textViewHistory.setText(text);
         }
-
-
-
     }
 
-    class ViewHolderEmpty extends RecyclerView.ViewHolder
-    {
+    class ViewHolderEmpty extends RecyclerView.ViewHolder {
         public ViewHolderEmpty(View itemView) {
             super(itemView);
         }
