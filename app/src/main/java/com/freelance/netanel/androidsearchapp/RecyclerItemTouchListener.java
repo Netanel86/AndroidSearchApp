@@ -10,7 +10,7 @@ import android.view.View;
  * Created by Netanel on 22/09/2017.
  */
 
-public class SearchListItemTouchListener implements RecyclerView.OnItemTouchListener {
+public class RecyclerItemTouchListener implements RecyclerView.OnItemTouchListener {
 
     private GestureDetector gestureDetector;
 
@@ -19,7 +19,7 @@ public class SearchListItemTouchListener implements RecyclerView.OnItemTouchList
         void onClickItem(View view,int position);
     }
 
-    public SearchListItemTouchListener(Context context, final RecyclerView rv, final IRecyclerTouchListener listener)
+    public RecyclerItemTouchListener(Context context, final RecyclerView rv, final IRecyclerTouchListener listener)
     {
         gestureDetector = new GestureDetector(context,
                 new GestureDetector.SimpleOnGestureListener(){

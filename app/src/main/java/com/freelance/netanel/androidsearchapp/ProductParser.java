@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Netanel on 24/09/2017.
  */
 
-public class SearchItemParser implements IListItemParser<JSONObject>
+public class ProductParser implements IListItemParser<JSONObject>
 {
     @Override
     public List parse(JSONObject jsonObject)

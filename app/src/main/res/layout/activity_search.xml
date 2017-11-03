@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.freelance.netanel.androidsearchapp.activities.SearchActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorText">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/search_toolbar"
@@ -16,34 +17,49 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         android:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="right"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="14dp">
-        <ImageButton
-            android:id="@+id/activity_search_btn_list"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="7dp"
-            android:background="@color/colorWhite"
-            android:src="@drawable/ic_list_view"
-            android:hint="@string/btn.list"/>
-        <ImageButton
-            android:id="@+id/activity_search_btn_grid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_grid_view"
-            android:background="@color/colorWhite"
-            android:hint="@string/btn.grid"/>
-    </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_search_rv_results"
+
+    <ViewSwitcher
+        android:id="@+id/activity_search_vs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:paddingTop="20dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="14dp">
+                <ImageButton
+                    android:id="@+id/activity_search_btn_list"
+                    style="@style/AppTheme.LayoutButton"
+                    android:layout_marginEnd="7dp"
+                    android:src="@drawable/ic_list_view"
+                    android:hint="@string/btn.list" />
+                <ImageButton
+                    android:id="@+id/activity_search_btn_grid"
+                    style="@style/AppTheme.LayoutButton"
+                    android:src="@drawable/ic_grid_view"
+                    android:hint="@string/btn.grid" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_search_rv_results"
+                style="@style/AppTheme.RecyclerView" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/activity_search_rv_history"
+            style="@style/AppTheme.RecyclerView"
+            android:background="@color/colorPrimaryLight" />
+
+
+
+    </ViewSwitcher>
+
 </LinearLayout>

@@ -1,7 +1,5 @@
 package com.freelance.netanel.androidsearchapp;
 
-import android.content.Context;
-
 import com.freelance.netanel.androidsearchapp.model.Product;
 
 import org.json.JSONObject;
@@ -28,7 +26,7 @@ import java.net.HttpURLConnection;
     public API()
     {
         jsonReader = new JSONReader();
-        resultsParser = new SearchItemParser();
+        resultsParser = new ProductParser();
     }
 
     private HttpURLConnection openConnection(URL url) throws IOException

@@ -9,4 +9,5 @@ import java.util.Set;
 public interface IHistoryRepository {
     void addSearchQuery(String query);
     Set<String> getSearchHistory();
+    void clear();
 }

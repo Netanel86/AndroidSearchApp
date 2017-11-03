@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp;
+package com.freelance.netanel.androidsearchapp.adapters;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
 import com.freelance.netanel.androidsearchapp.services.GetImageAsyncTask;
 
@@ -21,11 +22,12 @@ import butterknife.ButterKnife;
  * Created by Netanel on 22/09/2017.
  */
 
-public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> {
-    public static final int LIST = 0;
-    public static final int GRID = 1;
+public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
+    public static final int VIEWYPE_LIST = 0;
+    public static final int VIEWTYPE_GRID = 1;
 
-    private int currentLayout = LIST;
+    private int currentLayout = VIEWYPE_LIST;
+
     private List<Product> results;
     private LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(14440000 * 15) {
         @Override
@@ -34,7 +36,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         }
     };
 
-    public SearchResultAdapter(List<Product> results) {
+    public ResultAdapter(List<Product> results) {
         this.results = results;
     }
 
@@ -43,10 +45,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         int layout = 0;
         switch (viewType) {
-            case LIST:
+            case VIEWYPE_LIST:
                 layout = R.layout.rv_item_product_list;
                 break;
-            case GRID:
+            case VIEWTYPE_GRID:
                 layout = R.layout.rv_item_product_grid;
         }
         View root = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
@@ -66,6 +68,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public int getItemViewType(int position) {
+        return currentLayout;
+    }
+
+    public int getCurrentLayout()
+    {
         return currentLayout;
     }
 

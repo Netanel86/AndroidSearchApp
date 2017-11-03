@@ -12,40 +12,46 @@ import java.util.Set;
 
 public class HistoryRepository implements IHistoryRepository {
 
-    private static final String SEARCH_HISTORY = "SEARCH_HISTORY";
-    private static final String HISTORY_KEY = "HISTORY";
+    private static final String FILE_NAME = "FILE_NAME";
+    private static final String HISTORY_LIST = "HISTORY";
 
     private SharedPreferences sharedPref;
 
     public HistoryRepository(Context context)
     {
-        sharedPref = context.getSharedPreferences(SEARCH_HISTORY,Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences(FILE_NAME,Context.MODE_PRIVATE);
 
     }
+
     @Override
     public void addSearchQuery(String query) {
 
+        Set<String> newHistory = new HashSet<>();
+        newHistory.add(query);
+
         Set<String> history = getSearchHistory();
-        history.add(query);
+        if(!history.isEmpty()){
+            newHistory.addAll(history);
+        }
 
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putStringSet(HISTORY_KEY,history);
-
-        editor.commit();
+        sharedPref.edit().putStringSet(HISTORY_LIST,newHistory).apply();
     }
 
     @Override
     public Set<String> getSearchHistory() {
         Set<String> set = null;
         try {
-             set = sharedPref.getStringSet(HISTORY_KEY, new HashSet<String>());
+             set = sharedPref.getStringSet(HISTORY_LIST, new HashSet<String>());
         }
         catch (ClassCastException ex)
         {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.clear();
-            editor.commit();
+            sharedPref.edit().clear().apply();
         }
         return set;
+    }
+
+    @Override
+    public void clear() {
+        sharedPref.edit().clear().apply();
     }
 }

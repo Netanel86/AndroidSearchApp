@@ -7,16 +7,15 @@
 
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/ic_search_24dp"
         android:title="@string/hint.search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:actionLayout="@layout/search_view"
         android:orderInCategory="1"
         />
     <item
-        android:id="@+id/action_settings"
-        android:title="Settings"/>
+        android:id="@+id/action_clear"
+        android:title="Clear history" />
 
 
 </menu>

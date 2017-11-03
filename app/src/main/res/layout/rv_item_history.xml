@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="7dp">
+    <ImageView
+        android:id="@+id/rv_item_history_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_recent_history"
+        android:tint="@color/colorSecondaryText"/>
+    <TextView
+        android:id="@+id/rv_item_history_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:textSize="@dimen/historyTextSize"
+        android:textColor="@color/colorText"/>
+</LinearLayout>

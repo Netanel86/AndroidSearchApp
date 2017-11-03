@@ -1,4 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <integer name="gridColCount">2</integer>
+    <dimen name="historyTextSize">18sp</dimen>
 </resources>

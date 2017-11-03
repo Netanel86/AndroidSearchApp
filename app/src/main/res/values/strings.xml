@@ -4,4 +4,6 @@
     <string name="btn.buy">Buy</string>
     <string name="btn.list">List</string>
     <string name="btn.grid">Grid</string>
+    <string name="history.empty">No History</string>
+    <string name="history.title">History</string>
 </resources>
