@@ -9,9 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -101,10 +99,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         api.setDataFetchCallback(new API.IDataFetcherCallback() {
             @Override
             public void onDataFetch(List<Product> items) {
+                progress.setVisibility(View.GONE);
+
                 if(items != null){
-                    progress.setVisibility(View.GONE);
                     resultAdapter.setResults(items);
-                    toast(getResources().getString(R.string.message_load_finish), Toast.LENGTH_SHORT);
                 }
                 else {
                     toast(getResources().getString(R.string.message_load_failed),Toast.LENGTH_LONG);
@@ -158,7 +156,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private void buildUI() {
         listLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         gridLayoutManager = new GridLayoutManager(this,
-                getResources().getInteger(R.integer.gridColCount));
+                getResources().getInteger(R.integer.grid_col_count));
         resultAdapter = new ResultAdapter(null);
         historyAdapter = new HistoryAdapter();
 
@@ -170,9 +168,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         rvResults.setAdapter(resultAdapter);
 
 
-        rvResults.addItemDecoration(
-                new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(),
-                        R.drawable.divider_horizontal)));
+//        rvResults.addItemDecoration(
+//                new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(),
+//                        R.drawable.divider_horizontal)));
     }
 
     private void createSearchView(Menu menu) {
@@ -198,7 +196,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 viewSwitcher.setDisplayedChild(CHILD_RESULTS);
                 historyRepository.addSearchQuery(query);
                 historyAdapter.setItems(historyRepository.getSearchHistory());
-                toast(getResources().getString(R.string.message_loading), Toast.LENGTH_SHORT);
                 progress.setVisibility(View.VISIBLE);
                 api.searchData(query);
                 return false;
@@ -220,6 +217,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         bundle.putString("image", product.imageUrl);
         bundle.putString("description", product.description);
+        bundle.putString("name", product.name);
         bundle.putInt("id", product.id);
 
         intentProductView.putExtra("product_bundle", bundle);

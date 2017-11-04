@@ -2,9 +2,9 @@ package com.freelance.netanel.androidsearchapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 
 public class ProductActivity extends AppCompatActivity {
 
+    @BindView(R.id.activity_product_tv_name)
+    TextView tvName;
+
     @BindView(R.id.activity_product_tv_description)
     TextView tvDescription;
 
@@ -24,7 +27,7 @@ public class ProductActivity extends AppCompatActivity {
     ImageView ivImage;
 
     @BindView(R.id.activity_product_btn_buy)
-    Button btnBuy;
+    FloatingActionButton btnBuy;
 
     Product product;
 
@@ -60,11 +63,14 @@ public class ProductActivity extends AppCompatActivity {
         product = new Product();
 
         product.imageUrl = productBundle.getString("image");
+        product.name = productBundle.getString("name");
         product.description = productBundle.getString("description");
         product.id = productBundle.getInt("id");
 
 
+        tvName.setText(product.name);
         tvDescription.setText(product.description);
+
 
         imageLoadTask = new FetchImageTask(ivImage,null);
         imageLoadTask.execute(product.imageUrl);

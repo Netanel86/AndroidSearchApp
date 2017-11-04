@@ -24,9 +24,9 @@ public class BitmapLoader {
             input.close();
 
             input = imageURL.openStream();
-            bmp = loadScaledBitmap(input,optionsSource,maxSize);
+            bmp = maxSize == Integer.MAX_VALUE ?
+                    loadBitmap(input) : loadScaledBitmap(input,optionsSource,maxSize);
             input.close();
-
         }
         catch (IOException ex)
         {
@@ -55,6 +55,9 @@ public class BitmapLoader {
         return BitmapFactory.decodeStream(input,null,optionsScaled);
     }
 
+    private static Bitmap loadBitmap(InputStream input){
+        return BitmapFactory.decodeStream(input);
+    }
     private static int calculateInSampleSize(BitmapFactory.Options options, int maxSize) {
         int scale = 1;
         if(options.outHeight > maxSize || options.outWidth > maxSize)
@@ -64,4 +67,6 @@ public class BitmapLoader {
 
         return  scale;
     }
+
+    // TODO: 04/11/2017 refactor fetch image task to be a subclass of bitmap loader
 }

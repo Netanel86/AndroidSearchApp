@@ -1,5 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <integer name="gridColCount">2</integer>
-    <dimen name="historyTextSize">18sp</dimen>
+    <dimen name="text_size.standard">12sp</dimen>
+    <dimen name="text_size.big">14sp</dimen>
+    <dimen name="text_size.headline">18sp</dimen>
+    <dimen name="text_size.title">24sp</dimen>
+    <integer name="grid_col_count">2</integer>
 </resources>

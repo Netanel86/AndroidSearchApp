@@ -7,12 +7,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="@string/history_item.title"
-        android:textSize="@dimen/historyTextSize"
-        android:textColor="@color/colorPrimaryText"
         android:padding="7dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/AppTheme.TextView.Title"
+        android:text="@string/history_item.title" />
 
     <View
         android:layout_width="match_parent"

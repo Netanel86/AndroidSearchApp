@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:name=".activities.ProductActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.ProductWebViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />

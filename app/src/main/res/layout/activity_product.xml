@@ -1,32 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.freelance.netanel.androidsearchapp.activities.ProductActivity"
-    android:orientation="vertical">
+    android:background="@android:color/white">
 
-    <ImageView
-        android:id="@+id/activity_product_iv_product"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:id="@+id/activity_product_tv_description"
-        android:textSize="25sp"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="21dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/activity_product_iv_product"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimaryLight"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_marginTop="18dp"
+            android:paddingStart="33dp"
+            android:paddingEnd="52dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2">
+
+            <TextView
+                android:id="@+id/activity_product_tv_name"
+                style="@style/AppTheme.TextView.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Product Name" />
+
+            <TextView
+                android:id="@+id/activity_product_tv_description"
+                style="@style/AppTheme.TextView.Big"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="This is the product description, bla bla bla bla bla bla bla" />
+        </LinearLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="10"/>
+        android:layout_gravity="end|center_vertical"
+        >
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/activity_product_btn_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_shopping_cart"
+            android:layout_margin="@dimen/fab_margin"
+            app:rippleColor="@color/colorPrimaryLight"
+            app:backgroundTint="@color/colorPrimary"
+            android:layout_gravity="end|center_horizontal"
+            />
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/activity_product_btn_buy"
-        android:layout_margin="20dp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/btn.buy"
-        android:layout_weight="1"/>
-
-
-</LinearLayout>
+</FrameLayout>

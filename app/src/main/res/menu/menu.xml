@@ -5,11 +5,12 @@
     android:layout_width="match_parent" >
 
     <item android:id="@+id/menu_action_search"
-        android:icon="@drawable/ic_search_24dp"
+        android:icon="@drawable/ic_search"
         android:title="@string/action.search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:orderInCategory="1" />
+
     <item android:id="@+id/menu_action_clear"
         android:title="@string/action.clear"
         android:orderInCategory="2"/>
