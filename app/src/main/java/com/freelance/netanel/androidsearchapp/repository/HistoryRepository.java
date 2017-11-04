@@ -1,8 +1,9 @@
-package com.freelance.netanel.androidsearchapp;
+package com.freelance.netanel.androidsearchapp.repository;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

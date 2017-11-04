@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.GetImageAsyncTask;
+import com.freelance.netanel.androidsearchapp.services.FetchImageTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +28,7 @@ public class ProductActivity extends AppCompatActivity {
 
     Product product;
 
-    GetImageAsyncTask imageLoadTask;
+    FetchImageTask imageLoadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class ProductActivity extends AppCompatActivity {
 
         tvDescription.setText(product.description);
 
-        imageLoadTask = new GetImageAsyncTask(ivImage,null);
+        imageLoadTask = new FetchImageTask(ivImage,null);
         imageLoadTask.execute(product.imageUrl);
     }
 

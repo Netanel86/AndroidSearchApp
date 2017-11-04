@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.freelance.netanel.androidsearchapp.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -88,7 +89,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void setItems(Set<String> items) {
         this.items.clear();
         if(items != null) {
-            this.items.addAll(items);
+            HistoryAdapter.this.items.addAll(items);
+            Collections.sort(HistoryAdapter.this.items);
         }
         notifyDataSetChanged();
     }

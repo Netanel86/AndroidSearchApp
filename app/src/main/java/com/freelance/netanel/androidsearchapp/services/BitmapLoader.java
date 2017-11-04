@@ -14,8 +14,7 @@ import java.net.URL;
  * A Bitmap Helper class which handles loading of images
  */
 public class BitmapLoader {
-    public static Bitmap loadBitmapFromURL(String urlString, int maxSize)
-    {
+    public static Bitmap loadBitmapFromURL(String urlString, int maxSize) {
         Bitmap bmp = null;
 
         try {
@@ -39,27 +38,24 @@ public class BitmapLoader {
     }
 
     /**
-     * searchData the bounds and details of a bitmap resource without loading it.
+     * get the bounds and details of a bitmap resource without loading it.
      * @param input a Bitmap {@link InputStream}
      * @return an {@link android.graphics.BitmapFactory.Options} object containing image details
      */
-    private static BitmapFactory.Options getBitmapBounds(InputStream input)
-    {
+    private static BitmapFactory.Options getBitmapBounds(InputStream input) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(input,null,options);
         return options;
     }
 
-    private static Bitmap loadScaledBitmap(InputStream input, BitmapFactory.Options optionsSource, int maxSize)
-    {
+    private static Bitmap loadScaledBitmap(InputStream input, BitmapFactory.Options optionsSource, int maxSize) {
         BitmapFactory.Options optionsScaled = new BitmapFactory.Options();
         optionsScaled.inSampleSize = calculateInSampleSize(optionsSource,maxSize);
         return BitmapFactory.decodeStream(input,null,optionsScaled);
     }
 
-    private static int calculateInSampleSize(BitmapFactory.Options options, int maxSize)
-    {
+    private static int calculateInSampleSize(BitmapFactory.Options options, int maxSize) {
         int scale = 1;
         if(options.outHeight > maxSize || options.outWidth > maxSize)
         {

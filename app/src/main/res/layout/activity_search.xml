@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.freelance.netanel.androidsearchapp.activities.SearchActivity"
-    android:orientation="vertical"
     android:background="@color/colorText">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/search_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-
 
     <ViewSwitcher
         android:id="@+id/activity_search_vs"
@@ -57,9 +43,19 @@
             android:id="@+id/activity_search_rv_history"
             style="@style/AppTheme.RecyclerView"
             android:background="@color/colorPrimaryLight" />
-
-
-
     </ViewSwitcher>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/activity_search_progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/activity_search_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+</FrameLayout>

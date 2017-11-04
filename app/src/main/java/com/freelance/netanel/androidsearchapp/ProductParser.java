@@ -29,6 +29,7 @@ public class ProductParser implements IListItemParser<JSONObject>
                 JSONObject current = array.getJSONObject(i);
                 Product product = new Product();
 
+                // TODO: 04/11/2017 refactor instainitiation of product to static factory method in product class
                 product.id = current.getInt("id");
                 product.name = current.getString("name");
                 product.imageUrl = current.getString("imageUrl");

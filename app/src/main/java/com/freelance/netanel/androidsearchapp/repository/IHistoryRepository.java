@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp;
+package com.freelance.netanel.androidsearchapp.repository;
 
 import java.util.Set;
 

@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="@string/history.title"
+        android:text="@string/history_item.title"
         android:textSize="@dimen/historyTextSize"
         android:textColor="@color/colorPrimaryText"
         android:padding="7dp"

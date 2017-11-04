@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.GetImageAsyncTask;
+import com.freelance.netanel.androidsearchapp.services.FetchImageTask;
 
 import java.util.List;
 
@@ -109,7 +109,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         @BindView(R.id.rv_item_product_tv_description)
         public TextView textViewDescription;
 
-        private GetImageAsyncTask imageLoadTask;
+        private FetchImageTask imageLoadTask;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -133,7 +133,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                 if (imageLoadTask != null) {
                     imageLoadTask.cancel(true);
                 }
-                imageLoadTask = new GetImageAsyncTask(imageView, imageCache);
+                imageLoadTask = new FetchImageTask(imageView, imageCache);
                 imageLoadTask.execute(imageURL);
             }
         }
@@ -145,4 +145,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             setImage(result.imageUrl);
         }
     }
+
+    // TODO: 04/11/2017 add viewholder for empty list
 }

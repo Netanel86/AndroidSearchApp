@@ -6,12 +6,12 @@
 
     <item android:id="@+id/menu_action_search"
         android:icon="@drawable/ic_search_24dp"
-        android:title="@string/hint.search"
+        android:title="@string/action.search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:orderInCategory="1" />
-    <item android:id="@+id/menu_btn_clear"
-        android:title="Clear history"
+    <item android:id="@+id/menu_action_clear"
+        android:title="@string/action.clear"
         android:orderInCategory="2"/>
 
 </menu>

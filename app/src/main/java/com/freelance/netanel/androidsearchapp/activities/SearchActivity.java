@@ -21,8 +21,8 @@ import android.widget.ViewSwitcher;
 import com.freelance.netanel.androidsearchapp.API;
 import com.freelance.netanel.androidsearchapp.DividerItemDecoration;
 import com.freelance.netanel.androidsearchapp.adapters.HistoryAdapter;
-import com.freelance.netanel.androidsearchapp.HistoryRepository;
-import com.freelance.netanel.androidsearchapp.IHistoryRepository;
+import com.freelance.netanel.androidsearchapp.repository.HistoryRepository;
+import com.freelance.netanel.androidsearchapp.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.adapters.IListAdapterCallback;
 import com.freelance.netanel.androidsearchapp.adapters.ResultAdapter;
@@ -49,6 +49,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private SearchView searchView;
 
+    @BindView(R.id.activity_search_progress_layout)
+    public  View progress;
+
     @BindView(R.id.activity_search_vs)
     public ViewSwitcher viewSwitcher;
 
@@ -64,9 +67,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.activity_search_btn_grid)
     public ImageButton btnGrid;
 
-    @BindView(R.id.search_toolbar)
-    public Toolbar tbSearch;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -74,7 +74,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_search);
 
         initButterknife();
-        setSupportActionBar(tbSearch);
 
         api = new API();
         buildUI();
@@ -103,11 +102,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onDataFetch(List<Product> items) {
                 if(items != null){
+                    progress.setVisibility(View.GONE);
                     resultAdapter.setResults(items);
-                    toast("Results Loaded!", Toast.LENGTH_SHORT);
+                    toast(getResources().getString(R.string.message_load_finish), Toast.LENGTH_SHORT);
                 }
                 else {
-                    toast("Failed To Load Results",Toast.LENGTH_LONG);
+                    toast(getResources().getString(R.string.message_load_failed),Toast.LENGTH_LONG);
                 }
             }
         });
@@ -120,10 +120,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
 
-        MenuItem clearHistoryItem = menu.findItem(R.id.menu_btn_clear);
+        createSearchView(menu);
+
+        MenuItem clearHistoryItem = menu.findItem(R.id.menu_action_clear);
         clearHistoryItem.setOnMenuItemClickListener(
                 new MenuItem.OnMenuItemClickListener() {
                     @Override
@@ -133,9 +134,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                         return false;
                     }
                 });
-
-        createSearchView(menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -200,7 +198,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 viewSwitcher.setDisplayedChild(CHILD_RESULTS);
                 historyRepository.addSearchQuery(query);
                 historyAdapter.setItems(historyRepository.getSearchHistory());
-                toast("Loading results...", Toast.LENGTH_SHORT);
+                toast(getResources().getString(R.string.message_loading), Toast.LENGTH_SHORT);
+                progress.setVisibility(View.VISIBLE);
                 api.searchData(query);
                 return false;
             }

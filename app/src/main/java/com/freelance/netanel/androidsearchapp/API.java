@@ -2,14 +2,12 @@ package com.freelance.netanel.androidsearchapp;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.freelance.netanel.androidsearchapp.model.Product;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.net.URL;
 import java.util.List;
 
@@ -28,7 +26,7 @@ import java.net.HttpURLConnection;
     private IJSONReader jsonReader;
     private IListItemParser resultsParser;
 
-    private GetDataAsyncTask dataFetchTask;
+    private FetchDataTask dataFetchTask;
     private IDataFetcherCallback callback;
 
     public interface IDataFetcherCallback {
@@ -54,13 +52,11 @@ import java.net.HttpURLConnection;
 
     public void searchData(String query) {
 
-        dataFetchTask = new GetDataAsyncTask();
+        dataFetchTask = new FetchDataTask();
         dataFetchTask.execute(query);
     }
 
-    private class GetDataAsyncTask extends AsyncTask<String, Void, List<Product>> {
-
-        private String errorMessage;
+    private class FetchDataTask extends AsyncTask<String, Void, List<Product>> {
 
         @Override
         protected void onPostExecute(List<Product> products) {
@@ -78,8 +74,7 @@ import java.net.HttpURLConnection;
                         new URL(String.format(DATA_ENDPOINT, 1)));
                 jsonObject = jsonReader.read(connection.getInputStream());
             } catch (IOException ex) {
-                Log.e(GetDataAsyncTask.class.getSimpleName(), ex.getMessage());
-
+                Log.e(FetchDataTask.class.getSimpleName(), ex.getMessage());
             }
             return jsonObject == null ? null : resultsParser.parse(jsonObject);
         }
