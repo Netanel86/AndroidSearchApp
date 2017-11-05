@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-
 /**
  * Created by Netanel on 06/10/2017.
  * A Bitmap Helper class which handles loading of images

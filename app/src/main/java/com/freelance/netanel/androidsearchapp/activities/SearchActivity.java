@@ -1,10 +1,9 @@
 package com.freelance.netanel.androidsearchapp.activities;
-
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import com.inneractive.api.ads.sdk.InneractiveAdManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

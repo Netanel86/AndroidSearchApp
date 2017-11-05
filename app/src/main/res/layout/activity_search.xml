@@ -35,6 +35,8 @@
                     android:src="@drawable/ic_grid_view"
                     android:hint="@string/btn.grid"
                     />
+
+
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -42,13 +44,19 @@
                 android:layout_marginTop="14dp"
                 style="@style/AppTheme.RecyclerView"
                 />
+
+            <fragment
+                android:id="@+id/my_fragment"
+                android:name="com.freelance.netanel.androidsearchapp.AdViewFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"/>
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/activity_search_rv_history"
             style="@style/AppTheme.RecyclerView"
             android:background="@color/colorPrimaryLight"
-
             />
     </ViewSwitcher>
 
@@ -68,5 +76,7 @@
             android:indeterminateTint="@color/colorPrimaryDark"
             />
     </FrameLayout>
+
+
 
 </FrameLayout>
