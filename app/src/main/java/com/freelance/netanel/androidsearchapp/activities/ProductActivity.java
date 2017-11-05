@@ -1,6 +1,7 @@
 package com.freelance.netanel.androidsearchapp.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.FetchImageTask;
+import com.freelance.netanel.androidsearchapp.services.BitmapLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
 
     private Product product;
 
-    private FetchImageTask imageLoadTask;
+    private BitmapLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +47,28 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("product_bundle");
 
-        pullAndSetProduct(bundle);
+        imageLoader = new BitmapLoader();
+        product = parseProduct(bundle);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         btnBuy.setOnClickListener(this);
         btnBack.setOnClickListener(this);
 
+        imageLoader.setImageFetchCallback(new BitmapLoader.IBitmapFetcherCallBack() {
+            @Override
+            public void onBitmapFetch(Bitmap bmp) {
+                if (bmp != null) {
+                    ivImage.setImageBitmap(bmp);
+                }
+            }
+        });
+
+        bindProduct();
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -68,27 +85,29 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.activity_product_btn_back:
+                // TODO: 05/11/2017 send back notification if buy button was pressed
                 ProductActivity.this.finish();
                 break;
         }
     }
 
-    private void pullAndSetProduct(Bundle productBundle)
-    {
-        product = new Product();
+    private Product parseProduct(Bundle productBundle) {
+        Product product = new Product();
 
         product.imageUrl = productBundle.getString("image");
         product.name = productBundle.getString("name");
         product.description = productBundle.getString("description");
         product.id = productBundle.getInt("id");
 
+        return product;
+    }
 
+    private void bindProduct() {
         tvName.setText(product.name);
         tvDescription.setText(product.description);
 
-
-        imageLoadTask = new FetchImageTask(ivImage,null);
-        imageLoadTask.execute(product.imageUrl);
+        ivImage.setImageResource(R.drawable.ic_buybuy_logo);
+        imageLoader.loadBitmapFromURL(product.imageUrl,ivImage.getMaxHeight());
     }
 
 }

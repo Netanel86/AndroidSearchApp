@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.FetchImageTask;
+import com.freelance.netanel.androidsearchapp.services.BitmapLoader;
 
 import java.util.List;
 
@@ -30,6 +30,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     private List<Product> results;
 
+
+
     private LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(14440000 * 15) {
         @Override
         protected int sizeOf(String key, Bitmap value) {
@@ -41,6 +43,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     public ResultAdapter(List<Product> results) {
         this.results = results;
+
     }
 
     @Override
@@ -99,7 +102,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
          * position of current item in the collection
          */
         private int position;
-
+        private BitmapLoader imageLoader;
+        Product product;
         @BindView(R.id.rv_item_product_iv_image)
         public ImageView imageView;
 
@@ -108,8 +112,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
         @BindView(R.id.rv_item_product_tv_description)
         public TextView textViewDescription;
-
-        private FetchImageTask imageLoadTask;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -123,26 +125,37 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                     }
                 }
             });
-        }
 
-        private void setImage(String imageURL) {
-            Bitmap bmp = imageCache.get(imageURL);
-            if (bmp != null) {
-                imageView.setImageBitmap(bmp);
-            } else {
-                if (imageLoadTask != null) {
-                    imageLoadTask.cancel(true);
+            imageLoader = new BitmapLoader();
+            imageLoader.setImageFetchCallback(new BitmapLoader.IBitmapFetcherCallBack() {
+                @Override
+                public void onBitmapFetch(Bitmap bmp) {
+                    if(bmp != null)
+                    {
+                        imageView.setImageBitmap(bmp);
+                        if(imageCache != null) {
+                            imageCache.put(product.imageUrl, bmp);
+                        }
+                        imageView.setBackgroundColor(imageView.getResources().getColor(R.color.colorIcons));
+                    }
                 }
-                imageLoadTask = new FetchImageTask(imageView, imageCache);
-                imageLoadTask.execute(imageURL);
-            }
+            });
         }
 
         public void bind(Product result, int position) {
             ViewHolder.this.position = position;
+            ViewHolder.this.product = result;
+
             textViewName.setText(result.name);
             textViewDescription.setText(result.description);
-            setImage(result.imageUrl);
+
+            Bitmap bmp = imageCache.get(result.imageUrl);
+            if (bmp != null) {
+                imageView.setImageBitmap(bmp);
+            } else {
+                imageView.setImageResource(R.drawable.ic_buybuy_logo);
+                imageLoader.loadBitmapFromURL(result.imageUrl,imageView.getMaxHeight());
+            }
         }
     }
 

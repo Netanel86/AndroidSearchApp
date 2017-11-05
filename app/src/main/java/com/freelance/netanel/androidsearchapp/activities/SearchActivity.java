@@ -205,6 +205,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             public boolean onQueryTextChange(String newText) {
                 if(!newText.isEmpty()) {
                     viewSwitcher.setDisplayedChild(CHILD_HISTORY);
+                    // TODO: 05/11/2017 add filter for search result history
                 }
                 return false;
             }

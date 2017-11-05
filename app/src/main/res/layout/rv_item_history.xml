@@ -8,13 +8,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_recent_history"
-        android:tint="@color/colorSecondaryText"/>
+        android:tint="@color/colorAccent"/>
     <TextView
         android:id="@+id/rv_item_history_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_gravity="center"
-        android:textSize="@dimen/text_size.standard"
-        android:textColor="@color/colorText"/>
+        android:textSize="@dimen/text_size.headline"
+        android:textColor="@color/colorPrimaryText"/>
 </LinearLayout>
