@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,23 +16,26 @@ import com.freelance.netanel.androidsearchapp.services.FetchImageTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.activity_product_tv_name)
-    TextView tvName;
+    public TextView tvName;
 
     @BindView(R.id.activity_product_tv_description)
-    TextView tvDescription;
+    public TextView tvDescription;
 
     @BindView(R.id.activity_product_iv_product)
-    ImageView ivImage;
+    public ImageView ivImage;
 
     @BindView(R.id.activity_product_btn_buy)
-    FloatingActionButton btnBuy;
+    public FloatingActionButton btnBuy;
 
-    Product product;
+    @BindView(R.id.activity_product_btn_back)
+    public ImageButton btnBack;
 
-    FetchImageTask imageLoadTask;
+    private Product product;
+
+    private FetchImageTask imageLoadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +48,29 @@ public class ProductActivity extends AppCompatActivity {
 
         pullAndSetProduct(bundle);
 
-        btnBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentProductWebView = new Intent(getApplicationContext(),ProductWebViewActivity.class);
+        btnBuy.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
+
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.activity_product_btn_buy:
+                Intent intentProductWebView = new Intent(getApplicationContext(),
+                        ProductWebViewActivity.class);
                 Bundle bundle = new Bundle();
 
-                bundle.putString("product_url",String.format("https://www.shopyourway.com/xxx/%s",product.id));
-                intentProductWebView.putExtra("webview_bundle",bundle);
+                bundle.putString("product_url",
+                        String.format("https://www.shopyourway.com/xxx/%s", product.id));
+                intentProductWebView.putExtra("webview_bundle", bundle);
                 startActivity(intentProductWebView);
-            }
-        });
+                break;
 
+            case R.id.activity_product_btn_back:
+                ProductActivity.this.finish();
+                break;
+        }
     }
 
     private void pullAndSetProduct(Bundle productBundle)
