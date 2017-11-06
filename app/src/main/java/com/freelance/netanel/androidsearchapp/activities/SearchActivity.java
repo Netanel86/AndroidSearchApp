@@ -3,7 +3,6 @@ import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.inneractive.api.ads.sdk.InneractiveAdManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.freelance.netanel.androidsearchapp.API;
-import com.freelance.netanel.androidsearchapp.DividerItemDecoration;
 import com.freelance.netanel.androidsearchapp.adapters.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.repository.HistoryRepository;
 import com.freelance.netanel.androidsearchapp.repository.IHistoryRepository;
@@ -46,7 +44,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private SearchView searchView;
 
-    @BindView(R.id.activity_search_progress_layout)
+    @BindView(R.id.activity_search_progress)
     public  View progress;
 
     @BindView(R.id.activity_search_vs)
@@ -215,10 +213,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         Intent intentProductView = new Intent(getApplicationContext(), ProductActivity.class);
         Bundle bundle = new Bundle();
 
-        bundle.putString("image", product.imageUrl);
-        bundle.putString("description", product.description);
-        bundle.putString("name", product.name);
-        bundle.putInt("id", product.id);
+        bundle.putString("image", product.getImageUrl());
+        bundle.putString("description", product.getDescription());
+        bundle.putString("name", product.getName());
+        bundle.putInt("id", product.getId());
 
         intentProductView.putExtra("product_bundle", bundle);
         startActivity(intentProductView);

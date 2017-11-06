@@ -3,14 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
-
-    <!--<com.inneractive.api.ads.InneractiveAdView-->
-        <!--android:id="@+id/ad"-->
-        <!--xmlns:inneractive="http://schemas.android.com/apk/res/com.your.application.package"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--inneractive:appId="Nirit_MobileSchool_Android"-->
-        <!--inneractive:adType="BANNER"-->
-        <!--inneractive:refreshInterval="60" />-->
+    android:layout_centerHorizontal="true">
 </android.support.constraint.ConstraintLayout>

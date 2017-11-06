@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
+
 
     <ViewSwitcher
         android:id="@+id/activity_search_vs"
@@ -11,72 +11,93 @@
         android:layout_height="match_parent"
         android:inAnimation="@android:anim/slide_in_left"
         android:outAnimation="@android:anim/slide_out_right">
-        <LinearLayout
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="end"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="18dp"
-                android:layout_marginStart="18dp">
+                android:layout_marginStart="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <ImageButton
                     android:id="@+id/activity_search_btn_list"
                     style="@style/AppTheme.LayoutButton"
                     android:layout_marginEnd="7dp"
+                    android:hint="@string/btn.list"
                     android:src="@drawable/ic_list_view"
-                    android:hint="@string/btn.list" />
+                    app:layout_constraintEnd_toStartOf="@+id/activity_search_btn_grid" />
+
                 <ImageButton
                     android:id="@+id/activity_search_btn_grid"
                     style="@style/AppTheme.LayoutButton"
-                    android:src="@drawable/ic_grid_view"
                     android:hint="@string/btn.grid"
-                    />
-
-
-            </LinearLayout>
+                    android:src="@drawable/ic_grid_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/activity_search_rv_results"
-                android:layout_marginTop="14dp"
                 style="@style/AppTheme.RecyclerView"
-                />
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/activity_search_ad"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
             <fragment
-                android:id="@+id/my_fragment"
+                android:id="@+id/activity_search_ad"
                 android:name="com.freelance.netanel.androidsearchapp.AdViewFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"/>
-        </LinearLayout>
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/activity_search_rv_history"
             style="@style/AppTheme.RecyclerView"
-            android:background="@color/colorPrimaryLight"
-            />
+            android:background="@color/colorPrimaryLight" />
     </ViewSwitcher>
 
-    <FrameLayout
-        android:id="@+id/activity_search_progress_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:visibility="gone">
-        <ProgressBar
-            android:id="@+id/activity_search_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="@color/colorPrimaryDark"
-            />
-    </FrameLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ProgressBar
+        android:id="@+id/activity_search_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:indeterminateTintMode="src_atop"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        android:visibility="gone"/>
 
 
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

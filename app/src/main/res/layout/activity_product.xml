@@ -65,7 +65,7 @@
         android:src="@drawable/ic_add_shopping_cart"
         app:backgroundTint="@color/colorPrimary"
         app:rippleColor="@color/colorPrimaryLight"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 

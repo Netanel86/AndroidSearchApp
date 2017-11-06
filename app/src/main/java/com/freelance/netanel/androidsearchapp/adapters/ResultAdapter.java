@@ -30,8 +30,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     private List<Product> results;
 
-
-
     private LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(14440000 * 15) {
         @Override
         protected int sizeOf(String key, Bitmap value) {
@@ -97,7 +95,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         /**
          * position of current item in the collection
          */
@@ -134,7 +131,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                     {
                         imageView.setImageBitmap(bmp);
                         if(imageCache != null) {
-                            imageCache.put(product.imageUrl, bmp);
+                            imageCache.put(product.getImageUrl(), bmp);
                         }
                         imageView.setBackgroundColor(imageView.getResources().getColor(R.color.colorIcons));
                     }
@@ -146,15 +143,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             ViewHolder.this.position = position;
             ViewHolder.this.product = result;
 
-            textViewName.setText(result.name);
-            textViewDescription.setText(result.description);
+            textViewName.setText(result.getName());
+            textViewDescription.setText(result.getDescription());
 
-            Bitmap bmp = imageCache.get(result.imageUrl);
+            Bitmap bmp = imageCache.get(result.getImageUrl());
             if (bmp != null) {
                 imageView.setImageBitmap(bmp);
             } else {
                 imageView.setImageResource(R.drawable.ic_buybuy_logo);
-                imageLoader.loadBitmapFromURL(result.imageUrl,imageView.getMaxHeight());
+                imageLoader.loadBitmapFromURL(result.getImageUrl(),imageView.getMaxHeight());
             }
         }
     }

@@ -15,6 +15,7 @@ import java.net.URL;
  */
 public class BitmapLoader {
 
+    // TODO: 06/11/2017 use picasso lib to load images and handle cache
     private IBitmapFetcherCallBack finishCallback;
     private FetchImageTask imageFetchTask;
 
@@ -66,8 +67,6 @@ public class BitmapLoader {
 
         return  scale;
     }
-
-    // TODO: 04/11/2017 refactor fetch image task to be a subclass of bitmap loader
 
     public class FetchImageTask extends AsyncTask<String,Void,Bitmap> {
 

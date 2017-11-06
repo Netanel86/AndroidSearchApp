@@ -79,7 +79,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                 Bundle bundle = new Bundle();
 
                 bundle.putString("product_url",
-                        String.format("https://www.shopyourway.com/xxx/%s", product.id));
+                        String.format("https://www.shopyourway.com/xxx/%s", product.getId()));
                 intentProductWebView.putExtra("webview_bundle", bundle);
                 startActivity(intentProductWebView);
                 break;
@@ -94,20 +94,20 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     private Product parseProduct(Bundle productBundle) {
         Product product = new Product();
 
-        product.imageUrl = productBundle.getString("image");
-        product.name = productBundle.getString("name");
-        product.description = productBundle.getString("description");
-        product.id = productBundle.getInt("id");
+        product.setImageUrl(productBundle.getString("image"));
+        product.setName(productBundle.getString("name"));
+        product.setDescription(productBundle.getString("description"));
+        product.setId(productBundle.getInt("id"));
 
         return product;
     }
 
     private void bindProduct() {
-        tvName.setText(product.name);
-        tvDescription.setText(product.description);
+        tvName.setText(product.getName());
+        tvDescription.setText(product.getDescription());
 
         ivImage.setImageResource(R.drawable.ic_buybuy_logo);
-        imageLoader.loadBitmapFromURL(product.imageUrl,ivImage.getMaxHeight());
+        imageLoader.loadBitmapFromURL(product.getImageUrl(),ivImage.getMaxHeight());
     }
 
 }

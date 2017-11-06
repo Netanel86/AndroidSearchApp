@@ -1,5 +1,10 @@
 package com.freelance.netanel.androidsearchapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URL;
 
 /**
@@ -7,20 +12,47 @@ import java.net.URL;
  */
 
 public class Product {
-    public int id;
-    public String name;
-    public String imageUrl;
-    public String description;
+    @SerializedName("id")
+    private int id;
 
-    public Product()
-    {
+    @SerializedName("name")
+    private String name;
 
+    @SerializedName("imageUrl")
+    private String imageUrl;
+
+    @SerializedName("description")
+    private String description;
+
+    public int getId() {
+        return id;
     }
-    public Product(int id,String name,String description,String imageUrl)
-    {
+
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
