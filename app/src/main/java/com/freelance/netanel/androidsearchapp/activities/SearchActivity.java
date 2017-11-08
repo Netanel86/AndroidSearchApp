@@ -19,7 +19,6 @@ import com.freelance.netanel.androidsearchapp.adapters.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.repository.HistoryRepository;
 import com.freelance.netanel.androidsearchapp.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.R;
-import com.freelance.netanel.androidsearchapp.adapters.IListAdapterCallback;
 import com.freelance.netanel.androidsearchapp.adapters.ResultAdapter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 
@@ -80,13 +79,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         historyRepository = new HistoryRepository(getApplicationContext());
         historyAdapter.setItems(historyRepository.getSearchHistory());
-        historyAdapter.setCallBack(new IListAdapterCallback<String>() {
+        historyAdapter.setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
             @Override
             public void onItemClick(String query) {
                 searchView.setQuery(query,true);
             }
         });
-        resultAdapter.setCallback(new IListAdapterCallback<Product>() {
+        resultAdapter.setCallback(new ResultAdapter.IResultAdapterCallBack() {
             @Override
             public void onItemClick(Product item) {
                 openProductActivity(item);

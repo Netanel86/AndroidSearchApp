@@ -24,12 +24,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEWTYPE_EMPTY = 1;
     private static final int VIEWTYPE_ITEM = 3;
 
-    private ArrayList<String> items;
-    private IListAdapterCallback<String> callback;
+    private ArrayList<String> mItems;
+    private IHistoryAdapterCallBack mCallBack;
+
+    public interface IHistoryAdapterCallBack{
+        void onItemClick(String item);
+    }
 
     public HistoryAdapter() {
         super();
-        this.items = new ArrayList<>();
+        this.mItems = new ArrayList<>();
     }
 
     @Override
@@ -46,7 +50,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case VIEWTYPE_ITEM:
                 holder = new ViewHolderItem(LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.rv_item_history, parent, false),
-                        callback);
+                        mCallBack);
                 break;
             default:
                 holder = new ViewHolderEmpty(LayoutInflater.from(parent.getContext())
@@ -61,16 +65,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof ViewHolderItem){
-            ((ViewHolderItem)holder).bind(items.get(position - 1));
+            ((ViewHolderItem)holder).bind(mItems.get(position - 1));
         }
-
     }
 
     @Override
     public int getItemViewType(int position) {
 
         int viewType = 0;
-        if(items.isEmpty()) {
+        if(mItems.isEmpty()) {
             viewType = VIEWTYPE_EMPTY;
         }else if(position == 0) {
             viewType = VIEWTYPE_TITLE;
@@ -83,29 +86,29 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return items.isEmpty() ? 1 : items.size() + 1;
+        return mItems.isEmpty() ? 1 : mItems.size() + 1;
     }
 
     public void setItems(Set<String> items) {
-        this.items.clear();
+        this.mItems.clear();
         if(items != null) {
-            HistoryAdapter.this.items.addAll(items);
-            Collections.sort(HistoryAdapter.this.items);
+            HistoryAdapter.this.mItems.addAll(items);
+            Collections.sort(HistoryAdapter.this.mItems);
         }
         notifyDataSetChanged();
     }
 
-    public void setCallBack(IListAdapterCallback<String> callback)
+    public void setCallBack(IHistoryAdapterCallBack callback)
     {
-        this.callback = callback;
+        this.mCallBack = callback;
     }
 
     class ViewHolderItem extends RecyclerView.ViewHolder{
 
         @BindView(R.id.rv_item_history_tv)
-        TextView textViewHistory;
+        TextView mTextViewHistory;
 
-        public ViewHolderItem(View itemView, final IListAdapterCallback<String> callback) {
+        private ViewHolderItem(View itemView, final IHistoryAdapterCallBack callback) {
             super(itemView);
             ButterKnife.bind(this,itemView);
 
@@ -114,15 +117,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     if(callback != null)
                     {
-                        callback.onItemClick(textViewHistory.getText().toString());
+                        callback.onItemClick(mTextViewHistory.getText().toString());
                     }
                 }
             });
         }
 
-        public void bind(String text)
+        private void bind(String text)
         {
-            textViewHistory.setText(text);
+            mTextViewHistory.setText(text);
         }
     }
 
