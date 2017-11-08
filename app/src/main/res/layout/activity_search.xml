@@ -58,7 +58,7 @@
             <fragment
                 android:id="@+id/activity_search_ad"
                 android:name="com.freelance.netanel.androidsearchapp.AdViewFragment"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

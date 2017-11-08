@@ -97,7 +97,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onDataFetch(List<Product> items) {
                 progress.setVisibility(View.GONE);
-
                 if(items != null){
                     resultAdapter.setResults(items);
                 }
@@ -182,6 +181,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 viewSwitcher.setDisplayedChild(CHILD_RESULTS);
+
                 return true;
             }
         });
