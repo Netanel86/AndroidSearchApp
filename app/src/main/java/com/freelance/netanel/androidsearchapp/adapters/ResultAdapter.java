@@ -28,19 +28,22 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     private int currentLayout = LAYOUT_TYPE_LIST;
 
-    private List<Product> results;
-
-    private LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(14440000 * 15) {
+    private LruCache<String, Bitmap> mImageCache = new LruCache<String, Bitmap>(14440000 * 15) {
         @Override
         protected int sizeOf(String key, Bitmap value) {
             return value.getByteCount();
         }
     };
 
-    private IListAdapterCallback<Product> callback;
+    private List<Product> mResults;
+    private IResultAdapterCallBack mCallBack;
+
+    public interface IResultAdapterCallBack{
+        void onItemClick(Product item);
+    }
 
     public ResultAdapter(List<Product> results) {
-        this.results = results;
+        this.mResults = results;
 
     }
 
@@ -62,12 +65,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(results.get(position), position);
+        holder.bind(mResults.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return results == null ? 0 : results.size();
+        return mResults == null ? 0 : mResults.size();
     }
 
     @Override
@@ -86,75 +89,74 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     }
 
     public void setResults(List<Product> results) {
-        this.results = results;
+        this.mResults = results;
         notifyDataSetChanged();
     }
 
-    public void setCallback(IListAdapterCallback<Product> callback) {
-        ResultAdapter.this.callback = callback;
+    public void setCallback(IResultAdapterCallBack callback) {
+        ResultAdapter.this.mCallBack = callback;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         /**
-         * position of current item in the collection
+         * mPosition of current item in the collection
          */
-        private int position;
-        private BitmapLoader imageLoader;
-        Product product;
+        private int mPosition;
+        private BitmapLoader mImageLoader;
+        private Product mProduct;
+
         @BindView(R.id.rv_item_product_iv_image)
-        public ImageView imageView;
+        private ImageView mImageView;
 
         @BindView(R.id.rv_item_product_tv_name)
-        public TextView textViewName;
+        private TextView mTextViewName;
 
         @BindView(R.id.rv_item_product_tv_description)
-        public TextView textViewDescription;
+        private TextView mTextViewDescription;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(callback != null ){
-                        callback.onItemClick(results.get(position));
+                    if(mCallBack != null ){
+                        mCallBack.onItemClick(mResults.get(mPosition));
                     }
                 }
             });
 
-            imageLoader = new BitmapLoader();
-            imageLoader.setImageFetchCallback(new BitmapLoader.IBitmapFetcherCallBack() {
+            mImageLoader = new BitmapLoader();
+            mImageLoader.setImageFetchCallback(new BitmapLoader.IBitmapFetcherCallBack() {
                 @Override
                 public void onBitmapFetch(Bitmap bmp) {
                     if(bmp != null)
                     {
-                        imageView.setImageBitmap(bmp);
-                        if(imageCache != null) {
-                            imageCache.put(product.getImageUrl(), bmp);
+                        mImageView.setImageBitmap(bmp);
+                        if(mImageCache != null) {
+                            mImageCache.put(mProduct.getImageUrl(), bmp);
                         }
-                        imageView.setBackgroundColor(imageView.getResources().getColor(R.color.colorIcons));
+                        mImageView.setBackgroundColor(mImageView.getResources().getColor(R.color.colorIcons));
                     }
                 }
             });
         }
 
-        public void bind(Product result, int position) {
-            ViewHolder.this.position = position;
-            ViewHolder.this.product = result;
+        private void bind(Product result, int position) {
+            ViewHolder.this.mPosition = position;
+            ViewHolder.this.mProduct = result;
 
-            textViewName.setText(result.getName());
-            textViewDescription.setText(result.getDescription());
+            mTextViewName.setText(result.getName());
+            mTextViewDescription.setText(result.getDescription());
 
-            Bitmap bmp = imageCache.get(result.getImageUrl());
+            Bitmap bmp = mImageCache.get(result.getImageUrl());
             if (bmp != null) {
-                imageView.setImageBitmap(bmp);
+                mImageView.setImageBitmap(bmp);
             } else {
-                imageView.setImageResource(R.drawable.ic_buybuy_logo);
-                imageLoader.loadBitmapFromURL(result.getImageUrl(),imageView.getMaxHeight());
+                mImageView.setImageResource(R.drawable.ic_buybuy_logo);
+                mImageLoader.loadBitmapFromURL(result.getImageUrl(), mImageView.getMaxHeight());
             }
         }
     }
-
     // TODO: 04/11/2017 add viewholder for empty list
 }

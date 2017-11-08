@@ -19,7 +19,6 @@ import com.freelance.netanel.androidsearchapp.adapters.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.repository.HistoryRepository;
 import com.freelance.netanel.androidsearchapp.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.R;
-import com.freelance.netanel.androidsearchapp.adapters.IListAdapterCallback;
 import com.freelance.netanel.androidsearchapp.adapters.ResultAdapter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 
