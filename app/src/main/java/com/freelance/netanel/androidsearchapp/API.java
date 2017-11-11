@@ -30,6 +30,7 @@ import java.net.HttpURLConnection;
     private FetchDataTask mFetchDataTask;
     private IDataFetcherCallback mCallback;
 
+    // TODO: 10/11/2017 add callback in case the fetch had failed
     public interface IDataFetcherCallback {
         void onDataFetch(List<Product> items);
     }

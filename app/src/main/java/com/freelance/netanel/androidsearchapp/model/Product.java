@@ -1,58 +1,88 @@
 package com.freelance.netanel.androidsearchapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URL;
 
 /**
  * Created by Netanel on 24/09/2017.
  */
 
-public class Product {
-    @SerializedName("id")
-    private int id;
+public class Product implements Parcelable {
+    @SerializedName("mId")
+    private int mId;
 
-    @SerializedName("name")
-    private String name;
+    @SerializedName("mName")
+    private String mName;
 
-    @SerializedName("imageUrl")
-    private String imageUrl;
+    @SerializedName("mImageUrl")
+    private String mImageUrl;
 
-    @SerializedName("description")
-    private String description;
-
+    @SerializedName("mDescription")
+    private String mDescription;
+    public Product(){}
     public int getId() {
-        return id;
+        return mId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return mImageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.mImageUrl = imageUrl;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.mDescription = description;
+    }
+
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel source) {
+            return new Product(source);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
+    private Product(Parcel inputParcel) {
+        mId = inputParcel.readInt();
+        mName = inputParcel.readString();
+        mDescription = inputParcel.readString();
+        mImageUrl = inputParcel.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mName);
+        dest.writeString(mDescription);
+        dest.writeString(mImageUrl);
     }
 }

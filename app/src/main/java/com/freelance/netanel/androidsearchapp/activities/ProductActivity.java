@@ -44,11 +44,9 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_product);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("product_bundle");
+        product = getIntent().getExtras().getParcelable("product_bundle");
 
         imageLoader = new BitmapLoader();
-        product = parseProduct(bundle);
     }
 
     @Override
@@ -91,17 +89,6 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private Product parseProduct(Bundle productBundle) {
-        Product product = new Product();
-
-        product.setImageUrl(productBundle.getString("image"));
-        product.setName(productBundle.getString("name"));
-        product.setDescription(productBundle.getString("description"));
-        product.setId(productBundle.getInt("id"));
-
-        return product;
-    }
-
     private void bindProduct() {
         tvName.setText(product.getName());
         tvDescription.setText(product.getDescription());
@@ -109,5 +96,4 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         ivImage.setImageResource(R.drawable.ic_buybuy_logo);
         imageLoader.loadBitmapFromURL(product.getImageUrl(),ivImage.getMaxHeight());
     }
-
 }

@@ -210,14 +210,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private void openProductActivity(Product product) {
         Intent intentProductView = new Intent(getApplicationContext(), ProductActivity.class);
-        Bundle bundle = new Bundle();
 
-        bundle.putString("image", product.getImageUrl());
-        bundle.putString("description", product.getDescription());
-        bundle.putString("name", product.getName());
-        bundle.putInt("id", product.getId());
-
-        intentProductView.putExtra("product_bundle", bundle);
+        intentProductView.putExtra("product_bundle", product);
         startActivity(intentProductView);
     }
 
