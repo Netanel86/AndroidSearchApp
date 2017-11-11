@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.inneractive.api.ads.sdk.InneractiveAdManager;
-import com.inneractive.api.ads.sdk.InneractiveAdView;
+import com.freelance.netanel.androidsearchapp.services.AdManager;
+import com.freelance.netanel.androidsearchapp.services.IAdManager;
 
 /**
  * Created by Netanel on 05/11/2017.
@@ -16,17 +16,25 @@ import com.inneractive.api.ads.sdk.InneractiveAdView;
 
 public class AdViewFragment extends Fragment {
 
+    private IAdManager mAdManager;
+    private View mAdView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             Bundle savedInstanceState) {
-        // TODO: 06/11/2017 create a wrapper class with interface for ad handling
         ViewGroup group = (ViewGroup) inflater.inflate(R.layout.fragment_ad, container,false );
-        InneractiveAdManager.initialize(getContext());
-        InneractiveAdView banner = new InneractiveAdView(getContext(),"Nirit_MobileSchool_Android", InneractiveAdView.AdType.Banner);
-        group.addView(banner);
-        banner.loadAd();
+
+        mAdManager = new AdManager();
+        mAdView = mAdManager.createBanner(getContext());
+        group.addView(mAdView);
 
         return group;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdManager.loadAd(mAdView);
     }
 }
