@@ -22,6 +22,7 @@ import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.adapters.ResultAdapter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -94,15 +95,34 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         api.setDataFetchCallback(new API.IDataFetcherCallback() {
             @Override
-            public void onDataFetch(List<Product> items) {
-                progress.setVisibility(View.GONE);
-                if(items != null){
-                    resultAdapter.setResults(items);
-                }
-                else {
-                    toast(getResources().getString(R.string.message_load_failed),Toast.LENGTH_LONG);
-                }
+            public void onDataFetch(final List<Product> items) {
+                SearchActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setVisibility(View.GONE);
+                        if(items != null){
+                            resultAdapter.setResults(items);
+                        }
+                        else {
+                            toast(getResources().getString(R.string.message_load_failed),Toast.LENGTH_LONG);
+                        }
+                    }
+                });
+
             }
+
+            @Override
+            public void onDataFetchFail(final IOException exception) {
+                SearchActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setVisibility(View.GONE);
+                        toast(exception.getMessage(),Toast.LENGTH_LONG);
+                    }
+                });
+
+            }
+
         });
 
         viewSwitcher.setDisplayedChild(CHILD_RESULTS);
@@ -180,7 +200,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 viewSwitcher.setDisplayedChild(CHILD_RESULTS);
-
                 return true;
             }
         });
