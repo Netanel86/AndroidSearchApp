@@ -1,5 +1,6 @@
 package com.freelance.netanel.androidsearchapp.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,6 +19,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String KEY_PRODUCT = "product_key";
+
+    /**
+     * Prepares an instance of {@link Intent} to start {@link ProductActivity} activity
+     * @param context the {@link Context} of the parent activity.
+     * @param product an instance of {@link Product} to display.
+     * @return an instance of {@link Intent} ready for starting a new {@link ProductActivity},
+     * including the {@link Product} to pass to the new activity.
+     */
+    public static Intent prepareIntent(Context context, Product product) {
+        Intent intent = new Intent(context, ProductActivity.class);
+        intent.putExtra(KEY_PRODUCT, product);
+        return intent;
+    }
 
     @BindView(R.id.activity_product_tv_name)
     public TextView tvName;
@@ -44,7 +59,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_product);
         ButterKnife.bind(this);
 
-        product = getIntent().getExtras().getParcelable("product_bundle");
+        product = getIntent().getExtras().getParcelable(KEY_PRODUCT);
 
         imageLoader = new BitmapLoader();
     }
@@ -69,17 +84,10 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.activity_product_btn_buy:
-                Intent intentProductWebView = new Intent(getApplicationContext(),
-                        ProductWebViewActivity.class);
-                Bundle bundle = new Bundle();
-
-                bundle.putString("product_url",
-                        String.format("https://www.shopyourway.com/xxx/%s", product.getId()));
-                intentProductWebView.putExtra("webview_bundle", bundle);
-                startActivity(intentProductWebView);
+                Intent intent = ProductWebViewActivity.prepareIntent(this, product);
+                startActivity(intent);
                 break;
 
             case R.id.activity_product_btn_back:

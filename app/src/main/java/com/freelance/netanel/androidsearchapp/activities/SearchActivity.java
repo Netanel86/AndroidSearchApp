@@ -228,10 +228,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void openProductActivity(Product product) {
-        Intent intentProductView = new Intent(getApplicationContext(), ProductActivity.class);
-
-        intentProductView.putExtra("product_bundle", product);
-        startActivity(intentProductView);
+        Intent intent = ProductActivity.prepareIntent(this,product);
+        startActivity(intent);
     }
 
     private void setResultsLayout(RecyclerView.LayoutManager targetLayoutManager, int targetViewType) {

@@ -102,7 +102,6 @@ public class BitmapLoader {
             {
                 finishCallback.onBitmapFetch(bitmap);
             }
-
         }
     }
 }

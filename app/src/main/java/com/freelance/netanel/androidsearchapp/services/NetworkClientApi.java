@@ -5,7 +5,6 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -17,7 +16,7 @@ import okhttp3.Response;
  * Created by Netanel on 11/11/2017.
  */
 
-public class NetworkCallApi implements INetworkCaller {
+public class NetworkClientApi implements INetworkClient {
 
     private final OkHttpClient mClient = new OkHttpClient();
 
@@ -32,9 +31,9 @@ public class NetworkCallApi implements INetworkCaller {
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(NetworkCallApi.class.getSimpleName(),e.getMessage());
+                Log.e(NetworkClientApi.class.getSimpleName(),e.getMessage());
                 if(callback != null){
-                    callback.onFaliure(e);
+                    callback.onFailure(e);
                 }
             }
 

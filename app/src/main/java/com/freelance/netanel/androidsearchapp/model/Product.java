@@ -7,53 +7,23 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Netanel on 24/09/2017.
+ * Describes a product.
+ * Implements {@link Parcelable}, for passing instances when using {@link android.content.Intent}
  */
-
 public class Product implements Parcelable {
-    @SerializedName("mId")
+    @SerializedName("id")
     private int mId;
 
-    @SerializedName("mName")
+    @SerializedName("name")
     private String mName;
 
-    @SerializedName("mImageUrl")
+    @SerializedName("imageUrl")
     private String mImageUrl;
 
-    @SerializedName("mDescription")
+    @SerializedName("description")
     private String mDescription;
-    public Product(){}
-    public int getId() {
-        return mId;
-    }
 
-    public void setId(int id) {
-        this.mId = id;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        this.mName = name;
-    }
-
-    public String getImageUrl() {
-        return mImageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.mImageUrl = imageUrl;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String description) {
-        this.mDescription = description;
-    }
-
+    ///region Parcelable
     public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
         @Override
         public Product createFromParcel(Parcel source) {
@@ -84,5 +54,41 @@ public class Product implements Parcelable {
         dest.writeString(mName);
         dest.writeString(mDescription);
         dest.writeString(mImageUrl);
+    }
+    ///endregion
+
+    public Product() {
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int id) {
+        this.mId = id;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        this.mName = name;
+    }
+
+    public String getImageUrl() {
+        return mImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.mImageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        this.mDescription = description;
     }
 }
