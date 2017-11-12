@@ -1,8 +1,6 @@
 package com.freelance.netanel.androidsearchapp.adapters;
 
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,8 @@ import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.BitmapLoader;
+import com.freelance.netanel.androidsearchapp.services.IImageLoader;
+import com.freelance.netanel.androidsearchapp.services.ImageLoader;
 
 import java.util.List;
 
@@ -28,23 +27,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     private int currentLayout = LAYOUT_TYPE_LIST;
 
-    private LruCache<String, Bitmap> mImageCache = new LruCache<String, Bitmap>(14440000 * 15) {
-        @Override
-        protected int sizeOf(String key, Bitmap value) {
-            return value.getByteCount();
-        }
-    };
-
     private List<Product> mResults;
     private IResultAdapterCallBack mCallBack;
 
-    public interface IResultAdapterCallBack{
+    public interface IResultAdapterCallBack {
         void onItemClick(Product item);
     }
 
     public ResultAdapter(List<Product> results) {
         this.mResults = results;
-
     }
 
     @Override
@@ -78,8 +69,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         return currentLayout;
     }
 
-    public int getCurrentLayout()
-    {
+    public int getCurrentLayout() {
         return currentLayout;
     }
 
@@ -98,12 +88,13 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        private static final int PLACE_HOLDER_RES  = R.drawable.ic_buybuy_logo;
+
         /**
          * mPosition of current item in the collection
          */
         private int mPosition;
-        private BitmapLoader mImageLoader;
-        private Product mProduct;
+        private IImageLoader mImageLoader;
 
         @BindView(R.id.rv_item_product_iv_image)
         public ImageView mImageView;
@@ -120,42 +111,22 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mCallBack != null ){
+                    if (mCallBack != null) {
                         mCallBack.onItemClick(mResults.get(mPosition));
                     }
                 }
             });
-
-            mImageLoader = new BitmapLoader();
-            mImageLoader.setImageFetchCallback(new BitmapLoader.IBitmapFetcherCallBack() {
-                @Override
-                public void onBitmapFetch(Bitmap bmp) {
-                    if(bmp != null)
-                    {
-                        mImageView.setImageBitmap(bmp);
-                        if(mImageCache != null) {
-                            mImageCache.put(mProduct.getImageUrl(), bmp);
-                        }
-                        mImageView.setBackgroundColor(mImageView.getResources().getColor(R.color.colorIcons));
-                    }
-                }
-            });
+            mImageLoader = new ImageLoader();
         }
 
         private void bind(Product result, int position) {
             ViewHolder.this.mPosition = position;
-            ViewHolder.this.mProduct = result;
 
             mTextViewName.setText(result.getName());
             mTextViewDescription.setText(result.getDescription());
 
-            Bitmap bmp = mImageCache.get(result.getImageUrl());
-            if (bmp != null) {
-                mImageView.setImageBitmap(bmp);
-            } else {
-                mImageView.setImageResource(R.drawable.ic_buybuy_logo);
-                mImageLoader.loadBitmapFromURL(result.getImageUrl(), mImageView.getMaxHeight());
-            }
+            mImageLoader.load(result.getImageUrl(), ViewHolder.this.itemView.getContext(),
+                    mImageView, PLACE_HOLDER_RES);
         }
     }
     // TODO: 04/11/2017 add viewholder for empty list

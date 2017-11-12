@@ -13,16 +13,19 @@ import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.BitmapLoader;
+import com.freelance.netanel.androidsearchapp.services.IImageLoader;
+import com.freelance.netanel.androidsearchapp.services.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String KEY_PRODUCT = "product_key";
+    private static final int PLACE_HOLDER_RES = R.drawable.ic_buybuy_logo;
 
     /**
      * Prepares an instance of {@link Intent} to start {@link ProductActivity} activity
+     *
      * @param context the {@link Context} of the parent activity.
      * @param product an instance of {@link Product} to display.
      * @return an instance of {@link Intent} ready for starting a new {@link ProductActivity},
@@ -49,9 +52,9 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.activity_product_btn_back)
     public ImageButton btnBack;
 
-    private Product product;
+    private Product mProduct;
 
-    private BitmapLoader imageLoader;
+    private IImageLoader mImageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +62,9 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_product);
         ButterKnife.bind(this);
 
-        product = getIntent().getExtras().getParcelable(KEY_PRODUCT);
+        mProduct = getIntent().getExtras().getParcelable(KEY_PRODUCT);
 
-        imageLoader = new BitmapLoader();
+        mImageLoader = new ImageLoader();
     }
 
     @Override
@@ -70,15 +73,6 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         btnBuy.setOnClickListener(this);
         btnBack.setOnClickListener(this);
 
-        imageLoader.setImageFetchCallback(new BitmapLoader.IBitmapFetcherCallBack() {
-            @Override
-            public void onBitmapFetch(Bitmap bmp) {
-                if (bmp != null) {
-                    ivImage.setImageBitmap(bmp);
-                }
-            }
-        });
-
         bindProduct();
     }
 
@@ -86,7 +80,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_product_btn_buy:
-                Intent intent = ProductWebViewActivity.prepareIntent(this, product);
+                Intent intent = ProductWebViewActivity.prepareIntent(this, mProduct);
                 startActivity(intent);
                 break;
 
@@ -98,10 +92,9 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void bindProduct() {
-        tvName.setText(product.getName());
-        tvDescription.setText(product.getDescription());
+        tvName.setText(mProduct.getName());
+        tvDescription.setText(mProduct.getDescription());
 
-        ivImage.setImageResource(R.drawable.ic_buybuy_logo);
-        imageLoader.loadBitmapFromURL(product.getImageUrl(),ivImage.getMaxHeight());
+        mImageLoader.load(mProduct.getImageUrl(), this, ivImage, PLACE_HOLDER_RES);
     }
 }
