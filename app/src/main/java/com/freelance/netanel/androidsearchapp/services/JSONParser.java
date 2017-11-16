@@ -14,15 +14,30 @@ import java.lang.reflect.Type;
 public class JSONParser implements IJSONParser {
     @Override
     public <T> T fromJson(Reader reader, Type typeOfT) {
-        GsonBuilder builder = createGsonBuilder(typeOfT, new GsonClassTypeAdapter<T>(typeOfT));
+        GsonBuilder builder =
+                createGsonBuilder(typeOfT, new GsonClassTypeAdapter<T>(typeOfT));
         return builder.create().fromJson(reader, typeOfT);
     }
 
     @Override
     public <T> T fromJson(Reader reader, Type typeOfT, String memberName) {
-        GsonBuilder builder = createGsonBuilder(typeOfT,
-                new GsonClassTypeAdapter<T>(typeOfT, memberName));
+        GsonBuilder builder =
+                createGsonBuilder(typeOfT, new GsonClassTypeAdapter<T>(typeOfT, memberName));
         return builder.create().fromJson(reader, typeOfT);
+    }
+
+    @Override
+    public <T> T fromJson(String json, Type typeOfT) {
+        GsonBuilder builder =
+                createGsonBuilder(typeOfT, new GsonClassTypeAdapter<T>(typeOfT));
+        return builder.create().fromJson(json, typeOfT);
+    }
+
+    @Override
+    public <T> T fromJson(String json, Type typeOfT, String memberName) {
+        GsonBuilder builder =
+                createGsonBuilder(typeOfT, new GsonClassTypeAdapter<T>(typeOfT, memberName));
+        return builder.create().fromJson(json, typeOfT);
     }
 
     private GsonBuilder createGsonBuilder(Type typeOfT, JsonDeserializer typeAdapter) {
@@ -31,3 +46,4 @@ public class JSONParser implements IJSONParser {
         return builder;
     }
 }
+

@@ -12,6 +12,8 @@ public interface IJSONParser {
 
     <T> T fromJson(Reader reader, Type typeOfT);
     <T> T fromJson(Reader reader, Type typeOfT, String memberName);
+    <T> T fromJson(String json, Type typeOfT);
+    <T> T fromJson(String json, Type typeOfT, String memberName);
 }
 
 

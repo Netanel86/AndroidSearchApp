@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 /**
  * Created by Netanel on 12/11/2017.
@@ -12,6 +13,10 @@ import com.squareup.picasso.Picasso;
 
 public class ImageLoader implements IImageLoader {
     public void load(String url, Context context, ImageView intoView, int placeHolderResId) {
-        Picasso.with(context).load(Uri.parse(url)).placeholder(placeHolderResId).into(intoView);
+        RequestCreator request = Picasso.with(context).load(Uri.parse(url));
+        if(placeHolderResId != 0) {
+            request.placeholder(placeHolderResId);
+        }
+        request.into(intoView);
     }
 }

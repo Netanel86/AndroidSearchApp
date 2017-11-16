@@ -105,8 +105,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ViewHolderItem extends RecyclerView.ViewHolder{
 
+        // TODO: 16/11/2017 add button to pass history item to textbox without submit
         @BindView(R.id.rv_item_history_tv)
-        TextView mTextViewHistory;
+        public TextView mTextViewHistory;
 
         private ViewHolderItem(View itemView, final IHistoryAdapterCallBack callback) {
             super(itemView);

@@ -14,6 +14,31 @@ public class Product implements Parcelable {
     @SerializedName("id")
     private int mId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (mId != product.mId) return false;
+        if (mName != null ? !mName.equals(product.mName) : product.mName != null) return false;
+        if (mImageUrl != null ? !mImageUrl.equals(product.mImageUrl) : product.mImageUrl != null) {
+            return false;
+        }
+        return mDescription != null ? mDescription.equals(product.mDescription)
+                : product.mDescription == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mId;
+        result = 31 * result + (mName != null ? mName.hashCode() : 0);
+        result = 31 * result + (mImageUrl != null ? mImageUrl.hashCode() : 0);
+        result = 31 * result + (mDescription != null ? mDescription.hashCode() : 0);
+        return result;
+    }
+
     @SerializedName("name")
     private String mName;
 
@@ -57,7 +82,11 @@ public class Product implements Parcelable {
     }
     ///endregion
 
-    public Product() {
+    public Product(int id, String name, String description, String imageUrl) {
+        mId = id;
+        mName = name;
+        mDescription = description;
+        mImageUrl = imageUrl;
     }
 
     public int getId() {

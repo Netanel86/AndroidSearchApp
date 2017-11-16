@@ -41,7 +41,7 @@ public class GsonClassTypeAdapter<T> implements JsonDeserializer<T> {
             if(json.isJsonObject()) {
                 //case the collection is nested in a json object
                 if(mKey == null) {
-                    throw new NullPointerException(GsonClassTypeAdapter.class.getSimpleName()
+                    throw new IllegalArgumentException(GsonClassTypeAdapter.class.getSimpleName()
                             + ": 'key' cant be null, a nested collection must be specified with a member name");
                 }
                 element = json.getAsJsonObject().getAsJsonArray(mKey);
