@@ -3,7 +3,7 @@ package com.freelance.netanel.androidsearchapp;
 import com.freelance.netanel.androidsearchapp.model.Product;
 import com.freelance.netanel.androidsearchapp.services.IJSONParser;
 import com.freelance.netanel.androidsearchapp.services.INetworkClient;
-import com.freelance.netanel.androidsearchapp.services.JSONParser;
+import com.freelance.netanel.androidsearchapp.services.JsonParser;
 import com.freelance.netanel.androidsearchapp.services.NetworkClientApi;
 import com.google.gson.reflect.TypeToken;
 
@@ -32,7 +32,7 @@ import java.util.List;
     }
 
     public API() {
-        mJsonParser = new JSONParser();
+        mJsonParser = new JsonParser();
         mNetworkApi = new NetworkClientApi();
     }
 
