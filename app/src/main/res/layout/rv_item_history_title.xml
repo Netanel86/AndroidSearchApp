@@ -10,13 +10,7 @@
         android:padding="7dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/AppTheme.TextView.Title"
+        style="@style/AppTheme.TextView.Headline"
+        android:textColor="@color/colorPrimary"
         android:text="@string/history_item.title" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorDivider"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </android.support.constraint.ConstraintLayout>

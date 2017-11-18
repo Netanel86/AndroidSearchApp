@@ -1,5 +1,6 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin.spacing">16dp</dimen>
+    <dimen name="padding.default">8dp</dimen>
     <dimen name="text_size.standard">12sp</dimen>
     <dimen name="text_size.big">14sp</dimen>
     <dimen name="text_size.headline">18sp</dimen>

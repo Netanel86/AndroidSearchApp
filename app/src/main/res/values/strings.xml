@@ -1,12 +1,12 @@
 <resources>
     <string name="title.app_name">Android Search App</string>v
     <string name="action.search">Search</string>
-    <string name="action.clear">Clear History</string>
+    <string name="action.clear">CLEAR SEARCH HISTORY</string>
     <string name="btn.buy">Buy</string>
     <string name="btn.list">List</string>
     <string name="btn.grid">Grid</string>
     <string name="history_item.empty">No History</string>
-    <string name="history_item.title">History</string>
+    <string name="history_item.title">RECENT HISOTRY</string>
     <string name="message.loading">Loading…</string>
     <string name="message.load_finish">Load successful!</string>
     <string name="message.load_failed">Load failed!</string>

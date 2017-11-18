@@ -1,9 +1,11 @@
 package com.freelance.netanel.androidsearchapp.adapters;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
@@ -23,12 +25,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEWTYPE_TITLE = 2;
     private static final int VIEWTYPE_EMPTY = 1;
     private static final int VIEWTYPE_ITEM = 3;
+    private static final int VIEWTYPE_CLEAR = 4;
 
     private ArrayList<String> mItems;
     private IHistoryAdapterCallBack mCallBack;
 
     public interface IHistoryAdapterCallBack{
-        void onItemClick(String item);
+        void onItemClick(String item, boolean isSubmit);
+        void onItemClearClick();
     }
 
     public HistoryAdapter() {
@@ -38,9 +42,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        int layout = 0;
-        RecyclerView.ViewHolder holder = null;
+        RecyclerView.ViewHolder holder;
 
         switch (viewType) {
             case VIEWTYPE_TITLE:
@@ -51,6 +53,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder = new ViewHolderItem(LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.rv_item_history, parent, false),
                         mCallBack);
+                break;
+            case VIEWTYPE_CLEAR:
+                holder = new ViewHolderClear((LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.rv_item_history_clear,parent,false)));
                 break;
             default:
                 holder = new ViewHolderEmpty(LayoutInflater.from(parent.getContext())
@@ -77,7 +83,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewType = VIEWTYPE_EMPTY;
         }else if(position == 0) {
             viewType = VIEWTYPE_TITLE;
-        }else {
+        } else if(position == mItems.size() + 1) {
+            viewType = VIEWTYPE_CLEAR;
+        } else {
             viewType = VIEWTYPE_ITEM;
         }
 
@@ -86,7 +94,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mItems.isEmpty() ? 1 : mItems.size() + 1;
+        return mItems.isEmpty() ? 1 : mItems.size() + 2;
     }
 
     public void setItems(Set<String> items) {
@@ -105,20 +113,32 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ViewHolderItem extends RecyclerView.ViewHolder{
 
-        // TODO: 16/11/2017 add button to pass history item to textbox without submit
         @BindView(R.id.rv_item_history_tv)
         public TextView mTextViewHistory;
+
+        @BindView(R.id.rv_item_history_btn_insert)
+        public FloatingActionButton mBtnInsertText;
+
+        private final boolean vSumbit = true;
 
         private ViewHolderItem(View itemView, final IHistoryAdapterCallBack callback) {
             super(itemView);
             ButterKnife.bind(this,itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            mTextViewHistory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(callback != null)
-                    {
-                        callback.onItemClick(mTextViewHistory.getText().toString());
+                    if(callback != null) {
+                        callback.onItemClick(mTextViewHistory.getText().toString(),vSumbit);
+                    }
+                }
+            });
+
+            mBtnInsertText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (callback != null) {
+                        callback.onItemClick(mTextViewHistory.getText().toString(),!vSumbit);
                     }
                 }
             });
@@ -133,6 +153,25 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class ViewHolderEmpty extends RecyclerView.ViewHolder {
         public ViewHolderEmpty(View itemView) {
             super(itemView);
+        }
+    }
+
+    class ViewHolderClear extends RecyclerView.ViewHolder {
+        @BindView(R.id.rv_item_history_btn_clear)
+        public Button mBtnClear;
+
+        public ViewHolderClear(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this,itemView);
+            mBtnClear.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HistoryAdapter.this.setItems(null);
+                    if(mCallBack != null) {
+                        mCallBack.onItemClearClick();
+                    }
+                }
+            });
         }
     }
 }
