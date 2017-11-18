@@ -49,7 +49,7 @@ public class ProductJsonParserTest {
     @Rule
     public final ExpectedException mException = ExpectedException.none();
 
-    private IJSONParser mTarget;
+    private IJsonParser mTarget;
 
     @Before
     public void setup() {

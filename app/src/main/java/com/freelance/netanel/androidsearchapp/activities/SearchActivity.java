@@ -33,20 +33,20 @@ import butterknife.ButterKnife;
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int CHILD_RESULTS = 0;
     private static final int CHILD_HISTORY = 1;
-    private API api;
+    private API mAPI;
 
-    private IHistoryRepository historyRepository;
+    private IHistoryRepository mIHistoryRepository;
 
-    private ResultAdapter resultAdapter;
-    private HistoryAdapter historyAdapter;
+    private ResultAdapter mResultadapter;
+    private HistoryAdapter mHistoryAdapter;
 
-    private LinearLayoutManager listLayoutManager;
-    private GridLayoutManager gridLayoutManager;
+    private LinearLayoutManager mListLayoutManager;
+    private GridLayoutManager mGridLayoutManager;
 
-    private SearchView searchView;
+    private SearchView mSearchView;
 
     @BindView(R.id.activity_search_progress)
-    public  View progress;
+    public View progress;
 
     @BindView(R.id.activity_search_vs)
     public ViewSwitcher viewSwitcher;
@@ -71,7 +71,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         initButterknife();
 
-        api = new API();
+        mAPI = new API();
         buildUI();
     }
 
@@ -79,27 +79,27 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     protected void onStart() {
         super.onStart();
 
-        historyRepository = new HistoryRepository(getApplicationContext());
-        historyAdapter.setItems(historyRepository.getSearchHistory());
-        historyAdapter.setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
+        mIHistoryRepository = new HistoryRepository(getApplicationContext());
+        mHistoryAdapter.setItems(mIHistoryRepository.getSearchHistory());
+        mHistoryAdapter.setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
             @Override
             public void onItemClick(String query, boolean submit) {
-                searchView.setQuery(query, submit);
+                mSearchView.setQuery(query, submit);
             }
 
             @Override
             public void onItemClearClick() {
-                historyRepository.clear();
+                mIHistoryRepository.clear();
             }
         });
-        resultAdapter.setCallback(new ResultAdapter.IResultAdapterCallBack() {
+        mResultadapter.setCallback(new ResultAdapter.IResultAdapterCallBack() {
             @Override
             public void onItemClick(Product item) {
                 openProductActivity(item);
             }
         });
 
-        api.setDataFetchCallback(new API.IDataFetcherCallback() {
+        mAPI.setDataFetchCallback(new API.IDataFetcherCallback() {
             @Override
             public void onDataFetch(final List<Product> items) {
                 SearchActivity.this.runOnUiThread(new Runnable() {
@@ -107,7 +107,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     public void run() {
                         progress.setVisibility(View.GONE);
                         if(items != null){
-                            resultAdapter.setResults(items);
+                            mResultadapter.setResults(items);
                         }
                         else {
                             toast(getResources().getString(R.string.message_load_failed),Toast.LENGTH_LONG);
@@ -150,11 +150,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_search_btn_list:
-                setResultsLayout(listLayoutManager, ResultAdapter.LAYOUT_TYPE_LIST);
+                setResultsLayout(mListLayoutManager, ResultAdapter.LAYOUT_TYPE_LIST);
                 break;
 
             case R.id.activity_search_btn_grid:
-                setResultsLayout(gridLayoutManager, ResultAdapter.LAYOUT_TYPE_GRID);
+                setResultsLayout(mGridLayoutManager, ResultAdapter.LAYOUT_TYPE_GRID);
                 break;
         }
     }
@@ -165,18 +165,18 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void buildUI() {
-        listLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        gridLayoutManager = new GridLayoutManager(this,
+        mListLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mGridLayoutManager = new GridLayoutManager(this,
                 getResources().getInteger(R.integer.grid_col_count));
-        resultAdapter = new ResultAdapter();
-        historyAdapter = new HistoryAdapter();
+        mResultadapter = new ResultAdapter();
+        mHistoryAdapter = new HistoryAdapter();
 
         rvHistory.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvHistory.setAdapter(historyAdapter);
+        rvHistory.setAdapter(mHistoryAdapter);
 
-        rvResults.setLayoutManager(listLayoutManager);
-        rvResults.setAdapter(resultAdapter);
+        rvResults.setLayoutManager(mListLayoutManager);
+        rvResults.setAdapter(mResultadapter);
 
         rvHistory.addItemDecoration(new DividerItemDecoration(getDrawable(R.drawable.divider_horizontal)));
     }
@@ -198,16 +198,16 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 return true;
             }
         });
-        searchView = (SearchView) searchItem.getActionView();
+        mSearchView = (SearchView) searchItem.getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 viewSwitcher.setDisplayedChild(CHILD_RESULTS);
-                historyRepository.addSearchQuery(query);
-                historyAdapter.setItems(historyRepository.getSearchHistory());
+                mIHistoryRepository.addSearchQuery(query);
+                mHistoryAdapter.setItems(mIHistoryRepository.getSearchHistory());
                 progress.setVisibility(View.VISIBLE);
-                api.searchData(query);
+                mAPI.searchData(query);
                 return false;
             }
 
@@ -216,7 +216,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 if(!newText.isEmpty() && viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
                     viewSwitcher.setDisplayedChild(CHILD_HISTORY);
                 }
-                historyAdapter.setItemsFilteredByName(historyRepository.getSearchHistory(),newText);
+                mHistoryAdapter.setItemsFilteredByName(mIHistoryRepository.getSearchHistory(),newText);
                 return false;
             }
         });
@@ -228,9 +228,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setResultsLayout(RecyclerView.LayoutManager targetLayoutManager, int targetViewType) {
-        if (resultAdapter.getCurrentLayout() != targetViewType) {
+        if (mResultadapter.getCurrentLayout() != targetViewType) {
             rvResults.setLayoutManager(targetLayoutManager);
-            resultAdapter.setLayout(targetViewType);
+            mResultadapter.setLayout(targetViewType);
         }
     }
 

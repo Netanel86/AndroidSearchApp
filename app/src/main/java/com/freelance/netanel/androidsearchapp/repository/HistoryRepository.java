@@ -3,7 +3,6 @@ package com.freelance.netanel.androidsearchapp.repository;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,13 +12,13 @@ import java.util.Set;
 
 public class HistoryRepository implements IHistoryRepository {
 
-    private static final String FILE_NAME = "FILE_NAME";
-    private static final String HISTORY_LIST = "HISTORY";
+    private static final String RES_APP = "RES_APP";
+    private static final String KEY_HISTORY = "HISTORY";
 
-    private SharedPreferences sharedPref;
+    private SharedPreferences mSharedPreferences;
 
     public HistoryRepository(Context context) {
-        sharedPref = context.getSharedPreferences(FILE_NAME,Context.MODE_PRIVATE);
+        mSharedPreferences = context.getSharedPreferences(RES_APP,Context.MODE_PRIVATE);
     }
 
     @Override
@@ -33,24 +32,24 @@ public class HistoryRepository implements IHistoryRepository {
             newHistory.addAll(history);
         }
 
-        sharedPref.edit().putStringSet(HISTORY_LIST,newHistory).apply();
+        mSharedPreferences.edit().putStringSet(KEY_HISTORY,newHistory).apply();
     }
 
     @Override
     public Set<String> getSearchHistory() {
         Set<String> set = null;
         try {
-             set = sharedPref.getStringSet(HISTORY_LIST, new HashSet<String>());
+             set = mSharedPreferences.getStringSet(KEY_HISTORY, new HashSet<String>());
         }
         catch (ClassCastException ex)
         {
-            sharedPref.edit().clear().apply();
+            mSharedPreferences.edit().clear().apply();
         }
         return set;
     }
 
     @Override
     public void clear() {
-        sharedPref.edit().clear().apply();
+        mSharedPreferences.edit().clear().apply();
     }
 }

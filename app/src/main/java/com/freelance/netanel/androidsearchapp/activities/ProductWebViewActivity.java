@@ -14,8 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductWebViewActivity extends AppCompatActivity {
-    private static final String KEY_PRODUCT_ID = "product_id_key";
-    private static final String KEY_BUNDLE  = "webview_bundle";
+    private static final String ARGUMENT_ID = "product_id_key";
+    private static final String BUNDLE_URL = "webview_bundle";
     private static final String PRODUCT_URL  = "https://www.shopyourway.com/xxx/%s";
 
     /**
@@ -29,8 +29,8 @@ public class ProductWebViewActivity extends AppCompatActivity {
         Intent intent = new Intent(context, ProductWebViewActivity.class);
         Bundle bundle = new Bundle();
 
-        bundle.putInt(KEY_PRODUCT_ID, product.getId());
-        intent.putExtra(KEY_BUNDLE, bundle);
+        bundle.putInt(ARGUMENT_ID, product.getId());
+        intent.putExtra(BUNDLE_URL, bundle);
         return intent;
     }
 
@@ -44,8 +44,8 @@ public class ProductWebViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra(KEY_BUNDLE);
-        int productId = bundle.getInt(KEY_PRODUCT_ID);
+        Bundle bundle = intent.getBundleExtra(BUNDLE_URL);
+        int productId = bundle.getInt(ARGUMENT_ID);
         String url = String.format(PRODUCT_URL, productId);
 
         wvProduct.setWebViewClient(new WebViewClient());

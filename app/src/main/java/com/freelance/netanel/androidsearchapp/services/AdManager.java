@@ -11,7 +11,6 @@ import com.inneractive.api.ads.sdk.InneractiveAdView;
  */
 
 public class AdManager implements IAdManager {
-
     private static final String APP_ID = "Nirit_MobileSchool_Android";
 
     @Override

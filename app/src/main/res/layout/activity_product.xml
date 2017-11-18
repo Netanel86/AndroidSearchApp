@@ -48,8 +48,6 @@
     <ImageButton
         android:id="@+id/activity_product_btn_back"
         style="@style/AppTheme.LayoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="21dp"
         android:src="@drawable/ic_arrow_back"
@@ -60,8 +58,7 @@
         android:id="@+id/activity_product_btn_buy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|center_horizontal"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="@dimen/margin.spacing"
         android:src="@drawable/ic_add_shopping_cart"
         app:backgroundTint="@color/colorPrimary"
         app:rippleColor="@color/colorPrimaryLight"

@@ -32,11 +32,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ArrayList<String> mItems;
     private IHistoryAdapterCallBack mCallBack;
 
-    public interface IHistoryAdapterCallBack{
-        void onItemClick(String item, boolean isSubmit);
-        void onItemClearClick();
-    }
-
     public HistoryAdapter() {
         super();
         this.mItems = new ArrayList<>();
@@ -121,6 +116,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         }
         setItems(filtered);
+    }
+
+    public interface IHistoryAdapterCallBack{
+        void onItemClick(String item, boolean isSubmit);
+        void onItemClearClick();
     }
 
     class ViewHolderItem extends RecyclerView.ViewHolder{

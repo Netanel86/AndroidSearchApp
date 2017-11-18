@@ -6,9 +6,9 @@ import java.lang.reflect.Type;
 /**
  * Created by Netanel on 24/09/2017.
  * Supplies an interface for parsing JSON data.
- * Implement to create a custom {@link IJSONParser}
+ * Implement to create a custom {@link IJsonParser}
  */
-public interface IJSONParser {
+public interface IJsonParser {
 
     /**
      * Parses a data stream containing a json input and map it into a class of the requested type.

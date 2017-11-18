@@ -6,47 +6,57 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Netanel on 24/09/2017.
- * Describes a product.
- * Implements {@link Parcelable}, for passing instances when using {@link android.content.Intent}
+ * Represents a product.
+ * Implements Parcelable, for passing instances when using Intent.
+ * @see Parcelable
+ * @see android.content.Intent
+ * @author Netanel Iting
+ * @version %I%, %G%
+ * @since 1.0
  */
 public class Product implements Parcelable {
     @SerializedName("id")
     private int mId;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Product product = (Product) o;
-
-        if (mId != product.mId) return false;
-        if (mName != null ? !mName.equals(product.mName) : product.mName != null) return false;
-        if (mImageUrl != null ? !mImageUrl.equals(product.mImageUrl) : product.mImageUrl != null) {
-            return false;
-        }
-        return mDescription != null ? mDescription.equals(product.mDescription)
-                : product.mDescription == null;
+    public int getId() {
+        return mId;
     }
-
-    @Override
-    public int hashCode() {
-        int result = mId;
-        result = 31 * result + (mName != null ? mName.hashCode() : 0);
-        result = 31 * result + (mImageUrl != null ? mImageUrl.hashCode() : 0);
-        result = 31 * result + (mDescription != null ? mDescription.hashCode() : 0);
-        return result;
+    public void setId(int id) {
+        this.mId = id;
     }
 
     @SerializedName("name")
     private String mName;
+    public String getName() {
+        return mName;
+    }
+    public void setName(String name) {
+        this.mName = name;
+    }
 
     @SerializedName("imageUrl")
     private String mImageUrl;
+    public String getImageUrl() {
+        return mImageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.mImageUrl = imageUrl;
+    }
 
     @SerializedName("description")
     private String mDescription;
+    public String getDescription() {
+        return mDescription;
+    }
+    public void setDescription(String description) {
+        this.mDescription = description;
+    }
+
+    public Product(int id, String name, String description, String imageUrl) {
+        mId = id;
+        mName = name;
+        mDescription = description;
+        mImageUrl = imageUrl;
+    }
 
     ///region Parcelable
     public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
@@ -82,42 +92,30 @@ public class Product implements Parcelable {
     }
     ///endregion
 
-    public Product(int id, String name, String description, String imageUrl) {
-        mId = id;
-        mName = name;
-        mDescription = description;
-        mImageUrl = imageUrl;
+    ///region Equals
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (mId != product.mId) return false;
+        if (mName != null ? !mName.equals(product.mName) : product.mName != null) return false;
+        if (mImageUrl != null ? !mImageUrl.equals(product.mImageUrl) : product.mImageUrl != null) {
+            return false;
+        }
+        return mDescription != null ? mDescription.equals(product.mDescription)
+                : product.mDescription == null;
     }
 
-    public int getId() {
-        return mId;
+    @Override
+    public int hashCode() {
+        int result = mId;
+        result = 31 * result + (mName != null ? mName.hashCode() : 0);
+        result = 31 * result + (mImageUrl != null ? mImageUrl.hashCode() : 0);
+        result = 31 * result + (mDescription != null ? mDescription.hashCode() : 0);
+        return result;
     }
-
-    public void setId(int id) {
-        this.mId = id;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        this.mName = name;
-    }
-
-    public String getImageUrl() {
-        return mImageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.mImageUrl = imageUrl;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String description) {
-        this.mDescription = description;
-    }
+    ///endregion
 }

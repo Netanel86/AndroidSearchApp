@@ -2,19 +2,18 @@ package com.freelance.netanel.androidsearchapp.services;
 
 import com.freelance.netanel.androidsearchapp.adapters.GsonClassTypeAdapter;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
 
 /**
  * <p>JsonParser represents a service for parsing json input and mapping it to java objects.</p>
- * @see IJSONParser
+ * @see IJsonParser
  * @author Netanel Iting
  * @version %I%, %G%
  * @since 1.0
  */
-public class JsonParser implements IJSONParser {
+public class JsonParser implements IJsonParser {
 
     /**
      * @throws IllegalArgumentException If the input stream is {@code null}.
