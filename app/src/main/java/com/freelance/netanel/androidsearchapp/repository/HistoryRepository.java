@@ -18,10 +18,8 @@ public class HistoryRepository implements IHistoryRepository {
 
     private SharedPreferences sharedPref;
 
-    public HistoryRepository(Context context)
-    {
+    public HistoryRepository(Context context) {
         sharedPref = context.getSharedPreferences(FILE_NAME,Context.MODE_PRIVATE);
-
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.freelance.netanel.androidsearchapp.API;
+import com.freelance.netanel.androidsearchapp.DividerItemDecoration;
 import com.freelance.netanel.androidsearchapp.adapters.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.repository.HistoryRepository;
 import com.freelance.netanel.androidsearchapp.repository.IHistoryRepository;
@@ -82,8 +83,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         historyAdapter.setItems(historyRepository.getSearchHistory());
         historyAdapter.setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
             @Override
-            public void onItemClick(String query) {
-                searchView.setQuery(query,true);
+            public void onItemClick(String query, boolean submit) {
+                searchView.setQuery(query, submit);
+            }
+
+            @Override
+            public void onItemClearClick() {
+                historyRepository.clear();
             }
         });
         resultAdapter.setCallback(new ResultAdapter.IResultAdapterCallBack() {
@@ -137,16 +143,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         createSearchView(menu);
 
-        MenuItem clearHistoryItem = menu.findItem(R.id.menu_action_clear);
-        clearHistoryItem.setOnMenuItemClickListener(
-                new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        historyRepository.clear();
-                        historyAdapter.setItems(null);
-                        return false;
-                    }
-                });
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -172,7 +168,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         listLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         gridLayoutManager = new GridLayoutManager(this,
                 getResources().getInteger(R.integer.grid_col_count));
-        resultAdapter = new ResultAdapter(null);
+        resultAdapter = new ResultAdapter();
         historyAdapter = new HistoryAdapter();
 
         rvHistory.setLayoutManager(
@@ -182,10 +178,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         rvResults.setLayoutManager(listLayoutManager);
         rvResults.setAdapter(resultAdapter);
 
-
-//        rvResults.addItemDecoration(
-//                new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(),
-//                        R.drawable.divider_horizontal)));
+        rvHistory.addItemDecoration(new DividerItemDecoration(getDrawable(R.drawable.divider_horizontal)));
     }
 
     private void createSearchView(Menu menu) {
@@ -199,7 +192,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                viewSwitcher.setDisplayedChild(CHILD_RESULTS);
+                if(viewSwitcher.getDisplayedChild() == CHILD_HISTORY) {
+                    viewSwitcher.setDisplayedChild(CHILD_RESULTS);
+                }
                 return true;
             }
         });
@@ -218,10 +213,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(!newText.isEmpty()) {
+                if(!newText.isEmpty() && viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
                     viewSwitcher.setDisplayedChild(CHILD_HISTORY);
-                    // TODO: 05/11/2017 add filter for search result history
                 }
+                historyAdapter.setItemsFilteredByName(historyRepository.getSearchHistory(),newText);
                 return false;
             }
         });

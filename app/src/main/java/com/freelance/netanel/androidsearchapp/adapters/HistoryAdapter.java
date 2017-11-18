@@ -12,6 +12,8 @@ import com.freelance.netanel.androidsearchapp.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -109,6 +111,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void setCallBack(IHistoryAdapterCallBack callback)
     {
         this.mCallBack = callback;
+    }
+
+    public void setItemsFilteredByName(Set<String> items, String filter) {
+        HashSet<String> filtered = new HashSet<>();
+        for (String word: items){
+            if(word.startsWith(filter)) {
+                filtered.add(word);
+            }
+        }
+        setItems(filtered);
     }
 
     class ViewHolderItem extends RecyclerView.ViewHolder{

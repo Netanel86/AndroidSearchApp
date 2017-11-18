@@ -12,6 +12,7 @@ import com.freelance.netanel.androidsearchapp.model.Product;
 import com.freelance.netanel.androidsearchapp.services.IImageLoader;
 import com.freelance.netanel.androidsearchapp.services.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,65 +22,100 @@ import butterknife.ButterKnife;
  * Created by Netanel on 22/09/2017.
  */
 
-public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
-    public static final int LAYOUT_TYPE_LIST = 0;
-    public static final int LAYOUT_TYPE_GRID = 1;
+public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final int LAYOUT_TYPE_LIST = 1;
+    public static final int LAYOUT_TYPE_GRID = 2;
+    private static final int VIEWTYPE_LIST_EMPTY = 3;
+    private static final int VIEWTYPE_GRID_EMPTY = 4;
+    private static final int VIEWTYPE_LIST_ITEM = 5;
+    private static final int VIEWTYPE_GRID_ITEM = 6;
 
-    private int currentLayout = LAYOUT_TYPE_LIST;
+    private int mCurrentLayout = LAYOUT_TYPE_LIST;
 
     private List<Product> mResults;
     private IResultAdapterCallBack mCallBack;
 
-    public interface IResultAdapterCallBack {
-        void onItemClick(Product item);
-    }
-
-    public ResultAdapter(List<Product> results) {
-        this.mResults = results;
+    public ResultAdapter() {
+        super();
+        this.mResults = new ArrayList<>();
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        int layout = 0;
+        RecyclerView.ViewHolder holder;
         switch (viewType) {
-            case LAYOUT_TYPE_LIST:
-                layout = R.layout.rv_item_product_list;
+            case VIEWTYPE_LIST_ITEM:
+                holder = new ViewHolderItem(
+                        LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.rv_item_product_list,parent,false));
                 break;
-            case LAYOUT_TYPE_GRID:
-                layout = R.layout.rv_item_product_grid;
+            case VIEWTYPE_GRID_ITEM:
+                holder = new ViewHolderItem(
+                        LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.rv_item_product_grid, parent, false));
+                break;
+            default:
+                holder = new ViewHolderEmpty(
+                        LayoutInflater.from(parent.getContext())
+                                .inflate( R.layout.rv_item_product_empty, parent, false));
+                break;
         }
-        View root = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
 
-        return new ViewHolder(root);
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(mResults.get(position), position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof ViewHolderItem) {
+            ((ViewHolderItem)holder).bind(mResults.get(position), position);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mResults == null ? 0 : mResults.size();
+        return mResults.isEmpty() ? 1 : mResults.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return currentLayout;
+        int viewtype = 0;
+
+        switch (mCurrentLayout) {
+            case LAYOUT_TYPE_LIST:
+                if(mResults.isEmpty()){
+                    viewtype = VIEWTYPE_LIST_EMPTY;
+                } else {
+                    viewtype = VIEWTYPE_LIST_ITEM;
+                }
+                break;
+            case LAYOUT_TYPE_GRID:
+                if(mResults.isEmpty()) {
+                    viewtype = VIEWTYPE_GRID_EMPTY;
+                } else {
+                    viewtype= VIEWTYPE_GRID_ITEM;
+                }
+                break;
+        }
+
+        return viewtype;
     }
 
     public int getCurrentLayout() {
-        return currentLayout;
+        return mCurrentLayout;
     }
 
     public void setLayout(int layout) {
-        this.currentLayout = layout;
+        this.mCurrentLayout = layout;
         notifyDataSetChanged();
     }
 
     public void setResults(List<Product> results) {
-        this.mResults = results;
+        this.mResults.clear();
+        if (results != null) {
+            mResults.addAll(results);
+        }
+
         notifyDataSetChanged();
     }
 
@@ -87,7 +123,11 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         ResultAdapter.this.mCallBack = callback;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public interface IResultAdapterCallBack {
+        void onItemClick(Product item);
+    }
+
+    class ViewHolderItem extends RecyclerView.ViewHolder {
         private static final int PLACE_HOLDER_RES  = R.drawable.ic_buybuy_logo;
 
         /**
@@ -105,7 +145,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         @BindView(R.id.rv_item_product_tv_description)
         public TextView mTextViewDescription;
 
-        private ViewHolder(View itemView) {
+        private ViewHolderItem(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -120,14 +160,20 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         }
 
         private void bind(Product result, int position) {
-            ViewHolder.this.mPosition = position;
+            ViewHolderItem.this.mPosition = position;
 
             mTextViewName.setText(result.getName());
             mTextViewDescription.setText(result.getDescription());
 
-            mImageLoader.load(result.getImageUrl(), ViewHolder.this.itemView.getContext(),
+            mImageLoader.load(result.getImageUrl(), ViewHolderItem.this.itemView.getContext(),
                     mImageView, PLACE_HOLDER_RES);
         }
     }
-    // TODO: 04/11/2017 add viewholder for empty list
+
+    class ViewHolderEmpty extends RecyclerView.ViewHolder {
+
+        public ViewHolderEmpty(View itemView) {
+            super(itemView);
+        }
+    }
 }
