@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:padding="@dimen/padding.default">
+    android:padding="@dimen/padding.default"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@drawable/ripple_rv_item_history">
 
     <ImageView
         android:id="@+id/rv_item_history_iv_recent"
@@ -18,21 +21,27 @@
 
     <TextView
         android:id="@+id/rv_item_history_tv"
-        android:layout_width="0dp"
+        style="@style/AppTheme.TextView.Headline"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="@dimen/margin.spacing"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="@dimen/text_size.headline"
+        android:clickable="false"
+        android:paddingEnd="@dimen/padding.default"
+        android:paddingStart="@dimen/padding.default"
+        android:soundEffectsEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rv_item_history_btn_insert"
         app:layout_constraintStart_toEndOf="@+id/rv_item_history_iv_recent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
         android:id="@+id/rv_item_history_btn_insert"
-        style="@style/AppTheme.InsertButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:padding="@dimen/padding.default"
+        android:background="@drawable/ripple_rv_item_history_btn_insert"
+        android:tint="@color/colorPrimaryDark"
+        android:rotation="45"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

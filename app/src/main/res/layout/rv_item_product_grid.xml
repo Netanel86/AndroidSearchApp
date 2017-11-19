@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/rv_item_product_tv_name"
-        style="@style/AppTheme.TextView.Headline"
+        style="@style/AppTheme.TextView.Headline.Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
@@ -129,7 +130,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public TextView mTextViewHistory;
 
         @BindView(R.id.rv_item_history_btn_insert)
-        public FloatingActionButton mBtnInsertText;
+        public ImageButton mBtnInsertText;
 
         private final boolean vSumbit = true;
 
@@ -137,7 +138,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(itemView);
             ButterKnife.bind(this,itemView);
 
-            mTextViewHistory.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(callback != null) {

@@ -26,7 +26,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_marginBottom="7dp"
-            style="@style/AppTheme.TextView.Headline"/>
+            style="@style/AppTheme.TextView.Headline.Bold"/>
         <TextView
             android:id="@+id/rv_item_product_tv_description"
             android:layout_width="match_parent"

@@ -41,7 +41,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_size.headline</item>
-        <item name="android:background">@drawable/ripple_square</item>
+        <item name="android:background">@drawable/ripple_rv_item_history</item>
     </style>
     <style name="AppTheme.InsertButton" parent="Widget.Design.FloatingActionButton">
         <item name="android:layout_width">wrap_content</item>
@@ -50,6 +50,7 @@
         <item name="android:scaleType">center</item>
         <item name="android:tint">@color/colorPrimaryDark</item>
         <item name="android:rotation">45</item>
+        <item name="android:shadowColor">@android:color/transparent</item>
         <item name="elevation">0dp</item>
         <item name="backgroundTint">@color/colorPrimaryLight</item>
         <item name="rippleColor">@color/colorAccent</item>
@@ -64,6 +65,10 @@
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
     <style name="AppTheme.TextView.Headline" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textSize">@dimen/text_size.headline</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
+    <style name="AppTheme.TextView.Headline.Bold" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:textSize">@dimen/text_size.headline</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textStyle">bold</item>
