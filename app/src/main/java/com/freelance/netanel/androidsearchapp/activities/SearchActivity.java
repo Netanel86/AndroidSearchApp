@@ -1,5 +1,6 @@
 package com.freelance.netanel.androidsearchapp.activities;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -22,8 +24,12 @@ import com.freelance.netanel.androidsearchapp.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.adapters.ResultAdapter;
 import com.freelance.netanel.androidsearchapp.model.Product;
+import com.freelance.netanel.androidsearchapp.services.PageRouter;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -71,8 +77,17 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         initButterknife();
 
-        mAPI = new API();
+        mAPI = new API(this);
         buildUI();
+
+        Uri data = this.getIntent().getData();
+        if(data != null && data.isHierarchical()) {
+            String uri = this.getIntent().getDataString();
+//            PageRouter router = new PageRouter();
+//            router.navigate(uri);
+            toast("My Uri:" + uri,Toast.LENGTH_LONG);
+        }
+
     }
 
     @Override
@@ -80,7 +95,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         super.onStart();
 
         mIHistoryRepository = new HistoryRepository(getApplicationContext());
-        mHistoryAdapter.setItems(mIHistoryRepository.getSearchHistory());
+        mHistoryAdapter.setItems(new ArrayList<>(mIHistoryRepository.getSearchHistory()));
+//        mHistoryAdapter.setItems(mAPI.getDataBase().getHistory());
         mHistoryAdapter.setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
             @Override
             public void onItemClick(String query, boolean submit) {
@@ -90,6 +106,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onItemClearClick() {
                 mIHistoryRepository.clear();
+//                mAPI.getDataBase().clear();
             }
         });
         mResultadapter.setCallback(new ResultAdapter.IResultAdapterCallBack() {
@@ -114,7 +131,6 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
-
             }
 
             @Override
@@ -126,9 +142,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                         toast(exception.getMessage(),Toast.LENGTH_LONG);
                     }
                 });
-
             }
-
         });
 
         viewSwitcher.setDisplayedChild(CHILD_RESULTS);
@@ -205,7 +219,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             public boolean onQueryTextSubmit(String query) {
                 viewSwitcher.setDisplayedChild(CHILD_RESULTS);
                 mIHistoryRepository.addSearchQuery(query);
-                mHistoryAdapter.setItems(mIHistoryRepository.getSearchHistory());
+//                mAPI.getDataBase().addQuery(query);
+                mHistoryAdapter.setItems(new ArrayList<>(mIHistoryRepository.getSearchHistory()));
+//                mHistoryAdapter.setItems(mAPI.getDataBase().getHistory());
                 progress.setVisibility(View.VISIBLE);
                 mAPI.searchData(query);
                 return false;
@@ -213,10 +229,19 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(!newText.isEmpty() && viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
-                    viewSwitcher.setDisplayedChild(CHILD_HISTORY);
+                if(!newText.isEmpty()) {
+//                    mHistoryAdapter.setItemsFilteredByName(mAPI.getDataBase().getHistory(),newText);
+                    mHistoryAdapter.setItemsFilteredByName(mIHistoryRepository.getSearchHistory(),newText);
+
+                    if(viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
+                        viewSwitcher.setDisplayedChild(CHILD_HISTORY);
+                    }
                 }
-                mHistoryAdapter.setItemsFilteredByName(mIHistoryRepository.getSearchHistory(),newText);
+                else {
+//                    mHistoryAdapter.setItems(mAPI.getDataBase().getHistory());
+                    mHistoryAdapter.setItems(mIHistoryRepository.getSearchHistory());
+                }
+
                 return false;
             }
         });
