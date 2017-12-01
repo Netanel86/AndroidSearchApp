@@ -3,7 +3,9 @@ package com.freelance.netanel.androidsearchapp.repository;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +29,7 @@ public class HistoryRepository implements IHistoryRepository {
         Set<String> newHistory = new HashSet<>();
         newHistory.add(query);
 
-        Set<String> history = getSearchHistory();
+        List<String> history = getSearchHistory();
         if(!history.isEmpty()){
             newHistory.addAll(history);
         }
@@ -36,7 +38,7 @@ public class HistoryRepository implements IHistoryRepository {
     }
 
     @Override
-    public Set<String> getSearchHistory() {
+    public List<String> getSearchHistory() {
         Set<String> set = null;
         try {
              set = mSharedPreferences.getStringSet(KEY_HISTORY, new HashSet<String>());
@@ -45,7 +47,7 @@ public class HistoryRepository implements IHistoryRepository {
         {
             mSharedPreferences.edit().clear().apply();
         }
-        return set;
+        return new ArrayList<>(set);
     }
 
     @Override

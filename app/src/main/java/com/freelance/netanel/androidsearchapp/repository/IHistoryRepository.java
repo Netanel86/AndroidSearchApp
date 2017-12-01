@@ -1,5 +1,6 @@
 package com.freelance.netanel.androidsearchapp.repository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -8,6 +9,6 @@ import java.util.Set;
 
 public interface IHistoryRepository {
     void addSearchQuery(String query);
-    Set<String> getSearchHistory();
+    List<String> getSearchHistory();
     void clear();
 }

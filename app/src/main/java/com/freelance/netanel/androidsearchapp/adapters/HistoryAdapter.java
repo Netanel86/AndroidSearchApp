@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +31,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEWTYPE_ITEM = 3;
     private static final int VIEWTYPE_CLEAR = 4;
 
-    private ArrayList<String> mItems;
+    private List<String> mItems;
     private IHistoryAdapterCallBack mCallBack;
 
     public HistoryAdapter() {
@@ -95,11 +96,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return mItems.isEmpty() ? 1 : mItems.size() + 2;
     }
 
-    public void setItems(Set<String> items) {
+    public void setItems(List<String> items) {
         this.mItems.clear();
         if(items != null) {
             HistoryAdapter.this.mItems.addAll(items);
-            Collections.sort(HistoryAdapter.this.mItems);
         }
         notifyDataSetChanged();
     }
@@ -109,13 +109,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mCallBack = callback;
     }
 
-    public void setItemsFilteredByName(Set<String> items, String filter) {
-        HashSet<String> filtered = new HashSet<>();
+    public void setItemsFilteredByName(List<String> items, String filter) {
+        List<String> filtered = new ArrayList<>();
         for (String word: items){
             if(word.startsWith(filter)) {
                 filtered.add(word);
             }
         }
+
+        Collections.sort(filtered);
         setItems(filtered);
     }
 
