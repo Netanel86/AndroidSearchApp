@@ -44,7 +44,7 @@ public class GsonClassTypeAdapter<T> implements JsonDeserializer<T> {
      */
     public GsonClassTypeAdapter(Type targetClass) {
         if (targetClass == null) {
-            throw new NullPointerException(
+            throw new IllegalArgumentException(
                     GsonClassTypeAdapter.class.getSimpleName() + ": 'targetClass' cant be null");
         }
         mClass = targetClass;
@@ -111,7 +111,7 @@ public class GsonClassTypeAdapter<T> implements JsonDeserializer<T> {
     private JsonElement searchForObject(JsonElement json) {
         JsonElement element;
         if (mMemberName != null) {
-            //if a name was specified, get the requested member
+            //if a name was specified, getStringSet the requested member
             element = json.getAsJsonObject().getAsJsonObject(mMemberName);
         } else {
             //if no name was specified, try to return the entire object
