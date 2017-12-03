@@ -13,7 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>Represent's a String set where each string is assigned with a time stamp in milliseconds.
- * Set is ordered from newest value to oldest (LIFO) depending on the time stamp.
+ * Set is ordered from newest value to oldest (LIFO) depending on the time stamp and holds
+ * distinct strings.
  * Use {@code getNameOnlyList()} method to fetch the values for UI usage.</p>
  * @see SortedSet
  * @author Netanel Iting
