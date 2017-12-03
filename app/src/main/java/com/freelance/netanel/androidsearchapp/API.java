@@ -3,7 +3,6 @@ package com.freelance.netanel.androidsearchapp;
 import android.content.Context;
 
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.DAO;
 import com.freelance.netanel.androidsearchapp.services.IJsonParser;
 import com.freelance.netanel.androidsearchapp.services.INetworkClient;
 import com.freelance.netanel.androidsearchapp.services.JsonParser;
