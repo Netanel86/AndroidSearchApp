@@ -12,24 +12,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.freelance.netanel.androidsearchapp.API;
 import com.freelance.netanel.androidsearchapp.DividerItemDecoration;
+import com.freelance.netanel.androidsearchapp.SearchHistoryApi;
 import com.freelance.netanel.androidsearchapp.adapters.HistoryAdapter;
-import com.freelance.netanel.androidsearchapp.repository.HistoryRepository;
-import com.freelance.netanel.androidsearchapp.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.adapters.ResultAdapter;
 import com.freelance.netanel.androidsearchapp.model.Product;
-import com.freelance.netanel.androidsearchapp.services.PageRouter;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,10 +35,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private static final int CHILD_HISTORY = 1;
     private API mAPI;
 
-    private IHistoryRepository mIHistoryRepository;
-
+    private SearchHistoryApi searchHistoryApi;
     private ResultAdapter mResultadapter;
-    private HistoryAdapter mHistoryAdapter;
 
     private LinearLayoutManager mListLayoutManager;
     private GridLayoutManager mGridLayoutManager;
@@ -78,13 +70,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         initButterknife();
 
         mAPI = new API(this);
+        searchHistoryApi = new SearchHistoryApi(this);
         buildUI();
 
         Uri data = this.getIntent().getData();
         if(data != null && data.isHierarchical()) {
             String uri = this.getIntent().getDataString();
-//            PageRouter router = new PageRouter();
-//            router.navigate(uri);
+            // TODO: 02/12/2017 add a router to navigate threw views
             toast("My Uri:" + uri,Toast.LENGTH_LONG);
         }
 
@@ -93,11 +85,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onStart() {
         super.onStart();
-
-        mIHistoryRepository = new HistoryRepository(getApplicationContext());
-        mHistoryAdapter.setItems(new ArrayList<>(mIHistoryRepository.getSearchHistory()));
-//        mHistoryAdapter.setItems(mAPI.getDataBase().getHistory());
-        mHistoryAdapter.setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
+        searchHistoryApi.loadHistory();
+        searchHistoryApi.getAdapter().setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
             @Override
             public void onItemClick(String query, boolean submit) {
                 mSearchView.setQuery(query, submit);
@@ -105,8 +94,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onItemClearClick() {
-                mIHistoryRepository.clear();
-//                mAPI.getDataBase().clear();
+                searchHistoryApi.clear();
             }
         });
         mResultadapter.setCallback(new ResultAdapter.IResultAdapterCallBack() {
@@ -183,11 +171,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         mGridLayoutManager = new GridLayoutManager(this,
                 getResources().getInteger(R.integer.grid_col_count));
         mResultadapter = new ResultAdapter();
-        mHistoryAdapter = new HistoryAdapter();
 
         rvHistory.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvHistory.setAdapter(mHistoryAdapter);
+        rvHistory.setAdapter(searchHistoryApi.getAdapter());
 
         rvResults.setLayoutManager(mListLayoutManager);
         rvResults.setAdapter(mResultadapter);
@@ -218,10 +205,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public boolean onQueryTextSubmit(String query) {
                 viewSwitcher.setDisplayedChild(CHILD_RESULTS);
-                mIHistoryRepository.addSearchQuery(query);
-//                mAPI.getDataBase().addQuery(query);
-                mHistoryAdapter.setItems(new ArrayList<>(mIHistoryRepository.getSearchHistory()));
-//                mHistoryAdapter.setItems(mAPI.getDataBase().getHistory());
+                searchHistoryApi.addSearchQuery(query);
                 progress.setVisibility(View.VISIBLE);
                 mAPI.searchData(query);
                 return false;
@@ -230,16 +214,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(!newText.isEmpty()) {
-//                    mHistoryAdapter.setItemsFilteredByName(mAPI.getDataBase().getHistory(),newText);
-                    mHistoryAdapter.setItemsFilteredByName(mIHistoryRepository.getSearchHistory(),newText);
-
+                    searchHistoryApi.setFilter(newText);
                     if(viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
                         viewSwitcher.setDisplayedChild(CHILD_HISTORY);
                     }
                 }
                 else {
-//                    mHistoryAdapter.setItems(mAPI.getDataBase().getHistory());
-                    mHistoryAdapter.setItems(mIHistoryRepository.getSearchHistory());
+                    searchHistoryApi.loadHistory();
                 }
 
                 return false;

@@ -4,11 +4,10 @@ import android.content.Context;
 
 import com.freelance.netanel.androidsearchapp.ISharedPrefRepository;
 import com.freelance.netanel.androidsearchapp.AppSharedPreferences;
+import com.freelance.netanel.androidsearchapp.TimeStampedSet;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Netanel on 29/10/2017.
@@ -17,8 +16,12 @@ import java.util.Set;
 public class HistoryRepository implements IHistoryRepository {
 
     private static final String KEY_HISTORY = "HISTORY";
+    private static final boolean changed = true;
+    private boolean changedFlag = changed;
 
     private ISharedPrefRepository sharedPreferences;
+
+    private ArrayList<String> historyItems;
 
     public HistoryRepository(Context context) {
         sharedPreferences = new AppSharedPreferences(context);
@@ -26,33 +29,32 @@ public class HistoryRepository implements IHistoryRepository {
 
     @Override
     public void addSearchQuery(String query) {
-
-        Set<String> newHistory = new HashSet<>();
-        newHistory.add(query);
-
-        List<String> history = getSearchHistory();
-        if(!history.isEmpty()){
-            newHistory.addAll(history);
-        }
-
-        sharedPreferences.addStringSet(newHistory,KEY_HISTORY);
+        TimeStampedSet history = new TimeStampedSet(sharedPreferences.getStringSet(KEY_HISTORY));
+        history.add(query);
+        sharedPreferences.addStringSet(history.getInnerSet(), KEY_HISTORY);
+        changedFlag = changed;
     }
 
     @Override
     public List<String> getSearchHistory() {
-        Set<String> set = null;
-        try {
-            set = sharedPreferences.getStringSet(KEY_HISTORY);
+        if(changedFlag) {
+            try {
+                changedFlag = !changed;
+                TimeStampedSet sortedSet =
+                        new TimeStampedSet(sharedPreferences.getStringSet(KEY_HISTORY));
+
+                historyItems = sortedSet.getNameOnlyList();
+
+            } catch (ClassCastException ex) {
+                HistoryRepository.this.clear();
+            }
         }
-        catch (ClassCastException ex)
-        {
-            HistoryRepository.this.clear();
-        }
-        return new ArrayList<>(set);
+        return historyItems;
     }
 
     @Override
     public void clear() {
         sharedPreferences.remove(KEY_HISTORY);
+        changedFlag = changed;
     }
 }
