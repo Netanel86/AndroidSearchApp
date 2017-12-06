@@ -11,25 +11,40 @@ import java.util.Set;
 public interface ISharedPrefRepository {
 
     /***
-     * Adds a preference set to the repository under a key name.
-     * @param preference A collection of strings.
-     * @param key the key name under which to register the preference.
+     * Adds a string set to the shared repository under a key name.
+     * @param stringSet A collection of strings to store in the repository.
+     * @param key the key name under which to register the set.
      */
-    void addStringSet(Set<String> preference, String key);
+    void addStringSet(Set<String> stringSet, String key);
+
+    /***
+     * Gets a string set registered in the shared repository under a specified key name.
+     * @param key the key name under which the preference is registered.
+     * @return the preference string set registered under the requested key,
+     * {@code null} otherwise.
+     */
+    Set<String> getStringSet(String key);
+
+    /***
+     * Adds a string to the shared repository under a key name.
+     * @param input a string to store in the repository.
+     * @param Key the key name under which to register the string.
+     */
+    void AddString(String input, String Key);
+
+    /***
+     * Gets a string registered in the shared repository under a specified key name.
+     * @param key the key name under which the string is registered.
+     * @return the string registered under the specified key,
+     * empty string if no string is assigned to the key.
+     */
+    String getString(String key);
 
     /***
      * Removes a preference from the repository.
      * @param key the key name under which the preference is registered.
      */
     void remove(String key);
-
-    /***
-     * Gets a preference set registered under the specified key name.
-     * @param key the key name under which the preference is registered.
-     * @return the preference string set registered to the requested key,
-     * {@code null} otherwise.
-     */
-    Set<String> getStringSet(String key);
 
     /***
      * Clears the entire repository of all registered preferences.

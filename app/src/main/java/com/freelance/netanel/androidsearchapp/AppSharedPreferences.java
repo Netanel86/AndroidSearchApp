@@ -23,13 +23,8 @@ public class AppSharedPreferences implements ISharedPrefRepository{
     }
 
     @Override
-    public void addStringSet(Set<String> preference, String key) {
-        sharedPreferences.edit().putStringSet(key, preference).apply();
-    }
-
-    @Override
-    public void remove(String key) {
-        sharedPreferences.edit().remove(key).apply();
+    public void addStringSet(Set<String> stringSet, String key) {
+        sharedPreferences.edit().putStringSet(key, stringSet).apply();
     }
 
     @Override
@@ -41,6 +36,21 @@ public class AppSharedPreferences implements ISharedPrefRepository{
             remove(key);
         }
         return preference;
+    }
+
+    @Override
+    public void AddString(String input, String key) {
+        sharedPreferences.edit().putString(key, input).apply();
+    }
+
+    @Override
+    public String getString(String key) {
+        return sharedPreferences.getString(key, "");
+    }
+
+    @Override
+    public void remove(String key) {
+        sharedPreferences.edit().remove(key).apply();
     }
 
     @Override
