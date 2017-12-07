@@ -4,9 +4,11 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 
 /**
- * Created by Netanel on 24/09/2017.
- * Supplies an interface for parsing JSON data.
- * Implement to create a custom {@link IJsonParser}
+ * <p>Supplies an interface for parsing JSON data.</p>
+ * Implement to create a custom {@code IJsonParser}
+ * @author Netanel Iting
+ * @version %I%, %G%
+ * @since 1.0
  */
 public interface IJsonParser {
 
@@ -51,6 +53,14 @@ public interface IJsonParser {
      * {@code null}, if no suitable object was found in the json input
      */
     <T> T fromJson(String json, Type typeOfT, String memberName);
+
+    /***
+     * map an object and convert it to a Json string.
+     * @param object an object to parse.
+     * @param <T> type of object to parse.
+     * @return a Json string representing the mapped object.
+     */
+    <T> String toJson(T object);
 }
 
 

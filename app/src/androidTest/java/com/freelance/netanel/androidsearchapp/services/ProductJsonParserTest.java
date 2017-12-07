@@ -39,6 +39,7 @@ import java.util.List;
  * and the member is not a collection.</li>
  * <li> When requested type is an object with a member name that matches the json input,
  * and the member is not an object.</li>
+ * <li>When mapping an object to a Json string</li>
  * </ul>
  * @author Netanel Iting
  * @version %I%, %G%
@@ -156,7 +157,8 @@ public class ProductJsonParserTest {
     }
 
     @Test
-    public void parse_WhenJsonIsObjectWithNestedArrayAndMemberNameEmpty_ShouldThrowException() throws Exception {
+    public void parse_WhenJsonIsObjectWithNestedArrayAndMemberNameEmpty_ShouldThrowException()
+            throws Exception {
         final String jsonInput =
                 "{'products':["
                         + "{'id':1,"
@@ -190,10 +192,10 @@ public class ProductJsonParserTest {
         Type listType = createProductListType();
 
         List<Product> listResult = mTarget.fromJson(jsonInput, listType, "foo");
-        Product objectResult = mTarget.fromJson(jsonInput,Product.class,"foo");
+        Product objectResult = mTarget.fromJson(jsonInput, Product.class, "foo");
 
-        assertThat(listResult,nullValue());
-        assertThat(objectResult,nullValue());
+        assertThat(listResult, nullValue());
+        assertThat(objectResult, nullValue());
     }
 
     @Test
@@ -216,7 +218,8 @@ public class ProductJsonParserTest {
     }
 
     @Test
-    public void parse_WhenJsonWithMemberNameDoNotMatchProductListType_ShouldThrowException() throws Exception {
+    public void parse_WhenJsonWithMemberNameDoNotMatchProductListType_ShouldThrowException()
+            throws Exception {
         final String jsonInput =
                 "{'product':"
                         + "{'id':1,"
@@ -229,11 +232,12 @@ public class ProductJsonParserTest {
 
         List<Product> listResult = mTarget.fromJson(jsonInput, listType, "product");
 
-        assertThat(listResult,nullValue());
+        assertThat(listResult, nullValue());
     }
 
     @Test
-    public void parse_WhenJsonWithMemberNameDoNotMatchProductType_ShouldThrowException() throws Exception {
+    public void parse_WhenJsonWithMemberNameDoNotMatchProductType_ShouldThrowException()
+            throws Exception {
         final String jsonInput =
                 "{'products':["
                         + "{'id':1,"
@@ -247,11 +251,26 @@ public class ProductJsonParserTest {
                         + "]}";
         mException.expect(ClassCastException.class);
 
-        Product result = mTarget.fromJson(jsonInput,Product.class,"products");
+        Product result = mTarget.fromJson(jsonInput, Product.class, "products");
 
-        assertThat(result,nullValue());
+        assertThat(result, nullValue());
     }
 
+    @Test
+    public void map_WhenMappingAProduct_ShouldReturnJsonStringMappedToProduct() throws Exception {
+        final String jsonInput =
+                "{"
+                        + "\"description\":\"product description\","
+                        + "\"id\":1,"
+                        + "\"imageUrl\":\"http://product.image.url\","
+                        + "\"name\":\"product name\"}";
+        Product product = new Product(1, "product name", "product description",
+                "http://product.image.url");
+
+        String result = mTarget.toJson(product);
+
+        assertThat(result, is(jsonInput));
+    }
 
     private Type createProductListType() {
         return new TypeToken<List<Product>>() {

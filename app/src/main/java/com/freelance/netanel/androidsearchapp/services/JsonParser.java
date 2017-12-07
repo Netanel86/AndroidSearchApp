@@ -20,7 +20,7 @@ public class JsonParser implements IJsonParser {
      */
     @Override
     public <T> T fromJson(Reader reader, Type typeOfT) {
-        validateJson(reader);
+        validateNotNull(reader);
         GsonBuilder builder =
                 createGsonBuilder(typeOfT, null);
         return builder.create().fromJson(reader, typeOfT);
@@ -31,7 +31,7 @@ public class JsonParser implements IJsonParser {
      */
     @Override
     public <T> T fromJson(Reader reader, Type typeOfT, String memberName) {
-        validateJson(reader);
+        validateNotNull(reader);
         GsonBuilder builder =
                 createGsonBuilder(typeOfT, memberName);
         return builder.create().fromJson(reader, typeOfT);
@@ -42,7 +42,7 @@ public class JsonParser implements IJsonParser {
      */
     @Override
     public <T> T fromJson(String json, Type typeOfT) {
-        validateJson(json);
+        validateNotNull(json);
         GsonBuilder builder =
                 createGsonBuilder(typeOfT, null);
         return builder.create().fromJson(json, typeOfT);
@@ -53,10 +53,19 @@ public class JsonParser implements IJsonParser {
      */
     @Override
     public <T> T fromJson(String json, Type typeOfT, String memberName) {
-        validateJson(json);
+        validateNotNull(json);
         GsonBuilder builder =
                 createGsonBuilder(typeOfT, memberName);
         return builder.create().fromJson(json, typeOfT);
+    }
+
+    /***
+     * @throws IllegalArgumentException If the object is {@code null}.
+     */
+    @Override
+    public <T> String toJson(T object) {
+        validateNotNull(object);
+        return new GsonBuilder().create().toJson(object);
     }
 
     private <T> GsonBuilder createGsonBuilder(Type typeOfT, String memberName) {
@@ -71,9 +80,9 @@ public class JsonParser implements IJsonParser {
         return builder;
     }
 
-    private void validateJson(Object jsonInput) {
-        if(jsonInput == null){
-            throw new IllegalArgumentException("'jsonInput' : value is null, the Json input should not be null");
+    private void validateNotNull(Object input) {
+        if(input == null){
+            throw new IllegalArgumentException("'input' : value is null, the Json input should not be null");
         }
     }
 }
