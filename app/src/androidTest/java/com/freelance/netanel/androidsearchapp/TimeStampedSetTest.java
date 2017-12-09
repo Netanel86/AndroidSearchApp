@@ -16,18 +16,13 @@ import org.junit.runner.RunWith;
 public class TimeStampedSetTest {
     @Test
     public void add_WhenMultipleInputWithIdenticalName_ShouldReturnDistinct() throws Exception {
+        TimeStampList<String> target = new TimeStampList<>();
+        target.add("pants");
+        target.add("shirt");
+        target.add("hello");
+        target.add("pants");
 
-        TimeStampedSet set = new TimeStampedSet();
-        set.add("shirt");
-        set.add("pants");
-        set.add("hello");
-        set.add("xbox");
-        set.add("hello");
-        set.add("xbox");
-        set.add("hello");
-        set.add("zbox");
-        set.add("shirt");
-        set.add("mens pants");
-        assertThat(set,hasSize(6));
+
+        assertThat(target.getObjectTList(),hasSize(3));
     }
 }

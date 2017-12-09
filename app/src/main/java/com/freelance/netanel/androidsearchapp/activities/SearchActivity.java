@@ -17,6 +17,7 @@ import android.widget.ViewSwitcher;
 
 import com.freelance.netanel.androidsearchapp.API;
 import com.freelance.netanel.androidsearchapp.DividerItemDecoration;
+import com.freelance.netanel.androidsearchapp.ISearchHistoryApi;
 import com.freelance.netanel.androidsearchapp.SearchHistoryApi;
 import com.freelance.netanel.androidsearchapp.adapters.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.R;
@@ -35,7 +36,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private static final int CHILD_HISTORY = 1;
     private API mAPI;
 
-    private SearchHistoryApi searchHistoryApi;
+    private ISearchHistoryApi searchHistoryApi;
     private ResultAdapter mResultadapter;
 
     private LinearLayoutManager mListLayoutManager;
@@ -184,21 +185,22 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private void createSearchView(Menu menu) {
         MenuItem searchItem = menu.findItem(R.id.menu_action_search);
-        MenuItemCompat.setOnActionExpandListener(searchItem,new MenuItemCompat.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                viewSwitcher.setDisplayedChild(CHILD_HISTORY);
-                return true;
-            }
+        MenuItemCompat.setOnActionExpandListener(searchItem,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        viewSwitcher.setDisplayedChild(CHILD_HISTORY);
+                        return true;
+                    }
 
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                if(viewSwitcher.getDisplayedChild() == CHILD_HISTORY) {
-                    viewSwitcher.setDisplayedChild(CHILD_RESULTS);
-                }
-                return true;
-            }
-        });
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        if (viewSwitcher.getDisplayedChild() == CHILD_HISTORY) {
+                            viewSwitcher.setDisplayedChild(CHILD_RESULTS);
+                        }
+                        return true;
+                    }
+                });
         mSearchView = (SearchView) searchItem.getActionView();
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -213,13 +215,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(!newText.isEmpty()) {
+                if (!newText.isEmpty()) {
                     searchHistoryApi.setFilter(newText);
-                    if(viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
+                    if (viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
                         viewSwitcher.setDisplayedChild(CHILD_HISTORY);
                     }
-                }
-                else {
+                } else {
                     searchHistoryApi.loadHistory();
                 }
 

@@ -4,8 +4,12 @@ import android.content.Context;
 
 import com.freelance.netanel.androidsearchapp.ISharedPrefRepository;
 import com.freelance.netanel.androidsearchapp.AppSharedPreferences;
-import com.freelance.netanel.androidsearchapp.TimeStampedSet;
+import com.freelance.netanel.androidsearchapp.TimeStampList;
+import com.freelance.netanel.androidsearchapp.services.ICollectionWrapper;
+import com.freelance.netanel.androidsearchapp.services.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +20,12 @@ import java.util.List;
 public class HistoryRepository implements IHistoryRepository {
 
     private static final String KEY_HISTORY = "HISTORY";
-    private static final boolean changed = true;
-    private boolean changedFlag = changed;
+    private static final boolean CHANGED = true;
+    private boolean isChanged = CHANGED;
 
     private ISharedPrefRepository sharedPreferences;
 
-    private ArrayList<String> historyItems;
+    private ICollectionWrapper<String> historyItems;
 
     public HistoryRepository(Context context) {
         sharedPreferences = new AppSharedPreferences(context);
@@ -29,32 +33,46 @@ public class HistoryRepository implements IHistoryRepository {
 
     @Override
     public void addSearchQuery(String query) {
-        TimeStampedSet history = new TimeStampedSet(sharedPreferences.getStringSet(KEY_HISTORY));
-        history.add(query);
-        sharedPreferences.addStringSet(history.getInnerSet(), KEY_HISTORY);
-        changedFlag = changed;
+        isChanged = CHANGED;
+        historyItems.add(query);
+        String json = new JsonParser().toJson(historyItems.getWrappedList());
+        sharedPreferences.AddString(json,KEY_HISTORY);
     }
 
     @Override
     public List<String> getSearchHistory() {
-        if(changedFlag) {
+        if(isChanged) {
             try {
-                changedFlag = !changed;
-                TimeStampedSet sortedSet =
-                        new TimeStampedSet(sharedPreferences.getStringSet(KEY_HISTORY));
+                isChanged = !CHANGED;
 
-                historyItems = sortedSet.getNameOnlyList();
+                historyItems = new TimeStampList<>();
+                List<TimeStampList<String>.TimeStampItem> storedItems = fetchAndParseHistory();
 
+                if(storedItems != null) {
+                    historyItems.addAllWrappedItems(storedItems);
+                }
             } catch (ClassCastException ex) {
                 HistoryRepository.this.clear();
             }
         }
-        return historyItems;
+
+        return getStringList();
     }
 
     @Override
     public void clear() {
         sharedPreferences.remove(KEY_HISTORY);
-        changedFlag = changed;
+        isChanged = CHANGED;
+    }
+
+    private List<TimeStampList<String>.TimeStampItem> fetchAndParseHistory() {
+        String json = sharedPreferences.getString(KEY_HISTORY);
+        Type typeToken = new TypeToken<ArrayList<TimeStampList<String>.TimeStampItem>>() {
+        }.getType();
+        return new JsonParser().fromJson(json, typeToken);
+    }
+
+    private List<String> getStringList() {
+        return historyItems.getObjectTList();
     }
 }
