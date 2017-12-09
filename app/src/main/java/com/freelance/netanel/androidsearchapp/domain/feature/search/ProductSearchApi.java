@@ -1,16 +1,12 @@
 package com.freelance.netanel.androidsearchapp.domain.feature.search;
 
-import android.content.Context;
-
 import com.freelance.netanel.androidsearchapp.domain.model.Product;
-import com.freelance.netanel.androidsearchapp.domain.services.INetworkClient;
-import com.freelance.netanel.androidsearchapp.domain.services.NetworkClientApi;
-import com.freelance.netanel.androidsearchapp.domain.services.json.IJsonParser;
-import com.freelance.netanel.androidsearchapp.domain.services.json.JsonParser;
-import com.google.gson.reflect.TypeToken;
+import com.freelance.netanel.androidsearchapp.domain.services.network.INetworkClient;
+import com.freelance.netanel.androidsearchapp.domain.services.network.JsonResponseParser;
+import com.freelance.netanel.androidsearchapp.domain.services.network.NetworkClientApi;
+import com.freelance.netanel.androidsearchapp.domain.services.json.TypeOfT;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -24,7 +20,7 @@ import java.util.List;
             "page=%s" +
             "&token=0_20975_253402300799_1_39c0fd9abf524b96985688e78892212c05f34203a46ac36a4117f211b41c7f5d&hash=16eba7802b35f6cb1b03dbf6262d4db0808f437a14f070019a6fa98da45b3d90";
 
-    private IJsonParser jsonParser;
+    private static final String PRODUCTS_MEMBER_NAME = "products";
     private INetworkClient networkApi;
     private IDataFetcherCallback callback;
 
@@ -33,9 +29,8 @@ import java.util.List;
         void onDataFetchFail(IOException exception);
     }
 
-    public ProductSearchApi(Context context) {
-        jsonParser = new JsonParser();
-        networkApi = new NetworkClientApi();
+    public ProductSearchApi() {
+        networkApi = new NetworkClientApi(new JsonResponseParser());
     }
 
     public void setDataFetchCallback(IDataFetcherCallback callback) {
@@ -44,26 +39,23 @@ import java.util.List;
 
     public void searchData(String query) {
         String url = String.format(DATA_ENDPOINT, query, 1);
-        networkApi.getData(url, new INetworkClient.INetworkCallBack() {
-            @Override
-            public void onSuccess(Reader reader) {
-                Type listType = new TypeToken<List<Product>>() {
-                }.getType();
+        Type resultType = new TypeOfT<List<Product>>() {
+        }.getType();
+        networkApi.getData(url, PRODUCTS_MEMBER_NAME, resultType,
+                new INetworkClient.INetworkCallBack<List<Product>>() {
+                    @Override
+                    public void onSuccess(List<Product> result) {
+                        if (callback != null) {
+                            callback.onDataFetch(result);
+                        }
+                    }
 
-                List<Product> products = jsonParser.fromJson(reader,
-                        listType, "products");
-
-                if (callback != null) {
-                    callback.onDataFetch(products);
-                }
-            }
-
-            @Override
-            public void onFailure(IOException ex) {
-                if (callback != null) {
-                    callback.onDataFetchFail(ex);
-                }
-            }
-        });
+                    @Override
+                    public void onFailure(IOException ex) {
+                        if (callback != null) {
+                            callback.onDataFetchFail(ex);
+                        }
+                    }
+                });
     }
 }

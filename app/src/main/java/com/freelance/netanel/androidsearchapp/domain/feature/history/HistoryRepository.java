@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.freelance.netanel.androidsearchapp.domain.services.ISharedPrefRepository;
 import com.freelance.netanel.androidsearchapp.domain.services.AppSharedPreferences;
+import com.freelance.netanel.androidsearchapp.domain.services.json.IJsonParser;
 import com.freelance.netanel.androidsearchapp.domain.services.json.JsonParser;
-import com.google.gson.reflect.TypeToken;
-
+import com.freelance.netanel.androidsearchapp.domain.services.json.TypeOfT;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +22,20 @@ public class HistoryRepository implements IHistoryRepository {
     private boolean isChanged = CHANGED;
 
     private ISharedPrefRepository sharedPreferences;
+    private IJsonParser jsonParser;
 
     private ICollectionWrapper<String> historyItems;
 
     public HistoryRepository(Context context) {
         sharedPreferences = new AppSharedPreferences(context);
+        jsonParser = new JsonParser();
     }
 
     @Override
     public void addSearchQuery(String query) {
         isChanged = CHANGED;
         historyItems.add(query);
-        String json = new JsonParser().toJson(historyItems.getWrappedList());
+        String json = jsonParser.toJson(historyItems.getWrappedList());
         sharedPreferences.AddString(json,KEY_HISTORY);
     }
 
@@ -65,9 +67,9 @@ public class HistoryRepository implements IHistoryRepository {
 
     private List<TimeStampList<String>.TimeStampItem> fetchAndParseHistory() {
         String json = sharedPreferences.getString(KEY_HISTORY);
-        Type typeToken = new TypeToken<ArrayList<TimeStampList<String>.TimeStampItem>>() {
+        Type typeToken = new TypeOfT<ArrayList<TimeStampList<String>.TimeStampItem>>() {
         }.getType();
-        return new JsonParser().fromJson(json, typeToken);
+        return jsonParser.fromJson(json, typeToken);
     }
 
     private List<String> getStringList() {

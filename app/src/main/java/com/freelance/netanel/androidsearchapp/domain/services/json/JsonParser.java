@@ -1,5 +1,6 @@
 package com.freelance.netanel.androidsearchapp.domain.services.json;
 
+import com.freelance.netanel.androidsearchapp.domain.services.network.INetworkClient;
 import com.google.gson.GsonBuilder;
 
 import java.io.Reader;
