@@ -11,8 +11,8 @@ import android.support.test.espresso.core.deps.guava.reflect.TypeToken;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.freelance.netanel.androidsearchapp.domain.model.Product;
-import com.freelance.netanel.androidsearchapp.domain.services.json.IJsonParser;
-import com.freelance.netanel.androidsearchapp.domain.services.json.JsonParser;
+import com.freelance.netanel.androidsearchapp.domain.json.IJsonParser;
+import com.freelance.netanel.androidsearchapp.domain.json.JsonParser;
 
 import org.junit.Before;
 import org.junit.Rule;

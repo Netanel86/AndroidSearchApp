@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.search.SearchActivity"
+        <activity android:name=".ui.search_view.SearchActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,10 +26,10 @@
 
         </activity>
         <activity
-            android:name=".ui.product.ProductActivity"
+            android:name=".ui.product_view.ProductActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.product.ProductWebViewActivity"
+            android:name=".ui.product_view.ProductWebViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

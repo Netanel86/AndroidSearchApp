@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.hasSize;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.freelance.netanel.androidsearchapp.domain.feature.history.TimeStampList;
+import com.freelance.netanel.androidsearchapp.domain.history_repo.TimeStampList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

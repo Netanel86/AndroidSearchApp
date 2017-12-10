@@ -2,8 +2,8 @@ package com.freelance.netanel.androidsearchapp.ui.history;
 
 import android.content.Context;
 
-import com.freelance.netanel.androidsearchapp.domain.feature.history.HistoryRepository;
-import com.freelance.netanel.androidsearchapp.domain.feature.history.IHistoryRepository;
+import com.freelance.netanel.androidsearchapp.domain.history_repo.HistoryRepository;
+import com.freelance.netanel.androidsearchapp.domain.history_repo.IHistoryRepository;
 
 /**
  * <p>Represents an interface for handling user search history</p>
