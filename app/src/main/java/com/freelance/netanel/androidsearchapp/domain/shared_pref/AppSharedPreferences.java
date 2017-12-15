@@ -1,10 +1,11 @@
 package com.freelance.netanel.androidsearchapp.domain.shared_pref;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.inject.Inject;
 
 /**
  * <p>Represents a repository for fetching shared data</p>
@@ -14,12 +15,12 @@ import java.util.Set;
  * @since 1.0
  */
 public class AppSharedPreferences implements ISharedPrefRepository{
-    private static final String RESOURCE_APP_NAME = "RES_APP";
 
     private SharedPreferences sharedPreferences;
 
-    public AppSharedPreferences(Context context) {
-        sharedPreferences = context.getSharedPreferences(RESOURCE_APP_NAME, Context.MODE_PRIVATE);
+    @Inject
+    public AppSharedPreferences(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
     }
 
     @Override

@@ -2,14 +2,18 @@ package com.freelance.netanel.androidsearchapp.domain.history_repo;
 
 import android.content.Context;
 
-import com.freelance.netanel.androidsearchapp.domain.shared_pref.ISharedPrefRepository;
+import com.freelance.netanel.androidsearchapp.domain.MyApp;
 import com.freelance.netanel.androidsearchapp.domain.shared_pref.AppSharedPreferences;
 import com.freelance.netanel.androidsearchapp.domain.json.IJsonParser;
 import com.freelance.netanel.androidsearchapp.domain.json.JsonParser;
 import com.freelance.netanel.androidsearchapp.domain.json.TypeOfT;
+import com.freelance.netanel.androidsearchapp.domain.shared_pref.ISharedPrefRepository;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by Netanel on 29/10/2017.
@@ -21,13 +25,16 @@ public class HistoryRepository implements IHistoryRepository {
     private static final boolean CHANGED = true;
     private boolean isChanged = CHANGED;
 
-    private ISharedPrefRepository sharedPreferences;
+    @Inject
+    public ISharedPrefRepository sharedPreferences;
+
     private IJsonParser jsonParser;
 
     private ICollectionWrapper<String> historyItems;
 
     public HistoryRepository(Context context) {
-        sharedPreferences = new AppSharedPreferences(context);
+
+        ((MyApp)context.getApplicationContext()).getComponent().inject(this);
         jsonParser = new JsonParser();
     }
 

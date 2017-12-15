@@ -30,6 +30,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
+import dagger.android.DaggerApplication;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int CHILD_RESULTS = 0;
