@@ -1,9 +1,14 @@
-package com.freelance.netanel.androidsearchapp.domain;
+package com.freelance.netanel.androidsearchapp.service.ioc_container;
 
 
-import com.freelance.netanel.androidsearchapp.domain.search_api.ProductSearchApi;
-import com.freelance.netanel.androidsearchapp.ui.history.SearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.ui.search_view.ResultAdapter;
+import com.freelance.netanel.androidsearchapp.App;
+import com.freelance.netanel.androidsearchapp.feature.search.ProductSearchApi;
+import com.freelance.netanel.androidsearchapp.feature.history.SearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.ResultAdapter;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.module.ActivityInjectionModule;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.module.ContextModule;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.module.DataModule;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.module.NetworkUtilsModule;
 
 import javax.inject.Singleton;
 

@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.history_repo;
+package com.freelance.netanel.androidsearchapp.feature.history.repository;
 
 import java.util.List;
 

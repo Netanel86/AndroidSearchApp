@@ -1,12 +1,8 @@
-package com.freelance.netanel.androidsearchapp.domain.history_repo;
+package com.freelance.netanel.androidsearchapp.feature.history.repository;
 
-import android.content.Context;
-
-import com.freelance.netanel.androidsearchapp.domain.App;
-import com.freelance.netanel.androidsearchapp.domain.json.IJsonParser;
-import com.freelance.netanel.androidsearchapp.domain.json.JsonParser;
-import com.freelance.netanel.androidsearchapp.domain.json.TypeOfT;
-import com.freelance.netanel.androidsearchapp.domain.shared_pref.ISharedPrefRepository;
+import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
+import com.freelance.netanel.androidsearchapp.service.json_parser.TypeOfT;
+import com.freelance.netanel.androidsearchapp.service.shared_pref.ISharedPrefRepository;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

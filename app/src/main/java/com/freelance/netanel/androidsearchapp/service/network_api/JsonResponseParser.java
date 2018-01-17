@@ -1,6 +1,6 @@
-package com.freelance.netanel.androidsearchapp.domain.network_api;
+package com.freelance.netanel.androidsearchapp.service.network_api;
 
-import com.freelance.netanel.androidsearchapp.domain.json.IJsonParser;
+import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
 
 import java.io.Reader;
 import java.lang.reflect.Type;

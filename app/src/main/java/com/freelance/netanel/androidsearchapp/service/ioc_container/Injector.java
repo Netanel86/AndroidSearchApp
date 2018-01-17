@@ -1,13 +1,19 @@
-package com.freelance.netanel.androidsearchapp.domain;
+package com.freelance.netanel.androidsearchapp.service.ioc_container;
 
 import android.content.Context;
 
-import com.freelance.netanel.androidsearchapp.domain.search_api.ProductSearchApi;
-import com.freelance.netanel.androidsearchapp.ui.history.SearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.ui.search_view.ResultAdapter;
+import com.freelance.netanel.androidsearchapp.App;
+import com.freelance.netanel.androidsearchapp.feature.search.ProductSearchApi;
+import com.freelance.netanel.androidsearchapp.feature.history.SearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.ResultAdapter;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.module.ContextModule;
 
 /**
- * Created by Netanel on 31/12/2017.
+ * <p>This class wraps Google's Dagger library </p>
+ * @see dagger
+ * @author Netanel Iting
+ * @version %I%, %G%
+ * @since 1.0
  */
 
 public class Injector {

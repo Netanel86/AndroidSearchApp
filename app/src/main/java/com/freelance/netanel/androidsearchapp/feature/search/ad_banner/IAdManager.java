@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.ad_view;
+package com.freelance.netanel.androidsearchapp.feature.search.ad_banner;
 
 import android.content.Context;
 import android.view.View;

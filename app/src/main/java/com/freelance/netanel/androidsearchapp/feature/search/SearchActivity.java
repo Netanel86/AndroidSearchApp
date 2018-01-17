@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.search_view;
+package com.freelance.netanel.androidsearchapp.feature.search;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.MenuItemCompat;
@@ -15,35 +15,28 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.freelance.netanel.androidsearchapp.domain.history_repo.IHistoryRepository;
-import com.freelance.netanel.androidsearchapp.domain.search_api.ProductSearchApi;
-import com.freelance.netanel.androidsearchapp.domain.shared_pref.AppSharedPreferences;
-import com.freelance.netanel.androidsearchapp.domain.shared_pref.ISharedPrefRepository;
-import com.freelance.netanel.androidsearchapp.ui.history.DividerItemDecoration;
-import com.freelance.netanel.androidsearchapp.ui.product_view.ProductActivity;
-import com.freelance.netanel.androidsearchapp.ui.history.ISearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.ui.history.SearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.ui.history.HistoryAdapter;
+import com.freelance.netanel.androidsearchapp.feature.history.DividerItemDecoration;
+import com.freelance.netanel.androidsearchapp.feature.product.ProductActivity;
+import com.freelance.netanel.androidsearchapp.feature.history.ISearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.history.SearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.history.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.R;
-import com.freelance.netanel.androidsearchapp.domain.model.Product;
+import com.freelance.netanel.androidsearchapp.model.Product;
 
 import java.io.IOException;
 import java.util.List;
 
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
-import dagger.android.DaggerApplication;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int CHILD_RESULTS = 0;
     private static final int CHILD_HISTORY = 1;
-    private ProductSearchApi productSearchApi;
 
-    public ISearchHistoryApi searchHistoryApi;
+    private IProductSearchApi productSearchApi;
+    private ISearchHistoryApi searchHistoryApi;
 
     private ResultAdapter resultadapter;
 

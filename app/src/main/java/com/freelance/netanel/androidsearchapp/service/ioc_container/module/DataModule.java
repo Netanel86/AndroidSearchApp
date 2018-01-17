@@ -1,19 +1,17 @@
-package com.freelance.netanel.androidsearchapp.domain;
+package com.freelance.netanel.androidsearchapp.service.ioc_container.module;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.freelance.netanel.androidsearchapp.domain.history_repo.HistoryRepository;
-import com.freelance.netanel.androidsearchapp.domain.history_repo.IHistoryRepository;
-import com.freelance.netanel.androidsearchapp.domain.json.IJsonParser;
-import com.freelance.netanel.androidsearchapp.domain.shared_pref.AppSharedPreferences;
-import com.freelance.netanel.androidsearchapp.domain.shared_pref.ISharedPrefRepository;
+import com.freelance.netanel.androidsearchapp.feature.history.repository.HistoryRepository;
+import com.freelance.netanel.androidsearchapp.feature.history.repository.IHistoryRepository;
+import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
+import com.freelance.netanel.androidsearchapp.service.shared_pref.AppSharedPreferences;
+import com.freelance.netanel.androidsearchapp.service.shared_pref.ISharedPrefRepository;
 
 
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 

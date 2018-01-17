@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.shared_pref;
+package com.freelance.netanel.androidsearchapp.service.shared_pref;
 
 import java.util.Set;
 

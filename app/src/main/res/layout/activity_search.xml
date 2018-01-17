@@ -20,7 +20,7 @@
 
             <fragment
                 android:id="@+id/activity_search_ad"
-                android:name="com.freelance.netanel.androidsearchapp.ui.ad_view.AdViewFragment"
+                android:name="com.freelance.netanel.androidsearchapp.feature.search.ad_banner.AdViewFragment"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_marginEnd="14dp"

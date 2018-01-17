@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.json;
+package com.freelance.netanel.androidsearchapp.service.json_parser;
 
 import com.google.gson.GsonBuilder;
 
@@ -8,16 +8,18 @@ import java.lang.reflect.Type;
 import javax.inject.Inject;
 
 /**
- * <p>JsonParser represents a service for parsing json input and mapping it to java objects.</p>
+ * <p>GsonParser represents a service for parsing json input and mapping it to java objects.
+ * This class wrap Google's Gson library</p>
  * @see IJsonParser
+ * @see com.google.gson.Gson
  * @author Netanel Iting
  * @version %I%, %G%
  * @since 1.0
  */
-public class JsonParser implements IJsonParser {
+public class GsonParser implements IJsonParser {
 
     @Inject
-    public JsonParser(){}
+    public GsonParser(){}
 
     /**
      * @throws IllegalArgumentException If the input stream is {@code null}.

@@ -1,7 +1,9 @@
-package com.freelance.netanel.androidsearchapp.domain;
+package com.freelance.netanel.androidsearchapp;
 
 import android.app.Activity;
 import android.app.Application;
+
+import com.freelance.netanel.androidsearchapp.service.ioc_container.Injector;
 
 import javax.inject.Inject;
 
@@ -17,7 +19,7 @@ public class App extends Application implements HasActivityInjector {
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
-    Injector injector;
+    private Injector injector;
 
     @Override
     public void onCreate() {

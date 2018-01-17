@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.json;
+package com.freelance.netanel.androidsearchapp.service.json_parser;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

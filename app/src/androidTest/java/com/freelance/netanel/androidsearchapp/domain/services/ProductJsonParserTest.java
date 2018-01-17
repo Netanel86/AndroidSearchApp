@@ -10,9 +10,9 @@ import static org.junit.Assert.assertThat;
 import android.support.test.espresso.core.deps.guava.reflect.TypeToken;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.freelance.netanel.androidsearchapp.domain.model.Product;
-import com.freelance.netanel.androidsearchapp.domain.json.IJsonParser;
-import com.freelance.netanel.androidsearchapp.domain.json.JsonParser;
+import com.freelance.netanel.androidsearchapp.model.Product;
+import com.freelance.netanel.androidsearchapp.service.json_parser.GsonParser;
+import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,7 +24,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * <p>Tests the {@link JsonParser} class,
+ * <p>Tests the {@link GsonParser} class,
  * it uses the {@link Product} class to test the mapping of the parser.
  * The tested scenarios are:</p>
  * <ul>
@@ -56,7 +56,7 @@ public class ProductJsonParserTest {
 
     @Before
     public void setup() {
-        mTarget = new JsonParser();
+        mTarget = new GsonParser();
     }
 
     @Test

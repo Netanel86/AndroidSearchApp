@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.ad_view;
+package com.freelance.netanel.androidsearchapp.feature.search.ad_banner;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +24,7 @@ public class AdViewFragment extends Fragment {
             Bundle savedInstanceState) {
         ViewGroup group = (ViewGroup) inflater.inflate(R.layout.fragment_ad, container,false );
 
-        adManager = new AdManager();
+        adManager = new InneractiveAdManager();
         adView = adManager.createBanner(getContext());
         group.addView(adView);
 

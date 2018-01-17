@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.json;
+package com.freelance.netanel.androidsearchapp.service.json_parser;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -17,8 +17,8 @@ public interface IJsonParser {
      * @param reader a data reader object extending {@link Reader}, containing a json input.
      * @param typeOfT the type of the requested object to map.
      * @param <T> the type of the requested object to map (same as {@code typeOfT}).
-     * @return an object of type {@code <T>} mapped from the json input otherwise
-     * {@code null}, if no suitable object was found in the json input
+     * @return an object of type {@code <T>} mapped from the json input, if no suitable
+     * object was found, returns {@code null}.
      */
     <T> T fromJson(Reader reader, Type typeOfT);
 
@@ -28,8 +28,8 @@ public interface IJsonParser {
      * @param typeOfT the type of the requested object to map.
      * @param memberName the member name of the object in the json input.
      * @param <T> the type of the requested object to map (same as {@code typeOfT}).
-     * @return an object of type {@code <T>} mapped from the json input otherwise
-     * {@code null}, if no suitable object was found in the json input
+     * @return an object of type {@code <T>} mapped from the json input, if no suitable
+     * object was found, returns {@code null}.
      */
     <T> T fromJson(Reader reader, Type typeOfT, String memberName);
 
@@ -38,8 +38,8 @@ public interface IJsonParser {
      * @param json a string containing a json input.
      * @param typeOfT the type of the requested object to map.
      * @param <T> the type of the requested object to map (same as {@code typeOfT}).
-     * @return an object of type {@code <T>} mapped from the json input otherwise
-     * {@code null}, if no suitable object was found in the json input
+     * @return an object of type {@code <T>} mapped from the json input, if no suitable
+     * object was found, returns {@code null}.
      */
     <T> T fromJson(String json, Type typeOfT);
 
@@ -49,8 +49,8 @@ public interface IJsonParser {
      * @param typeOfT the type of the requested object to map.
      * @param memberName the member name of the object in the json input.
      * @param <T> the type of the requested object to map (same as {@code typeOfT}).
-     * @return an object of type {@code <T>} mapped from the json input otherwise
-     * {@code null}, if no suitable object was found in the json input
+     * @return an object of type {@code <T>} mapped from the json input, if no suitable
+     * object was found, returns {@code null}.
      */
     <T> T fromJson(String json, Type typeOfT, String memberName);
 

@@ -1,10 +1,7 @@
-package com.freelance.netanel.androidsearchapp.ui.history;
+package com.freelance.netanel.androidsearchapp.feature.history;
 
-import android.content.Context;
-
-import com.freelance.netanel.androidsearchapp.domain.Injector;
-import com.freelance.netanel.androidsearchapp.domain.history_repo.HistoryRepository;
-import com.freelance.netanel.androidsearchapp.domain.history_repo.IHistoryRepository;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.Injector;
+import com.freelance.netanel.androidsearchapp.feature.history.repository.IHistoryRepository;
 
 import javax.inject.Inject;
 

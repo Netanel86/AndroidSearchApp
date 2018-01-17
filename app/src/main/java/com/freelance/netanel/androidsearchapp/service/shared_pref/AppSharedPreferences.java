@@ -1,11 +1,9 @@
-package com.freelance.netanel.androidsearchapp.domain.shared_pref;
+package com.freelance.netanel.androidsearchapp.service.shared_pref;
 
 import android.content.SharedPreferences;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.inject.Inject;
 
 /**
  * <p>Represents a repository for fetching shared data</p>

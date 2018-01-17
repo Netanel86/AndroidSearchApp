@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.history;
+package com.freelance.netanel.androidsearchapp.feature.history;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -11,11 +11,11 @@ import android.view.View;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
-    private Drawable mDivider;
+    private Drawable divider;
 
     public DividerItemDecoration(Drawable divider)
     {
-        this.mDivider = divider;
+        this.divider = divider;
     }
 
     @Override
@@ -29,10 +29,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)child.getLayoutParams();
 
             int top = child.getBottom() + params.bottomMargin;
-            int bottom = top + mDivider.getIntrinsicHeight();
+            int bottom = top + divider.getIntrinsicHeight();
 
-            mDivider.setBounds(left,top,right,bottom);
-            mDivider.draw(canvas);
+            divider.setBounds(left,top,right,bottom);
+            divider.draw(canvas);
         }
     }
 }

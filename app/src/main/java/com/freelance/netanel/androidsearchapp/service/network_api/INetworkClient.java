@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.network_api;
+package com.freelance.netanel.androidsearchapp.service.network_api;
 
 import java.io.IOException;
 import java.io.Reader;

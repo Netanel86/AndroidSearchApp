@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.history;
+package com.freelance.netanel.androidsearchapp.feature.history;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -125,12 +125,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class ViewHolderItem extends RecyclerView.ViewHolder{
 
         @BindView(R.id.rv_item_history_tv)
-        public TextView mTextViewHistory;
+        public TextView textViewHistory;
 
         @BindView(R.id.rv_item_history_btn_insert)
-        public ImageButton mBtnInsertText;
+        public ImageButton buttonInsertText;
 
-        private final boolean vSumbit = true;
+        private static final boolean SUMBIT = true;
 
         private ViewHolderItem(View itemView, final IHistoryAdapterCallBack callback) {
             super(itemView);
@@ -140,16 +140,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     if(callback != null) {
-                        callback.onItemClick(mTextViewHistory.getText().toString(),vSumbit);
+                        callback.onItemClick(textViewHistory.getText().toString(), SUMBIT);
                     }
                 }
             });
 
-            mBtnInsertText.setOnClickListener(new View.OnClickListener() {
+            buttonInsertText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (callback != null) {
-                        callback.onItemClick(mTextViewHistory.getText().toString(),!vSumbit);
+                        callback.onItemClick(textViewHistory.getText().toString(),!SUMBIT);
                     }
                 }
             });
@@ -157,7 +157,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private void bind(String text)
         {
-            mTextViewHistory.setText(text);
+            textViewHistory.setText(text);
         }
     }
 
@@ -169,12 +169,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ViewHolderClear extends RecyclerView.ViewHolder {
         @BindView(R.id.rv_item_history_btn_clear)
-        public Button mBtnClear;
+        public Button buttonClear;
 
         public ViewHolderClear(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            mBtnClear.setOnClickListener(new View.OnClickListener() {
+            buttonClear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     HistoryAdapter.this.setItems(null);

@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.search_view;
+package com.freelance.netanel.androidsearchapp.feature.search;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
-import com.freelance.netanel.androidsearchapp.domain.Injector;
-import com.freelance.netanel.androidsearchapp.domain.model.Product;
-import com.freelance.netanel.androidsearchapp.ui.product_view.IImageLoader;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.Injector;
+import com.freelance.netanel.androidsearchapp.model.Product;
+import com.freelance.netanel.androidsearchapp.service.image_loader.IImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;

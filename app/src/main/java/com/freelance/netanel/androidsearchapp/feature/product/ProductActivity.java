@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.product_view;
+package com.freelance.netanel.androidsearchapp.feature.product;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
-import com.freelance.netanel.androidsearchapp.domain.model.Product;
+import com.freelance.netanel.androidsearchapp.model.Product;
+import com.freelance.netanel.androidsearchapp.service.image_loader.IImageLoader;
 
 import javax.inject.Inject;
 

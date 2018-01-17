@@ -1,8 +1,8 @@
-package com.freelance.netanel.androidsearchapp.domain;
+package com.freelance.netanel.androidsearchapp.service.ioc_container.module;
 
 
-import com.freelance.netanel.androidsearchapp.ui.product_view.ProductActivity;
-import com.freelance.netanel.androidsearchapp.ui.search_view.SearchActivity;
+import com.freelance.netanel.androidsearchapp.feature.product.ProductActivity;
+import com.freelance.netanel.androidsearchapp.feature.search.SearchActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

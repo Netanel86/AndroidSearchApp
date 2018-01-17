@@ -1,11 +1,9 @@
-package com.freelance.netanel.androidsearchapp.domain.search_api;
+package com.freelance.netanel.androidsearchapp.feature.search;
 
-import com.freelance.netanel.androidsearchapp.domain.Injector;
-import com.freelance.netanel.androidsearchapp.domain.model.Product;
-import com.freelance.netanel.androidsearchapp.domain.network_api.INetworkClient;
-import com.freelance.netanel.androidsearchapp.domain.network_api.JsonResponseParser;
-import com.freelance.netanel.androidsearchapp.domain.network_api.NetworkClientApi;
-import com.freelance.netanel.androidsearchapp.domain.json.TypeOfT;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.Injector;
+import com.freelance.netanel.androidsearchapp.model.Product;
+import com.freelance.netanel.androidsearchapp.service.network_api.INetworkClient;
+import com.freelance.netanel.androidsearchapp.service.json_parser.TypeOfT;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -16,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Created by Netanel on 01/10/2017.
  */
- public class ProductSearchApi {
+ public class ProductSearchApi implements IProductSearchApi {
 
     private final String DATA_ENDPOINT = "https://platform.shopyourway.com/products/search?" +
             "q=%s&" +
@@ -30,14 +28,8 @@ import javax.inject.Inject;
 
     private IDataFetcherCallback callback;
 
-    public interface IDataFetcherCallback {
-        void onDataFetch(List<Product> items);
-        void onDataFetchFail(IOException exception);
-    }
-
     public ProductSearchApi() {
         Injector.getInstance().inject(this);
-//        networkApi = new NetworkClientApi(new JsonResponseParser());
     }
 
     public void setDataFetchCallback(IDataFetcherCallback callback) {

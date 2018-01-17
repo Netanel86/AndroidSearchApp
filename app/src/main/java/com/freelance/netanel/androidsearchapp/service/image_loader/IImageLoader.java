@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.product_view;
+package com.freelance.netanel.androidsearchapp.service.image_loader;
 
 import android.content.Context;
 import android.widget.ImageView;

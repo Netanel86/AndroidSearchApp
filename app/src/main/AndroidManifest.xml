@@ -5,14 +5,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".domain.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_app"
         android:label="@string/title.app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.search_view.SearchActivity"
+        <activity android:name=".feature.search.SearchActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +27,10 @@
 
         </activity>
         <activity
-            android:name=".ui.product_view.ProductActivity"
+            android:name=".feature.product.ProductActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.product_view.ProductWebViewActivity"
+            android:name=".feature.product.ProductWebViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

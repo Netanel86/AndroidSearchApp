@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.json;
+package com.freelance.netanel.androidsearchapp.service.json_parser;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;

@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.network_api;
+package com.freelance.netanel.androidsearchapp.service.network_api;
 
 import android.util.Log;
 
@@ -20,14 +20,14 @@ import okhttp3.Response;
  * Created by Netanel on 11/11/2017.
  */
 
-public class NetworkClientApi implements INetworkClient {
+public class OkHttpClientApi implements INetworkClient {
 
     private final OkHttpClient client = new OkHttpClient();
 
     private IResponseParser responseParser;
 
     @Inject
-    public NetworkClientApi(IResponseParser parser) {
+    public OkHttpClientApi(IResponseParser parser) {
         if (parser == null) {
             throw new IllegalArgumentException(
                     IResponseParser.class.getSimpleName() + ": 'parser' cant be null");
@@ -49,7 +49,7 @@ public class NetworkClientApi implements INetworkClient {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(NetworkClientApi.class.getSimpleName(), e.getMessage());
+                Log.e(OkHttpClientApi.class.getSimpleName(), e.getMessage());
                 if (callback != null) {
                     callback.onFailure(e);
                 }

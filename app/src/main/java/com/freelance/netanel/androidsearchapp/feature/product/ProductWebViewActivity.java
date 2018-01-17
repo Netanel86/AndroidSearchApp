@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.ui.product_view;
+package com.freelance.netanel.androidsearchapp.feature.product;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.freelance.netanel.androidsearchapp.R;
-import com.freelance.netanel.androidsearchapp.domain.model.Product;
+import com.freelance.netanel.androidsearchapp.model.Product;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

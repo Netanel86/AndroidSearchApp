@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.domain.model;
+package com.freelance.netanel.androidsearchapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
