@@ -15,7 +15,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.freelance.netanel.androidsearchapp.domain.history_repo.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.domain.search_api.ProductSearchApi;
+import com.freelance.netanel.androidsearchapp.domain.shared_pref.AppSharedPreferences;
+import com.freelance.netanel.androidsearchapp.domain.shared_pref.ISharedPrefRepository;
 import com.freelance.netanel.androidsearchapp.ui.history.DividerItemDecoration;
 import com.freelance.netanel.androidsearchapp.ui.product_view.ProductActivity;
 import com.freelance.netanel.androidsearchapp.ui.history.ISearchHistoryApi;
@@ -28,6 +31,8 @@ import java.io.IOException;
 import java.util.List;
 
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
@@ -38,7 +43,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private static final int CHILD_HISTORY = 1;
     private ProductSearchApi productSearchApi;
 
-    private ISearchHistoryApi searchHistoryApi;
+    public ISearchHistoryApi searchHistoryApi;
+
     private ResultAdapter resultadapter;
 
     private LinearLayoutManager listLayoutManager;
@@ -66,6 +72,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
@@ -73,7 +80,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         initButterknife();
 
         productSearchApi = new ProductSearchApi();
-        searchHistoryApi = new SearchHistoryApi(this);
+        searchHistoryApi = new SearchHistoryApi();
         buildUI();
 
         Uri data = this.getIntent().getData();

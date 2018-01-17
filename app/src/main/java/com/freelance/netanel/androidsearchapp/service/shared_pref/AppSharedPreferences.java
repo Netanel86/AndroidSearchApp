@@ -18,7 +18,6 @@ public class AppSharedPreferences implements ISharedPrefRepository{
 
     private SharedPreferences sharedPreferences;
 
-    @Inject
     public AppSharedPreferences(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
     }

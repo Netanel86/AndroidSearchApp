@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 
 
+import javax.inject.Inject;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -24,6 +26,7 @@ public class NetworkClientApi implements INetworkClient {
 
     private IResponseParser responseParser;
 
+    @Inject
     public NetworkClientApi(IResponseParser parser) {
         if (parser == null) {
             throw new IllegalArgumentException(

@@ -8,12 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.freelance.netanel.androidsearchapp.R;
+import com.freelance.netanel.androidsearchapp.domain.Injector;
 import com.freelance.netanel.androidsearchapp.domain.model.Product;
 import com.freelance.netanel.androidsearchapp.ui.product_view.IImageLoader;
-import com.freelance.netanel.androidsearchapp.ui.product_view.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,14 +32,18 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int VIEWTYPE_LIST_ITEM = 5;
     private static final int VIEWTYPE_GRID_ITEM = 6;
 
-    private int mCurrentLayout = LAYOUT_TYPE_LIST;
+    private int currentLayout = LAYOUT_TYPE_LIST;
 
-    private List<Product> mResults;
-    private IResultAdapterCallBack mCallBack;
+    private List<Product> results;
+    private IResultAdapterCallBack callBack;
+
+    @Inject
+    public IImageLoader imageLoader;
 
     public ResultAdapter() {
         super();
-        this.mResults = new ArrayList<>();
+        Injector.getInstance().inject(this);
+        this.results = new ArrayList<>();
     }
 
     @Override
@@ -68,29 +74,29 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof ViewHolderItem) {
-            ((ViewHolderItem)holder).bind(mResults.get(position), position);
+            ((ViewHolderItem)holder).bind(results.get(position), position);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mResults.isEmpty() ? 1 : mResults.size();
+        return results.isEmpty() ? 1 : results.size();
     }
 
     @Override
     public int getItemViewType(int position) {
         int viewtype = 0;
 
-        switch (mCurrentLayout) {
+        switch (currentLayout) {
             case LAYOUT_TYPE_LIST:
-                if(mResults.isEmpty()){
+                if(results.isEmpty()){
                     viewtype = VIEWTYPE_LIST_EMPTY;
                 } else {
                     viewtype = VIEWTYPE_LIST_ITEM;
                 }
                 break;
             case LAYOUT_TYPE_GRID:
-                if(mResults.isEmpty()) {
+                if(results.isEmpty()) {
                     viewtype = VIEWTYPE_GRID_EMPTY;
                 } else {
                     viewtype= VIEWTYPE_GRID_ITEM;
@@ -102,25 +108,25 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public int getCurrentLayout() {
-        return mCurrentLayout;
+        return currentLayout;
     }
 
     public void setLayout(int layout) {
-        this.mCurrentLayout = layout;
+        this.currentLayout = layout;
         notifyDataSetChanged();
     }
 
     public void setResults(List<Product> results) {
-        this.mResults.clear();
+        this.results.clear();
         if (results != null) {
-            mResults.addAll(results);
+            this.results.addAll(results);
         }
 
         notifyDataSetChanged();
     }
 
     public void setCallback(IResultAdapterCallBack callback) {
-        ResultAdapter.this.mCallBack = callback;
+        ResultAdapter.this.callBack = callback;
     }
 
     public interface IResultAdapterCallBack {
@@ -131,19 +137,18 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         private static final int PLACE_HOLDER_RES  = R.drawable.ic_buybuy_logo;
 
         /**
-         * mPosition of current item in the collection
+         * position of current item in the collection
          */
-        private int mPosition;
-        private IImageLoader mImageLoader;
+        private int position;
 
         @BindView(R.id.rv_item_product_iv_image)
-        public ImageView mImageView;
+        public ImageView imageView;
 
         @BindView(R.id.rv_item_product_tv_name)
-        public TextView mTextViewName;
+        public TextView textViewName;
 
         @BindView(R.id.rv_item_product_tv_description)
-        public TextView mTextViewDescription;
+        public TextView textViewDescription;
 
         private ViewHolderItem(View itemView) {
             super(itemView);
@@ -151,22 +156,21 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mCallBack != null) {
-                        mCallBack.onItemClick(mResults.get(mPosition));
+                    if (callBack != null) {
+                        callBack.onItemClick(results.get(position));
                     }
                 }
             });
-            mImageLoader = new ImageLoader();
         }
 
         private void bind(Product result, int position) {
-            ViewHolderItem.this.mPosition = position;
+            ViewHolderItem.this.position = position;
 
-            mTextViewName.setText(result.getName());
-            mTextViewDescription.setText(result.getDescription());
+            textViewName.setText(result.getName());
+            textViewDescription.setText(result.getDescription());
 
-            mImageLoader.load(result.getImageUrl(), ViewHolderItem.this.itemView.getContext(),
-                    mImageView, PLACE_HOLDER_RES);
+            imageLoader.load(result.getImageUrl(), ViewHolderItem.this.itemView.getContext(),
+                    imageView, PLACE_HOLDER_RES);
         }
     }
 

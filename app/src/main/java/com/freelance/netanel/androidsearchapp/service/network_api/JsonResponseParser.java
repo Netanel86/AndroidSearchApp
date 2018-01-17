@@ -1,10 +1,11 @@
 package com.freelance.netanel.androidsearchapp.domain.network_api;
 
 import com.freelance.netanel.androidsearchapp.domain.json.IJsonParser;
-import com.freelance.netanel.androidsearchapp.domain.json.JsonParser;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
+
+import javax.inject.Inject;
 
 /**
  * Created by Netanel on 10/12/2017.
@@ -13,8 +14,9 @@ import java.lang.reflect.Type;
 public class JsonResponseParser implements INetworkClient.IResponseParser {
     private IJsonParser jsonParser;
 
-    public JsonResponseParser() {
-        jsonParser = new JsonParser();
+    @Inject
+    public JsonResponseParser(IJsonParser jsonParser) {
+        this.jsonParser = jsonParser;
     }
 
     @Override

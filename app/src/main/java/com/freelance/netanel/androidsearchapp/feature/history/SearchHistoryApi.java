@@ -2,8 +2,11 @@ package com.freelance.netanel.androidsearchapp.ui.history;
 
 import android.content.Context;
 
+import com.freelance.netanel.androidsearchapp.domain.Injector;
 import com.freelance.netanel.androidsearchapp.domain.history_repo.HistoryRepository;
 import com.freelance.netanel.androidsearchapp.domain.history_repo.IHistoryRepository;
+
+import javax.inject.Inject;
 
 /**
  * <p>Represents an interface for handling user search history</p>
@@ -13,15 +16,17 @@ import com.freelance.netanel.androidsearchapp.domain.history_repo.IHistoryReposi
  * @since 1.0
  */
 public class SearchHistoryApi implements ISearchHistoryApi {
-    private IHistoryRepository historyRepository;
+
+    @Inject
+    public IHistoryRepository historyRepository;
 
     private HistoryAdapter historyAdapter;
     public HistoryAdapter getAdapter() {
         return historyAdapter;
     }
 
-    public SearchHistoryApi(Context context) {
-        historyRepository = new HistoryRepository(context);
+    public SearchHistoryApi() {
+        Injector.getInstance().inject(this);
         historyAdapter = new HistoryAdapter();
     }
 

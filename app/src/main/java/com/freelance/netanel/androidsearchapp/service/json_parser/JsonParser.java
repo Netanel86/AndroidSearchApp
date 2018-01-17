@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import java.io.Reader;
 import java.lang.reflect.Type;
 
+import javax.inject.Inject;
+
 /**
  * <p>JsonParser represents a service for parsing json input and mapping it to java objects.</p>
  * @see IJsonParser
@@ -13,6 +15,9 @@ import java.lang.reflect.Type;
  * @since 1.0
  */
 public class JsonParser implements IJsonParser {
+
+    @Inject
+    public JsonParser(){}
 
     /**
      * @throws IllegalArgumentException If the input stream is {@code null}.

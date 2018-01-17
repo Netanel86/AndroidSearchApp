@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.freelance.netanel.androidsearchapp.R;
 import com.freelance.netanel.androidsearchapp.domain.model.Product;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String EXTRA_PRODUCT = "product_key";
@@ -51,17 +54,17 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
 
     private Product product;
 
-    private IImageLoader imageLoader;
+    @Inject
+    public IImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AndroidInjection.inject(this);
         setContentView(R.layout.activity_product);
         ButterKnife.bind(this);
 
         product = getIntent().getExtras().getParcelable(EXTRA_PRODUCT);
-
-        imageLoader = new ImageLoader();
     }
 
     @Override
