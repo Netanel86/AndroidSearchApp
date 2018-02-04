@@ -11,16 +11,17 @@ import com.freelance.netanel.androidsearchapp.infra.IMvpPresenter;
 
 public interface SearchContract {
     interface IView {
-        void showProgress();
-        void hideProgress();
-        void setLayoutList();
-        void setLayoutGrid();
         void showViewChild(int childId);
         void showLongToast(String message);
         void showMessageFailed();
         void showProductView(Intent intent);
-        void setSearchQuery(String query, boolean sumbit);
+        void showProgress();
+        void hideProgress();
         void clearQueryFocus();
+        void setLayoutList();
+        void setLayoutGrid();
+        void setSearchQuery(String query, boolean sumbit);
+        void setEnabled(boolean enabled);
         void runOnUiThread(Runnable runnable);
     }
     interface IPresenter extends IMvpPresenter<SearchContract.IView> {

@@ -21,6 +21,8 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     private static final int CHILD_RESULTS = 0;
     private static final int CHILD_HISTORY = 1;
 
+    private static final boolean ENABLED = true;
+
     private int currentChild = CHILD_RESULTS;
 
     private ResultAdapterContract.IPresenter resultsPresenter;
@@ -64,6 +66,7 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
                     @Override
                     public void run() {
                         getView().hideProgress();
+                        getView().setEnabled(ENABLED);
                         if (items != null) {
                             resultsPresenter.clearAndAddAll(items);
                         } else {
@@ -79,6 +82,7 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
                     @Override
                     public void run() {
                         getView().hideProgress();
+                        getView().setEnabled(ENABLED);
                         getView().showLongToast(exception.getMessage());
                     }
                 });
@@ -115,6 +119,7 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
         productSearchApi.searchData(query);
         getView().showProgress();
         getView().clearQueryFocus();
+        getView().setEnabled(!ENABLED);
     }
 
     @Override

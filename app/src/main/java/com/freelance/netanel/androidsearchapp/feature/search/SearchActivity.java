@@ -11,6 +11,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -221,4 +222,16 @@ public class SearchActivity extends AppCompatActivity
     public void clearQueryFocus() {
         searchView.clearFocus();
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        if (!enabled) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+        else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+
 }
