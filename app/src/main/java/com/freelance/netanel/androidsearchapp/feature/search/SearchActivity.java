@@ -16,27 +16,15 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.freelance.netanel.androidsearchapp.feature.history.DividerItemDecoration;
-import com.freelance.netanel.androidsearchapp.feature.product.ProductActivity;
-import com.freelance.netanel.androidsearchapp.feature.history.ISearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.feature.history.SearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.feature.history.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.R;
-import com.freelance.netanel.androidsearchapp.model.Product;
-
-import java.io.IOException;
-import java.util.List;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final int CHILD_RESULTS = 0;
-    private static final int CHILD_HISTORY = 1;
-
-    private IProductSearchApi productSearchApi;
-    private ISearchHistoryApi searchHistoryApi;
+public class SearchActivity extends AppCompatActivity
+        implements View.OnClickListener, SearchContract.IView {
 
     private ResultAdapter resultadapter;
 
@@ -63,6 +51,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.activity_search_btn_grid)
     public ImageButton gridButton;
 
+    private SearchContract.IPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -70,10 +60,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        presenter = new SearchPresenter(this);
+        presenter.bindView(this);
+
         initButterknife();
 
-        productSearchApi = new ProductSearchApi();
-        searchHistoryApi = new SearchHistoryApi();
         buildUI();
 
         Uri data = this.getIntent().getData();
@@ -88,56 +79,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onStart() {
         super.onStart();
-        searchHistoryApi.loadHistory();
-        searchHistoryApi.getAdapter().setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
-            @Override
-            public void onItemClick(String query, boolean submit) {
-                searchView.setQuery(query, submit);
-            }
-
-            @Override
-            public void onItemClearClick() {
-                searchHistoryApi.clear();
-            }
-        });
-        resultadapter.setCallback(new ResultAdapter.IResultAdapterCallBack() {
-            @Override
-            public void onItemClick(Product item) {
-                openProductActivity(item);
-            }
-        });
-
-        productSearchApi.setDataFetchCallback(new ProductSearchApi.IDataFetcherCallback() {
-            @Override
-            public void onDataFetch(final List<Product> items) {
-                SearchActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progress.setVisibility(View.GONE);
-                        if(items != null){
-                            resultadapter.setResults(items);
-                        }
-                        else {
-                            toast(getResources().getString(R.string.message_load_failed),Toast.LENGTH_LONG);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onDataFetchFail(final IOException exception) {
-                SearchActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progress.setVisibility(View.GONE);
-                        toast(exception.getMessage(),Toast.LENGTH_LONG);
-                    }
-                });
-            }
-        });
-
-        viewSwitcher.setDisplayedChild(CHILD_RESULTS);
-
+        viewSwitcher.setDisplayedChild(presenter.getCurrentChild());
         listButton.setOnClickListener(this);
         gridButton.setOnClickListener(this);
     }
@@ -155,11 +97,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_search_btn_list:
-                setResultsLayout(listLayoutManager, ResultAdapter.LAYOUT_TYPE_LIST);
+                presenter.onButtonListClicked();
                 break;
 
             case R.id.activity_search_btn_grid:
-                setResultsLayout(gridLayoutManager, ResultAdapter.LAYOUT_TYPE_GRID);
+                presenter.onButtonGridClicked();
                 break;
         }
     }
@@ -170,14 +112,15 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void buildUI() {
-        listLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        gridLayoutManager = new GridLayoutManager(this,
-                getResources().getInteger(R.integer.grid_col_count));
-        resultadapter = new ResultAdapter();
+        listLayoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        gridLayoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.grid_col_count));
+
+        resultadapter = new ResultAdapter(presenter.getResultsPresenter());
 
         rvHistory.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvHistory.setAdapter(searchHistoryApi.getAdapter());
+        rvHistory.setAdapter(presenter.getHistoryApi().getAdapter());
 
         rvResults.setLayoutManager(listLayoutManager);
         rvResults.setAdapter(resultadapter);
@@ -191,15 +134,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 new MenuItemCompat.OnActionExpandListener() {
                     @Override
                     public boolean onMenuItemActionExpand(MenuItem item) {
-                        viewSwitcher.setDisplayedChild(CHILD_HISTORY);
+                        presenter.onButtonSearchClicked();
                         return true;
                     }
 
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem item) {
-                        if (viewSwitcher.getDisplayedChild() == CHILD_HISTORY) {
-                            viewSwitcher.setDisplayedChild(CHILD_RESULTS);
-                        }
+                        presenter.onHideSearchHistory();
                         return true;
                     }
                 });
@@ -208,42 +149,76 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                viewSwitcher.setDisplayedChild(CHILD_RESULTS);
-                searchHistoryApi.addSearchQuery(query);
-                progress.setVisibility(View.VISIBLE);
-                productSearchApi.searchData(query);
+                presenter.onSubmitSearch(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (!newText.isEmpty()) {
-                    searchHistoryApi.setFilter(newText);
-                    if (viewSwitcher.getDisplayedChild() != CHILD_HISTORY) {
-                        viewSwitcher.setDisplayedChild(CHILD_HISTORY);
-                    }
-                } else {
-                    searchHistoryApi.loadHistory();
-                }
-
+                presenter.onQueryTextChanged(newText);
                 return false;
+            }
+        });
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                presenter.onQueryFocusChanged(hasFocus);
             }
         });
     }
 
-    private void openProductActivity(Product product) {
-        Intent intent = ProductActivity.prepareIntent(this,product);
+    private void toast(String message, int length) {
+        Toast.makeText(this, message, length).show();
+    }
+
+    @Override
+    public void showProgress() {
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setLayoutList() {
+        rvResults.setLayoutManager(listLayoutManager);
+    }
+
+    @Override
+    public void setLayoutGrid() {
+        rvResults.setLayoutManager(gridLayoutManager);
+    }
+
+    @Override
+    public void showViewChild(int childId) {
+        viewSwitcher.setDisplayedChild(childId);
+    }
+
+    @Override
+    public void showLongToast(String message) {
+        toast(message,Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public void showMessageFailed() {
+        showLongToast(getResources().getString(R.string.message_load_failed));
+    }
+
+    @Override
+    public void showProductView(Intent intent) {
         startActivity(intent);
     }
 
-    private void setResultsLayout(RecyclerView.LayoutManager targetLayoutManager, int targetViewType) {
-        if (resultadapter.getCurrentLayout() != targetViewType) {
-            rvResults.setLayoutManager(targetLayoutManager);
-            resultadapter.setLayout(targetViewType);
-        }
+    @Override
+    public void setSearchQuery(String query, boolean submit) {
+        searchView.setQuery(query,submit);
     }
 
-    private void toast(String message, int length) {
-        Toast.makeText(this, message, length).show();
+    @Override
+    public void clearQueryFocus() {
+        searchView.clearFocus();
     }
 }
