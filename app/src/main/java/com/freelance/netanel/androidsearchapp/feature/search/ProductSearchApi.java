@@ -1,6 +1,6 @@
 package com.freelance.netanel.androidsearchapp.feature.search;
 
-import com.freelance.netanel.androidsearchapp.service.ioc_container.Injector;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.Injection;
 import com.freelance.netanel.androidsearchapp.model.Product;
 import com.freelance.netanel.androidsearchapp.service.network_api.INetworkClient;
 import com.freelance.netanel.androidsearchapp.service.json_parser.TypeOfT;
@@ -29,7 +29,7 @@ import javax.inject.Inject;
     private IDataFetcherCallback callback;
 
     public ProductSearchApi() {
-        Injector.getInstance().inject(this);
+        Injection.getInjector().inject(this);
     }
 
     public void setDataFetchCallback(IDataFetcherCallback callback) {

@@ -1,6 +1,6 @@
 package com.freelance.netanel.androidsearchapp.feature.history;
 
-import com.freelance.netanel.androidsearchapp.service.ioc_container.Injector;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.Injection;
 import com.freelance.netanel.androidsearchapp.feature.history.repository.IHistoryRepository;
 
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ public class SearchHistoryApi implements ISearchHistoryApi {
     }
 
     public SearchHistoryApi() {
-        Injector.getInstance().inject(this);
+        Injection.getInjector().inject(this);
         historyAdapter = new HistoryAdapter();
     }
 
