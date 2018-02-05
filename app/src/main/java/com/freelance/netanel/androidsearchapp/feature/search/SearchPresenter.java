@@ -26,12 +26,14 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     private int currentChild = CHILD_RESULTS;
 
     private ResultAdapterContract.IPresenter resultsPresenter;
-    private IProductSearchApi productSearchApi;
+    private IProductRepository productRepository;
     private ISearchHistoryApi searchHistoryApi;
 
-    public SearchPresenter(Context context) {
-        resultsPresenter = new ResultAdapterPresenter();
-        productSearchApi = new ProductSearchApi();
+    public SearchPresenter(Context context,
+                           IProductRepository productRepository,
+                           ResultAdapterContract.IPresenter resultsPresenter) {
+        this.resultsPresenter = resultsPresenter;
+        this.productRepository = productRepository;
         searchHistoryApi = new SearchHistoryApi();
 
         initialize(context);
@@ -59,7 +61,7 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
             }
         });
 
-        productSearchApi.setDataFetchCallback(new ProductSearchApi.IDataFetcherCallback() {
+        productRepository.setDataFetchCallback(new ProductRepository.IDataFetcherCallback() {
             @Override
             public void onDataFetch(final List<Product> items) {
                 getView().runOnUiThread(new Runnable() {
@@ -116,7 +118,7 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     public void onSubmitSearch(String query) {
         setViewChild(CHILD_RESULTS);
         searchHistoryApi.addSearchQuery(query);
-        productSearchApi.searchData(query);
+        productRepository.searchData(query);
         getView().showProgress();
         getView().clearQueryFocus();
         getView().setEnabled(!ENABLED);

@@ -20,19 +20,14 @@ import com.freelance.netanel.androidsearchapp.feature.history.DividerItemDecorat
 import com.freelance.netanel.androidsearchapp.R;
 
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
 public class SearchActivity extends AppCompatActivity
         implements View.OnClickListener, SearchContract.IView {
-
-    private ResultAdapter resultadapter;
-
-    private LinearLayoutManager listLayoutManager;
-    private GridLayoutManager gridLayoutManager;
-
-    private SearchView searchView;
 
     @BindView(R.id.activity_search_progress)
     public View progress;
@@ -52,7 +47,15 @@ public class SearchActivity extends AppCompatActivity
     @BindView(R.id.activity_search_btn_grid)
     public ImageButton gridButton;
 
-    private SearchContract.IPresenter presenter;
+    private ResultAdapter resultadapter;
+
+    private LinearLayoutManager listLayoutManager;
+    private GridLayoutManager gridLayoutManager;
+
+    private SearchView searchView;
+
+    @Inject
+    public SearchContract.IPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,6 @@ public class SearchActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        presenter = new SearchPresenter(this);
         presenter.bindView(this);
 
         initButterknife();
@@ -233,5 +235,4 @@ public class SearchActivity extends AppCompatActivity
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
-
 }
