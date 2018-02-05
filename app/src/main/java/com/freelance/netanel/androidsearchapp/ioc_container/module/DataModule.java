@@ -1,10 +1,10 @@
-package com.freelance.netanel.androidsearchapp.service.ioc_container.module;
+package com.freelance.netanel.androidsearchapp.ioc_container.module;
 
 
 import android.content.Context;
 
-import com.freelance.netanel.androidsearchapp.feature.history.repository.HistoryRepository;
-import com.freelance.netanel.androidsearchapp.feature.history.repository.IHistoryRepository;
+import com.freelance.netanel.androidsearchapp.feature.search.history.repository.HistoryRepository;
+import com.freelance.netanel.androidsearchapp.feature.search.history.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.feature.search.IProductRepository;
 import com.freelance.netanel.androidsearchapp.feature.search.ProductRepository;
 import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;

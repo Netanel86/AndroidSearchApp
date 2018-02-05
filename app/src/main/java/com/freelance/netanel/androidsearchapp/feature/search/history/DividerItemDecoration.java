@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.feature.history;
+package com.freelance.netanel.androidsearchapp.feature.search.history;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;

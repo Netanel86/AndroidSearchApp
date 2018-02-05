@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.feature.search;
+package com.freelance.netanel.androidsearchapp.feature.search.results;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

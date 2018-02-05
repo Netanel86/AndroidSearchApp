@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.feature.search;
+package com.freelance.netanel.androidsearchapp.feature.search.results;
 
 import com.freelance.netanel.androidsearchapp.infra.IMvpPresenter;
 import com.freelance.netanel.androidsearchapp.model.Product;

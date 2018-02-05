@@ -3,10 +3,12 @@ package com.freelance.netanel.androidsearchapp.feature.search;
 import android.content.Context;
 import android.content.Intent;
 
-import com.freelance.netanel.androidsearchapp.feature.history.HistoryAdapter;
-import com.freelance.netanel.androidsearchapp.feature.history.ISearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.feature.history.SearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapter;
+import com.freelance.netanel.androidsearchapp.feature.search.history.ISearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.history.SearchHistoryApi;
 import com.freelance.netanel.androidsearchapp.feature.product.ProductActivity;
+import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
+import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterPresenter;
 import com.freelance.netanel.androidsearchapp.infra.MvpPresenter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 

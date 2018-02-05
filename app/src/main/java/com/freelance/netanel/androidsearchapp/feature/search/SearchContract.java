@@ -2,7 +2,8 @@ package com.freelance.netanel.androidsearchapp.feature.search;
 
 import android.content.Intent;
 
-import com.freelance.netanel.androidsearchapp.feature.history.ISearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.history.ISearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
 import com.freelance.netanel.androidsearchapp.infra.IMvpPresenter;
 
 /**

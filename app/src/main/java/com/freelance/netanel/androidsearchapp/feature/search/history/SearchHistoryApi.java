@@ -1,7 +1,7 @@
-package com.freelance.netanel.androidsearchapp.feature.history;
+package com.freelance.netanel.androidsearchapp.feature.search.history;
 
 import com.freelance.netanel.androidsearchapp.App;
-import com.freelance.netanel.androidsearchapp.feature.history.repository.IHistoryRepository;
+import com.freelance.netanel.androidsearchapp.feature.search.history.repository.IHistoryRepository;
 
 import javax.inject.Inject;
 

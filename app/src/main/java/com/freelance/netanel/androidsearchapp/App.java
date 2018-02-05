@@ -3,9 +3,9 @@ package com.freelance.netanel.androidsearchapp;
 import android.app.Activity;
 import android.app.Application;
 
-import com.freelance.netanel.androidsearchapp.service.ioc_container.AppComponent;
-import com.freelance.netanel.androidsearchapp.service.ioc_container.DaggerAppComponent;
-import com.freelance.netanel.androidsearchapp.service.ioc_container.module.ContextModule;
+import com.freelance.netanel.androidsearchapp.ioc_container.AppComponent;
+import com.freelance.netanel.androidsearchapp.ioc_container.DaggerAppComponent;
+import com.freelance.netanel.androidsearchapp.ioc_container.module.ContextModule;
 
 import javax.inject.Inject;
 

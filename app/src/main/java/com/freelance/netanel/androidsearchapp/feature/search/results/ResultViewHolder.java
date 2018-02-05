@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.feature.search;
+package com.freelance.netanel.androidsearchapp.feature.search.results;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +13,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dagger.android.AndroidInjection;
 
 /**
  * Created by Netanel on 31/01/2018.

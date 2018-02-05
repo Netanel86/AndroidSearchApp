@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.service.ioc_container;
+package com.freelance.netanel.androidsearchapp.ioc_container;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

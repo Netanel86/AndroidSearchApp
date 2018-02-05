@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.service.ioc_container.module;
+package com.freelance.netanel.androidsearchapp.ioc_container.module;
 
 import android.content.Context;
 

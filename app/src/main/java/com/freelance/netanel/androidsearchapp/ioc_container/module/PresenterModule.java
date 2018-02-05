@@ -1,13 +1,13 @@
-package com.freelance.netanel.androidsearchapp.service.ioc_container.module;
+package com.freelance.netanel.androidsearchapp.ioc_container.module;
 
 import android.content.Context;
 
 import com.freelance.netanel.androidsearchapp.feature.search.IProductRepository;
-import com.freelance.netanel.androidsearchapp.feature.search.ResultAdapterContract;
-import com.freelance.netanel.androidsearchapp.feature.search.ResultAdapterPresenter;
+import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
+import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterPresenter;
 import com.freelance.netanel.androidsearchapp.feature.search.SearchContract;
 import com.freelance.netanel.androidsearchapp.feature.search.SearchPresenter;
-import com.freelance.netanel.androidsearchapp.service.ioc_container.SearchScreenScope;
+import com.freelance.netanel.androidsearchapp.ioc_container.SearchScreenScope;
 
 import dagger.Module;
 import dagger.Provides;

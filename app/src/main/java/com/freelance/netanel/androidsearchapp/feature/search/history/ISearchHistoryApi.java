@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.feature.history;
+package com.freelance.netanel.androidsearchapp.feature.search.history;
 
 /**
  * <p>Supplies an interface for implementing a search history api</p>

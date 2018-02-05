@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.feature.history.repository;
+package com.freelance.netanel.androidsearchapp.feature.search.history.repository;
 
 import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
 import com.freelance.netanel.androidsearchapp.service.json_parser.TypeOfT;

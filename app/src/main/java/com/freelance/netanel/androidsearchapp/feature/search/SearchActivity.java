@@ -16,8 +16,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.freelance.netanel.androidsearchapp.feature.history.DividerItemDecoration;
+import com.freelance.netanel.androidsearchapp.feature.search.history.DividerItemDecoration;
 import com.freelance.netanel.androidsearchapp.R;
+import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapter;
 
 
 import javax.inject.Inject;

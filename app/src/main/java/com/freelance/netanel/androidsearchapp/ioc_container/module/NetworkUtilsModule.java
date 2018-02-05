@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.service.ioc_container.module;
+package com.freelance.netanel.androidsearchapp.ioc_container.module;
 
 import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
 import com.freelance.netanel.androidsearchapp.service.json_parser.GsonParser;
