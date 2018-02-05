@@ -3,7 +3,9 @@ package com.freelance.netanel.androidsearchapp;
 import android.app.Activity;
 import android.app.Application;
 
-import com.freelance.netanel.androidsearchapp.service.ioc_container.Injection;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.AppComponent;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.DaggerAppComponent;
+import com.freelance.netanel.androidsearchapp.service.ioc_container.module.ContextModule;
 
 import javax.inject.Inject;
 
@@ -19,11 +21,25 @@ public class App extends Application implements HasActivityInjector {
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
+    private static App instance;
+    public static App getInstance() {
+        return instance;
+    }
+
+    private AppComponent appComponent;
+    public AppComponent getInjector() {
+        return appComponent;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        Injection.initialize(this);
-        Injection.getInjector().inject(this);
+
+        instance = this;
+        appComponent = DaggerAppComponent.builder()
+                .contextModule(new ContextModule(this))
+                .build();
+        App.getInstance().getInjector().inject(this);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.freelance.netanel.androidsearchapp.feature.search;
 
-import com.freelance.netanel.androidsearchapp.service.ioc_container.Injection;
 import com.freelance.netanel.androidsearchapp.model.Product;
 import com.freelance.netanel.androidsearchapp.service.network_api.INetworkClient;
 import com.freelance.netanel.androidsearchapp.service.json_parser.TypeOfT;
@@ -9,12 +8,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
  * Created by Netanel on 01/10/2017.
  */
- public class ProductSearchApi implements IProductSearchApi {
+ public class ProductRepository implements IProductRepository {
 
     private final String DATA_ENDPOINT = "https://platform.shopyourway.com/products/search?" +
             "q=%s&" +
@@ -23,17 +20,16 @@ import javax.inject.Inject;
 
     private static final String PRODUCTS_MEMBER_NAME = "products";
 
-    @Inject
-    public INetworkClient networkApi;
+    private INetworkClient networkApi;
 
     private IDataFetcherCallback callback;
 
-    public ProductSearchApi() {
-        Injection.getInjector().inject(this);
+    public ProductRepository(INetworkClient networkApi) {
+        this.networkApi = networkApi;
     }
 
     public void setDataFetchCallback(IDataFetcherCallback callback) {
-        ProductSearchApi.this.callback = callback;
+        ProductRepository.this.callback = callback;
     }
 
     public void searchData(String query) {

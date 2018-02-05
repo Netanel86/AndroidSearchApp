@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Netanel on 17/01/2018.
  */
 
-public interface IProductSearchApi {
+public interface IProductRepository {
     void setDataFetchCallback(IDataFetcherCallback callback);
 
     void searchData(String query);
