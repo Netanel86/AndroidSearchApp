@@ -2,7 +2,7 @@ package com.freelance.netanel.androidsearchapp.feature.search.results;
 
 import android.support.annotation.NonNull;
 
-import com.freelance.netanel.androidsearchapp.infra.MvpRecyclerViewAdapterPresenter;
+import com.freelance.netanel.androidsearchapp.infra.MvpCollectionPresenter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 
 import java.util.List;
@@ -12,8 +12,7 @@ import java.util.List;
  */
 
 public class ResultAdapterPresenter
-        extends MvpRecyclerViewAdapterPresenter
-            <ResultAdapterContract.IView,Product,ResultViewHolderContract.IPresenter>
+        extends MvpCollectionPresenter<ResultAdapterContract.IView,Product,ResultVHContract.IPresenter>
         implements ResultAdapterContract.IPresenter {
     public static final int LAYOUT_TYPE_LIST = 1;
     public static final int LAYOUT_TYPE_GRID = 2;
@@ -26,19 +25,19 @@ public class ResultAdapterPresenter
     private IPresenterCallback callBack;
 
     @Override
-    public int getItemViewType() {
+    public int getItemViewType(int position) {
         int viewtype = 0;
 
         switch (currentLayout) {
             case LAYOUT_TYPE_LIST:
-                if(isListEmpty()){
+                if(isEmpty()){
                     viewtype = VIEWTYPE_LIST_EMPTY;
                 } else {
                     viewtype = VIEWTYPE_LIST_ITEM;
                 }
                 break;
             case LAYOUT_TYPE_GRID:
-                if(isListEmpty()) {
+                if(isEmpty()) {
                     viewtype = VIEWTYPE_GRID_EMPTY;
                 } else {
                     viewtype= VIEWTYPE_GRID_ITEM;
@@ -76,10 +75,10 @@ public class ResultAdapterPresenter
     }
 
     @Override
-    protected ResultViewHolderContract.IPresenter createPresenter(@NonNull Product model) {
-        ResultViewHolderPresenter presenter = new ResultViewHolderPresenter();
+    protected ResultVHContract.IPresenter createPresenter(@NonNull Product model) {
+        ResultVHPresenter presenter = new ResultVHPresenter();
         presenter.setProduct(model);
-        presenter.setCallback(new ResultViewHolderPresenter.IProductPresenterCallback() {
+        presenter.setCallback(new ResultVHPresenter.IProductPresenterCallback() {
             @Override
             public void onProductClicked(Product product) {
                 if(callBack != null) {

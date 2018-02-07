@@ -7,6 +7,6 @@ import android.support.annotation.NonNull;
  */
 
 public interface IMvpPresenter<V> {
-    void bindView(@NonNull V view);
+    void bindView(V view);
     V getView();
 }

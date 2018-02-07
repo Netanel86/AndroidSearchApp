@@ -7,8 +7,8 @@ import com.freelance.netanel.androidsearchapp.model.Product;
  * Created by Netanel on 31/01/2018.
  */
 
-public class ResultViewHolderPresenter extends MvpPresenter<ResultViewHolderContract.IView>
-        implements ResultViewHolderContract.IPresenter {
+public class ResultVHPresenter extends MvpPresenter<ResultVHContract.IView>
+        implements ResultVHContract.IPresenter {
 
     private Product product;
     private IProductPresenterCallback callback;
@@ -21,7 +21,7 @@ public class ResultViewHolderPresenter extends MvpPresenter<ResultViewHolderCont
     }
 
     @Override
-    public void bindView(ResultViewHolderContract.IView view) {
+    public void bindView(ResultVHContract.IView view) {
         super.bindView(view);
         this.getView().bindName(product.getName());
         this.getView().bindDescription(product.getDescription());

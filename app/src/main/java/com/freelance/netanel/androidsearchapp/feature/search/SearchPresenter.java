@@ -3,12 +3,9 @@ package com.freelance.netanel.androidsearchapp.feature.search;
 import android.content.Context;
 import android.content.Intent;
 
-import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapter;
-import com.freelance.netanel.androidsearchapp.feature.search.history.ISearchHistoryApi;
-import com.freelance.netanel.androidsearchapp.feature.search.history.SearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapterContract;
 import com.freelance.netanel.androidsearchapp.feature.product.ProductActivity;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
-import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterPresenter;
 import com.freelance.netanel.androidsearchapp.infra.MvpPresenter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 
@@ -28,21 +25,22 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     private int currentChild = CHILD_RESULTS;
 
     private ResultAdapterContract.IPresenter resultsPresenter;
+    private HistoryAdapterContract.IPresenter historyPresenter;
     private IProductRepository productRepository;
-    private ISearchHistoryApi searchHistoryApi;
 
     public SearchPresenter(Context context,
                            IProductRepository productRepository,
-                           ResultAdapterContract.IPresenter resultsPresenter) {
+                           ResultAdapterContract.IPresenter resultsPresenter,
+                           HistoryAdapterContract.IPresenter historyPresenter) {
         this.resultsPresenter = resultsPresenter;
+        this.historyPresenter = historyPresenter;
         this.productRepository = productRepository;
-        searchHistoryApi = new SearchHistoryApi();
 
         initialize(context);
     }
 
     private void initialize(final Context context) {
-        resultsPresenter.setCallback(new ResultAdapterPresenter.IPresenterCallback() {
+        resultsPresenter.setCallback(new ResultAdapterContract.IPresenter.IPresenterCallback() {
             @Override
             public void openProduct(Product product) {
                 Intent intent = ProductActivity.prepareIntent(context, product);
@@ -50,16 +48,10 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
             }
         });
 
-        searchHistoryApi.loadHistory();
-        searchHistoryApi.getAdapter().setCallBack(new HistoryAdapter.IHistoryAdapterCallBack() {
+        historyPresenter.setCallBack(new HistoryAdapterContract.IPresenter.IPresenterCallBack() {
             @Override
-            public void onItemClick(String query, boolean submit) {
-                getView().setSearchQuery(query, submit);
-            }
-
-            @Override
-            public void onItemClearClick() {
-                searchHistoryApi.clear();
+            public void onQueryClicked(String query, boolean isSubmit) {
+                getView().setSearchQuery(query, isSubmit);
             }
         });
 
@@ -94,6 +86,13 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
         });
     }
 
+    private void setViewChild(int childId) {
+        if(currentChild != childId) {
+            this.getView().showViewChild(childId);
+            currentChild = childId;
+        }
+    }
+
     @Override
     public void onButtonListClicked() {
         this.getView().setLayoutList();
@@ -107,19 +106,19 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     }
 
     @Override
-    public void onButtonSearchClicked() {
+    public void onExpandSearchClicked() {
         setViewChild(CHILD_HISTORY);
     }
 
     @Override
-    public void onHideSearchHistory() {
+    public void onCollapseSearchClicked() {
         setViewChild(CHILD_RESULTS);
     }
 
     @Override
-    public void onSubmitSearch(String query) {
+    public void onQuerySubmit(String query) {
         setViewChild(CHILD_RESULTS);
-        searchHistoryApi.addSearchQuery(query);
+        historyPresenter.onQuerySubmit(query);
         productRepository.searchData(query);
         getView().showProgress();
         getView().clearQueryFocus();
@@ -128,14 +127,7 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
 
     @Override
     public void onQueryTextChanged(String query) {
-        if (!query.isEmpty()) {
-            searchHistoryApi.setFilter(query);
-            if (currentChild != CHILD_HISTORY) {
-                setViewChild(CHILD_HISTORY);
-            }
-        } else {
-            searchHistoryApi.loadHistory();
-        }
+            historyPresenter.onQueryTextChanged(query);
     }
 
     @Override
@@ -156,14 +148,7 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     }
 
     @Override
-    public ISearchHistoryApi getHistoryApi() {
-        return searchHistoryApi;
-    }
-
-    private void setViewChild(int childId) {
-        if(currentChild != childId) {
-            this.getView().showViewChild(childId);
-            currentChild = childId;
-        }
+    public HistoryAdapterContract.IPresenter getHistoryPresenter() {
+        return historyPresenter;
     }
 }

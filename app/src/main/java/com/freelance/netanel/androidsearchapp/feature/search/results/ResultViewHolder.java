@@ -18,8 +18,8 @@ import butterknife.ButterKnife;
  * Created by Netanel on 31/01/2018.
  */
 
-public class ResultViewHolder extends MvpViewHolder<ResultViewHolderContract.IPresenter>
-        implements ResultViewHolderContract.IView {
+public class ResultViewHolder extends MvpViewHolder<ResultVHContract.IPresenter>
+        implements ResultVHContract.IView {
     private static final int PLACE_HOLDER_RES  = R.drawable.ic_buybuy_logo;
 
     @BindView(R.id.rv_item_product_iv_image)

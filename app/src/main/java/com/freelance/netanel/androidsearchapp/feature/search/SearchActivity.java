@@ -18,6 +18,7 @@ import android.widget.ViewSwitcher;
 
 import com.freelance.netanel.androidsearchapp.feature.search.history.DividerItemDecoration;
 import com.freelance.netanel.androidsearchapp.R;
+import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapter;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapter;
 
 
@@ -47,8 +48,6 @@ public class SearchActivity extends AppCompatActivity
 
     @BindView(R.id.activity_search_btn_grid)
     public ImageButton gridButton;
-
-    private ResultAdapter resultadapter;
 
     private LinearLayoutManager listLayoutManager;
     private GridLayoutManager gridLayoutManager;
@@ -120,14 +119,12 @@ public class SearchActivity extends AppCompatActivity
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         gridLayoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.grid_col_count));
 
-        resultadapter = new ResultAdapter(presenter.getResultsPresenter());
-
-        rvHistory.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvHistory.setAdapter(presenter.getHistoryApi().getAdapter());
+        rvResults.setAdapter(new ResultAdapter(presenter.getResultsPresenter()));
+        rvHistory.setAdapter(new HistoryAdapter(presenter.getHistoryPresenter()));
 
         rvResults.setLayoutManager(listLayoutManager);
-        rvResults.setAdapter(resultadapter);
+        rvHistory.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         rvHistory.addItemDecoration(new DividerItemDecoration(getDrawable(R.drawable.divider_horizontal)));
     }
@@ -138,13 +135,13 @@ public class SearchActivity extends AppCompatActivity
                 new MenuItemCompat.OnActionExpandListener() {
                     @Override
                     public boolean onMenuItemActionExpand(MenuItem item) {
-                        presenter.onButtonSearchClicked();
+                        presenter.onExpandSearchClicked();
                         return true;
                     }
 
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem item) {
-                        presenter.onHideSearchHistory();
+                        presenter.onCollapseSearchClicked();
                         return true;
                     }
                 });
@@ -153,7 +150,7 @@ public class SearchActivity extends AppCompatActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.onSubmitSearch(query);
+                presenter.onQuerySubmit(query);
                 return false;
             }
 

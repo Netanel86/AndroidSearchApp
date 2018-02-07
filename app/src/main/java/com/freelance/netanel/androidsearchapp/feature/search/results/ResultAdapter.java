@@ -11,7 +11,8 @@ import com.freelance.netanel.androidsearchapp.R;
  * Created by Netanel on 22/09/2017.
  */
 
-public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ResultAdapterContract.IView {
+public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements ResultAdapterContract.IView {
     private ResultAdapterContract.IPresenter presenter;
 
     public ResultAdapter(ResultAdapterContract.IPresenter presenter) {
@@ -48,18 +49,18 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof ResultViewHolder) {
-            ((ResultViewHolder)holder).bindPresenter(presenter.getPresenter(position));
+            ((ResultViewHolder)holder).bindPresenter(presenter.getItemPresenter(position));
         }
     }
 
     @Override
     public int getItemCount() {
-        return presenter.isListEmpty() ? 1 : presenter.getItemCount();
+        return presenter.isEmpty() ? 1 : presenter.getItemCount();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return  presenter.getItemViewType();
+        return  presenter.getItemViewType(position);
     }
 
     class ViewHolderEmpty extends RecyclerView.ViewHolder {

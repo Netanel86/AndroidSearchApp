@@ -7,7 +7,8 @@ import android.view.View;
  * Created by Netanel on 02/02/2018.
  */
 
-public abstract class MvpViewHolder<P extends IMvpPresenter> extends RecyclerView.ViewHolder {
+public abstract class MvpViewHolder<P extends IMvpPresenter>
+        extends RecyclerView.ViewHolder {
 
     protected P presenter;
 

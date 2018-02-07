@@ -2,7 +2,7 @@ package com.freelance.netanel.androidsearchapp.feature.search;
 
 import android.content.Intent;
 
-import com.freelance.netanel.androidsearchapp.feature.search.history.ISearchHistoryApi;
+import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapterContract;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
 import com.freelance.netanel.androidsearchapp.infra.IMvpPresenter;
 
@@ -28,13 +28,13 @@ public interface SearchContract {
     interface IPresenter extends IMvpPresenter<SearchContract.IView> {
         void onButtonListClicked();
         void onButtonGridClicked();
-        void onButtonSearchClicked();
-        void onHideSearchHistory();
-        void onSubmitSearch(String query);
+        void onExpandSearchClicked();
+        void onCollapseSearchClicked();
+        void onQuerySubmit(String query);
         void onQueryTextChanged(String query);
         void onQueryFocusChanged(boolean hasFocus);
         int getCurrentChild();
         ResultAdapterContract.IPresenter getResultsPresenter();
-        ISearchHistoryApi getHistoryApi();
+        HistoryAdapterContract.IPresenter getHistoryPresenter();
     }
 }

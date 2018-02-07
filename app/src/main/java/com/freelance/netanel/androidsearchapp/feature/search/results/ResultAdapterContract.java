@@ -1,6 +1,6 @@
 package com.freelance.netanel.androidsearchapp.feature.search.results;
 
-import com.freelance.netanel.androidsearchapp.infra.IMvpPresenter;
+import com.freelance.netanel.androidsearchapp.infra.IMvpCollectionPresenter;
 import com.freelance.netanel.androidsearchapp.model.Product;
 
 import java.util.List;
@@ -14,15 +14,14 @@ public interface ResultAdapterContract {
         void notifyDataSetChanged();
     }
 
-    interface IPresenter extends IMvpPresenter<ResultAdapterContract.IView> {
-        boolean isListEmpty();
-        int getItemCount();
-        void setCallback(IPresenterCallback callback);
-        void clearAndAddAll(List<Product> products);
-        int getItemViewType();
+    interface IPresenter extends IMvpCollectionPresenter<IView,Product,ResultVHContract.IPresenter> {
         void setLayoutList();
+
         void setLayoutGrid();
-        ResultViewHolderContract.IPresenter getPresenter(int position);
+
+        void clearAndAddAll(List<Product> products);
+
+        void setCallback(IPresenterCallback callback);
 
         interface IPresenterCallback{
             void openProduct(Product product);

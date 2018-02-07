@@ -2,7 +2,6 @@ package com.freelance.netanel.androidsearchapp.ioc_container;
 
 
 import com.freelance.netanel.androidsearchapp.App;
-import com.freelance.netanel.androidsearchapp.feature.search.history.SearchHistoryApi;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultViewHolder;
 import com.freelance.netanel.androidsearchapp.ioc_container.module.ActivityInjectionModule;
 import com.freelance.netanel.androidsearchapp.ioc_container.module.ContextModule;
@@ -27,6 +26,5 @@ import dagger.android.AndroidInjector;
 })
 @Singleton
 public interface AppComponent extends AndroidInjector<App> {
-    void inject(SearchHistoryApi searchHistoryApi);
     void inject(ResultViewHolder viewHolderProduct);
 }

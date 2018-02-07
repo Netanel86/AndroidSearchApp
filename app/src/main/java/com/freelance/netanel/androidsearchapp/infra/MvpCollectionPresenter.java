@@ -10,26 +10,23 @@ import java.util.List;
  * Created by Netanel on 01/02/2018.
  */
 
-public abstract class MvpRecyclerViewAdapterPresenter
-        <V, M, P> extends MvpPresenter<V> {
+public abstract class MvpCollectionPresenter
+        <V, M, P extends IMvpPresenter> extends MvpPresenter<V>
+        implements IMvpCollectionPresenter<V, M, P> {
 
     protected final HashMap<Object,P> presenters;
     private final List<M> items;
 
-    public MvpRecyclerViewAdapterPresenter() {
+    public MvpCollectionPresenter() {
         this.presenters = new HashMap<>();
         this.items = new ArrayList<>();
-    }
-
-    public P getPresenter(int position) {
-        return presenters.get(getPresenterKey(position));
     }
 
     public int getItemCount() {
         return items.size();
     }
 
-    public boolean isListEmpty() {
+    public boolean isEmpty() {
         return items.size() == 0;
     }
 
@@ -54,4 +51,14 @@ public abstract class MvpRecyclerViewAdapterPresenter
     public M getItem(int position) {
         return items.get(position);
     }
+
+    public List<M> getItems() {
+        return items;
+    }
+
+    public P getItemPresenter(int position) {
+        return presenters.get(getPresenterKey(position));
+    }
+
+    public abstract int getItemViewType(int position);
 }
