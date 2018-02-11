@@ -3,16 +3,16 @@ package com.freelance.netanel.androidsearchapp.infra;
 import java.util.List;
 
 /**
- * <p>Supplies an interface for implementing an MVP presenter which handles a collection of view
- * items, where each item has a corresponding presenter.</p>
+ * <p>Supplies an interface for implementing an MVP presenter which handles a collection of data
+ * presenters items, where each item has a corresponding presenter.</p>
  * <p>Remarks: each of the item's presenters should implement IMvpPresenter</p>
  * <p>Created on 07/02/2018</p>
- * @see IMvpPresenter
  * @param <V> The type of view which displays the collection (eg. RecyclerView.Adapter), preferably
  *           an interface.
  * @param <M> The type of model representing the data handled by the presenter.
  * @param <P> The type of presenter assigned to each of the collection view items, preferably
  *           an interface.
+ * @see IMvpPresenter
  *
  * @author Netanel Iting
  * @version %I%, %G%

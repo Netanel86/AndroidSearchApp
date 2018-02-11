@@ -7,7 +7,22 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Netanel on 01/02/2018.
+ * <p>Abstract implementation for an MVP presenter that handles a collection of items, where each item
+ * represents a child presenter. Each of the child presenters is bound to a view, and supplies an
+ * interface for presenting a data model class. The class supplies basic methods for managing the
+ * collection</p>
+ *
+ * @param <V> The main view or framework class type to be bounded to this presenter.
+ * @param <M> The data model class type presented by this presenter.
+ * @param <P> The presenter class type of the child presenters.
+ *
+ * @see IMvpCollectionPresenter
+ * @see IMvpPresenter
+ * @see MvpPresenter
+ *
+ * @author Netanel Iting
+ * @version %I%, %G%
+ * @since 1.0
  */
 
 public abstract class MvpCollectionPresenter
@@ -22,6 +37,14 @@ public abstract class MvpCollectionPresenter
         this.items = new ArrayList<>();
     }
 
+    public M getItem(int position) {
+        return items.get(position);
+    }
+
+    public List<M> getItems() {
+        return items;
+    }
+
     public int getItemCount() {
         return items.size();
     }
@@ -29,6 +52,12 @@ public abstract class MvpCollectionPresenter
     public boolean isEmpty() {
         return items.size() == 0;
     }
+
+    public P getItemPresenter(int position) {
+        return presenters.get(getPresenterKey(position));
+    }
+
+    public abstract int getItemViewType(int position);
 
     protected abstract Object getPresenterKey(int position);
 
@@ -47,18 +76,4 @@ public abstract class MvpCollectionPresenter
             this.presenters.put(getPresenterKey(model), createPresenter(model));
         }
     }
-
-    public M getItem(int position) {
-        return items.get(position);
-    }
-
-    public List<M> getItems() {
-        return items;
-    }
-
-    public P getItemPresenter(int position) {
-        return presenters.get(getPresenterKey(position));
-    }
-
-    public abstract int getItemViewType(int position);
 }

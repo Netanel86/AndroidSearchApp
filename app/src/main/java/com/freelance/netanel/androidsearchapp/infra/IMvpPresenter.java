@@ -1,7 +1,7 @@
 package com.freelance.netanel.androidsearchapp.infra;
 
 /**
- * <p>Supplies a base interface for implementing an MVP presenter</p>
+ * <p>Supplies a base interface for implementing an MVP data presenter.</p>
  * @param <V> the type of view attached to the presenter.
  *
  * @author Netanel Iting
