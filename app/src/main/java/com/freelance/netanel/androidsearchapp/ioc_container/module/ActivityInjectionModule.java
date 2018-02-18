@@ -3,7 +3,7 @@ package com.freelance.netanel.androidsearchapp.ioc_container.module;
 
 import com.freelance.netanel.androidsearchapp.feature.product.ProductActivity;
 import com.freelance.netanel.androidsearchapp.feature.search.SearchActivity;
-import com.freelance.netanel.androidsearchapp.ioc_container.SearchScreenScope;
+import com.freelance.netanel.androidsearchapp.ioc_container.SearchViewScope;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -15,8 +15,8 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityInjectionModule {
 
-    @ContributesAndroidInjector(modules = {PresenterModule.class})
-    @SearchScreenScope
+    @ContributesAndroidInjector(modules = {LocalDataModule.class, PresenterModule.class})
+    @SearchViewScope
     abstract SearchActivity contributeSearchActivityInjector();
 
     @ContributesAndroidInjector

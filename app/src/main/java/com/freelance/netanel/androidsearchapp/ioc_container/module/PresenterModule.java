@@ -10,7 +10,7 @@ import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapt
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterPresenter;
 import com.freelance.netanel.androidsearchapp.feature.search.SearchContract;
 import com.freelance.netanel.androidsearchapp.feature.search.SearchPresenter;
-import com.freelance.netanel.androidsearchapp.ioc_container.SearchScreenScope;
+import com.freelance.netanel.androidsearchapp.ioc_container.SearchViewScope;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,19 +23,19 @@ import dagger.Provides;
 public class PresenterModule {
 
     @Provides
-    @SearchScreenScope
+    @SearchViewScope
     public ResultAdapterContract.IPresenter provideResultsPresenter() {
         return new ResultAdapterPresenter();
     }
 
     @Provides
-    @SearchScreenScope
+    @SearchViewScope
     public HistoryAdapterContract.IPresenter provideHistoryPresenter(IHistoryRepository historyRepository) {
         return new HistoryAdapterPresenter(historyRepository);
     }
 
     @Provides
-    @SearchScreenScope
+    @SearchViewScope
     public SearchContract.IPresenter provideSearchPresenter
             (Context context,
              IProductRepository productRepository,
