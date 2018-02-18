@@ -20,7 +20,8 @@ This diagram illustrates the aforementioned dependencies life-cycle in relation 
 <p align="center">
 <img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/depedency_lifecycle.png" width="700" height="280" />
 </p>
-The dependency graph contains four modules in its main component, `AppComponent`: 
+
+The dependency graph contains four modules in its main component, `AppComponent` : 
 
 `ActivityInjectionModule` is part of dagger infrastructure and is responsible for injecting dependencies into android framework views.
 
@@ -40,6 +41,7 @@ This diagram illustrates the dagger graph:
 <p align="center">
 <img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/dependency_graph.png" width="700" height="300" />
 </p>
+
 The last diagram illustrates the general scheme of component dependencies:
 <p align="center">
 <img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/dependencies_diagram.png" width="600" height="550" />
