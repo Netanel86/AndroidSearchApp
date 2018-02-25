@@ -10,12 +10,12 @@ import java.util.List;
  */
 
 public interface IProductRepository {
-    void setDataFetchCallback(IDataFetcherCallback callback);
+    void searchData(String query, IDataFetcherCallback<List<Product>> callback);
 
-    void searchData(String query);
+    void fetchProduct(int productId, IDataFetcherCallback<Product> callback);
 
-    interface IDataFetcherCallback {
-        void onDataFetch(List<Product> items);
+    interface IDataFetcherCallback<T> {
+        void onDataFetch(T data);
         void onDataFetchFail(IOException exception);
     }
 }
