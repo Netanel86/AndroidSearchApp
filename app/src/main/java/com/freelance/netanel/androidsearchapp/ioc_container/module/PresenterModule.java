@@ -2,6 +2,8 @@ package com.freelance.netanel.androidsearchapp.ioc_container.module;
 
 import android.content.Context;
 
+import com.freelance.netanel.androidsearchapp.feature.product.ProductContract;
+import com.freelance.netanel.androidsearchapp.feature.product.ProductPresenter;
 import com.freelance.netanel.androidsearchapp.feature.search.IProductRepository;
 import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapterContract;
 import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapterPresenter;
@@ -10,6 +12,7 @@ import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapt
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterPresenter;
 import com.freelance.netanel.androidsearchapp.feature.search.SearchContract;
 import com.freelance.netanel.androidsearchapp.feature.search.SearchPresenter;
+import com.freelance.netanel.androidsearchapp.ioc_container.ProductViewScope;
 import com.freelance.netanel.androidsearchapp.ioc_container.SearchViewScope;
 
 import dagger.Module;
@@ -42,5 +45,11 @@ public class PresenterModule {
              ResultAdapterContract.IPresenter resultsPresenter,
              HistoryAdapterContract.IPresenter historyPresenter) {
         return new SearchPresenter(context, productRepository, resultsPresenter, historyPresenter);
+    }
+
+    @Provides
+    @ProductViewScope
+    public ProductContract.IPresenter provideProductPresenter(Context context) {
+        return new ProductPresenter(context);
     }
 }

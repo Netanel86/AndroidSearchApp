@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProductActivity extends AppCompatActivity implements View.OnClickListener, ProductContract.IView {
     private static final String EXTRA_PRODUCT = "product_key";
     private static final int RES_PLACEHOLDER = R.drawable.ic_buybuy_logo;
 
@@ -53,7 +53,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.activity_product_btn_back)
     public ImageButton btnBack;
 
-    private Product product;
+    @Inject
+    public ProductContract.IPresenter presenter;
 
     @Inject
     public IImageLoader imageLoader;
@@ -65,7 +66,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_product);
         ButterKnife.bind(this);
 
-        product = getIntent().getExtras().getParcelable(EXTRA_PRODUCT);
+        presenter.bindView(this);
+        presenter.onViewCreated((Product) getIntent().getExtras().getParcelable(EXTRA_PRODUCT));
     }
 
     @Override
@@ -73,29 +75,44 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         super.onStart();
         btnBuy.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-
-        bindProduct();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_product_btn_buy:
-                Intent intent = ProductWebViewActivity.prepareIntent(this, product);
-                startActivity(intent);
+                presenter.onButtonBuyClicked();
                 break;
 
             case R.id.activity_product_btn_back:
                 // TODO: 05/11/2017 send back notification if buy button was pressed
-                ProductActivity.this.finish();
+                presenter.onButtonBackClicked();
                 break;
         }
     }
 
-    private void bindProduct() {
-        tvName.setText(product.getName());
-        tvDescription.setText(product.getDescription());
+    @Override
+    public void showProductWebView(Intent intent) {
+        startActivity(intent);
+    }
 
-        imageLoader.load(product.getImageUrl(), this, ivImage, RES_PLACEHOLDER);
+    @Override
+    public void closeView() {
+        ProductActivity.this.finish();
+    }
+
+    @Override
+    public void bindName(String name) {
+        tvName.setText(name);
+    }
+
+    @Override
+    public void bindDescription(String description) {
+        tvDescription.setText(description);
+    }
+
+    @Override
+    public void bindImage(String url) {
+        imageLoader.load(url, this, ivImage, RES_PLACEHOLDER);
     }
 }
