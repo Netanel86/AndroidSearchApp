@@ -22,9 +22,9 @@ public class ProductActivityPresenter extends MvpPresenter<ProductActivityContra
     private int currentChlid;
 
     private Product product;
-    private ProductRouter router;
+    private ProductActivityRouter router;
 
-    public ProductActivityPresenter(ProductRouter router) {
+    public ProductActivityPresenter(ProductActivityRouter router) {
         this.router = router;
     }
 

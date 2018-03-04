@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Netanel on 04/02/2018.
  */
 
-public class SearchPresenter extends MvpPresenter<SearchContract.IView> implements SearchContract.IPresenter {
+public class SearchActivityPresenter extends MvpPresenter<SearchActivityContract.IView> implements SearchActivityContract.IPresenter {
     private static final int CHILD_RESULTS = 0;
     private static final int CHILD_HISTORY = 1;
 
@@ -23,12 +23,12 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     private ResultAdapterContract.IPresenter resultsPresenter;
     private HistoryAdapterContract.IPresenter historyPresenter;
     private IProductRepository productRepository;
-    private SearchRouter router;
+    private SearchActivityRouter router;
 
-    public SearchPresenter(SearchRouter router,
-                           IProductRepository productRepository,
-                           ResultAdapterContract.IPresenter resultsPresenter,
-                           HistoryAdapterContract.IPresenter historyPresenter) {
+    public SearchActivityPresenter(SearchActivityRouter router,
+                                   IProductRepository productRepository,
+                                   ResultAdapterContract.IPresenter resultsPresenter,
+                                   HistoryAdapterContract.IPresenter historyPresenter) {
         this.resultsPresenter = resultsPresenter;
         this.historyPresenter = historyPresenter;
         this.productRepository = productRepository;

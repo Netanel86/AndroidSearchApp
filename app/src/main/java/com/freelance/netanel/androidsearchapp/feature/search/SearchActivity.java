@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
 public class SearchActivity extends AppCompatActivity
-        implements View.OnClickListener, SearchContract.IView {
+        implements View.OnClickListener, SearchActivityContract.IView {
 
     @BindView(R.id.activity_search_progress)
     public View progress;
@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity
     private SearchView searchView;
 
     @Inject
-    public SearchContract.IPresenter presenter;
+    public SearchActivityContract.IPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

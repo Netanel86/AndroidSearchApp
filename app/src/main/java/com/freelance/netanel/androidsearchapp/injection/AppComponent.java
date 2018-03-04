@@ -13,14 +13,12 @@ import javax.inject.Singleton;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
-import dagger.android.support.AndroidSupportInjectionModule;
 
 /**
  * Created by Netanel on 10/12/2017.
  */
 @Component(modules = {
         AndroidInjectionModule.class,
-        AndroidSupportInjectionModule.class,
         ActivityInjectionModule.class,
         ContextModule.class,
         NetworkUtilsModule.class,

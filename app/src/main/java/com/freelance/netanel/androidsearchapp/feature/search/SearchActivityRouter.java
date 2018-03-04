@@ -10,8 +10,6 @@ import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
 
 import java.lang.ref.WeakReference;
 
-import javax.inject.Inject;
-
 /**
  * <p></p>
  *
@@ -21,12 +19,12 @@ import javax.inject.Inject;
  * Created on 25/02/2018
  */
 
-public class SearchRouter {
+public class SearchActivityRouter {
 
     private WeakReference<SearchActivity> contextReference;
     private IJsonParser jsonParser;
 
-    public SearchRouter(SearchActivity context, IJsonParser jsonParser) {
+    public SearchActivityRouter(SearchActivity context, IJsonParser jsonParser) {
         this.contextReference = new WeakReference<>(context);
         this.jsonParser = jsonParser;
 
@@ -44,7 +42,6 @@ public class SearchRouter {
     public void parseIntentData() {
         Uri data = contextReference.get().getIntent().getData();
         if(data != null && data.isHierarchical()) {
-            // TODO: 02/12/2017 add a router to navigate through views
             contextReference.get().showLongToast("My Uri:" + data);
         }
     }

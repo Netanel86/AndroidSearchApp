@@ -21,14 +21,6 @@ public class App extends Application implements HasActivityInjector{
     @Inject
     public DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
 
-//    @Inject
-//    public DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-//
-//    @Override
-//    public AndroidInjector<Fragment> supportFragmentInjector() {
-//        return dispatchingFragmentInjector;
-//    }
-
     private static App instance;
     public static App getInstance() {
         return instance;

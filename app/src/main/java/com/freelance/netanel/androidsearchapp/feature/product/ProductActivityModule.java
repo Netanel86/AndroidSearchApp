@@ -1,8 +1,6 @@
 package com.freelance.netanel.androidsearchapp.feature.product;
 
 
-import android.content.Context;
-
 import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
 
 import dagger.Module;
@@ -22,14 +20,14 @@ public class ProductActivityModule {
 
     @Provides
     @ProductViewScope
-    public ProductRouter provideProductRouter(ProductActivity context, IJsonParser jsonParser) {
-        return new ProductRouter(context,jsonParser);
+    public ProductActivityRouter provideProductRouter(ProductActivity context, IJsonParser jsonParser) {
+        return new ProductActivityRouter(context,jsonParser);
     }
 
     @Provides
     @ProductViewScope
     public ProductActivityContract.IPresenter provideProductActivityPresenter(
-            ProductRouter router) {
+            ProductActivityRouter router) {
         return new ProductActivityPresenter(router);
     }
 }

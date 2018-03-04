@@ -28,8 +28,8 @@ public class SearchActivityModule {
 
     @Provides
     @SearchViewScope
-    public SearchRouter provideSearchRouter(SearchActivity context, IJsonParser jsonParser) {
-      return new SearchRouter(context,jsonParser);
+    public SearchActivityRouter provideSearchRouter(SearchActivity context, IJsonParser jsonParser) {
+      return new SearchActivityRouter(context,jsonParser);
     }
 
     @Provides
@@ -46,11 +46,11 @@ public class SearchActivityModule {
 
     @Provides
     @SearchViewScope
-    public SearchContract.IPresenter provideSearchPresenter
-            (SearchRouter router,
+    public SearchActivityContract.IPresenter provideSearchPresenter
+            (SearchActivityRouter router,
              IProductRepository productRepository,
              ResultAdapterContract.IPresenter resultsPresenter,
              HistoryAdapterContract.IPresenter historyPresenter) {
-        return new SearchPresenter(router, productRepository, resultsPresenter, historyPresenter);
+        return new SearchActivityPresenter(router, productRepository, resultsPresenter, historyPresenter);
     }
 }
