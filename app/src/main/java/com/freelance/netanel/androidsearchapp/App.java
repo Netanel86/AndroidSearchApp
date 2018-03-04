@@ -2,18 +2,16 @@ package com.freelance.netanel.androidsearchapp;
 
 import android.app.Activity;
 import android.app.Application;
-import android.support.v4.app.Fragment;
 
-import com.freelance.netanel.androidsearchapp.ioc_container.AppComponent;
-import com.freelance.netanel.androidsearchapp.ioc_container.DaggerAppComponent;
-import com.freelance.netanel.androidsearchapp.ioc_container.module.ContextModule;
+import com.freelance.netanel.androidsearchapp.injection.AppComponent;
+import com.freelance.netanel.androidsearchapp.injection.DaggerAppComponent;
+import com.freelance.netanel.androidsearchapp.injection.module.ContextModule;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Created by Netanel on 10/12/2017.

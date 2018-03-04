@@ -1,12 +1,12 @@
-package com.freelance.netanel.androidsearchapp.ioc_container;
+package com.freelance.netanel.androidsearchapp.injection;
 
 
 import com.freelance.netanel.androidsearchapp.App;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultViewHolder;
-import com.freelance.netanel.androidsearchapp.ioc_container.module.ActivityInjectionModule;
-import com.freelance.netanel.androidsearchapp.ioc_container.module.ContextModule;
-import com.freelance.netanel.androidsearchapp.ioc_container.module.DataModule;
-import com.freelance.netanel.androidsearchapp.ioc_container.module.NetworkUtilsModule;
+import com.freelance.netanel.androidsearchapp.injection.module.ActivityInjectionModule;
+import com.freelance.netanel.androidsearchapp.injection.module.ContextModule;
+import com.freelance.netanel.androidsearchapp.injection.module.DataModule;
+import com.freelance.netanel.androidsearchapp.injection.module.NetworkUtilsModule;
 
 import javax.inject.Singleton;
 
