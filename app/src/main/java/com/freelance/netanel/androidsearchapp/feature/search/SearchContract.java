@@ -15,7 +15,6 @@ public interface SearchContract {
         void showViewChild(int childId);
         void showLongToast(String message);
         void showMessageFailed();
-        void showProductView(Intent intent);
         void showProgress();
         void hideProgress();
         void clearQueryFocus();
@@ -26,6 +25,7 @@ public interface SearchContract {
         void runOnUiThread(Runnable runnable);
     }
     interface IPresenter extends IMvpPresenter<SearchContract.IView> {
+        void onStart();
         void onButtonListClicked();
         void onButtonGridClicked();
         void onExpandSearchClicked();
@@ -33,7 +33,6 @@ public interface SearchContract {
         void onQuerySubmit(String query);
         void onQueryTextChanged(String query);
         void onQueryFocusChanged(boolean hasFocus);
-        int getCurrentChild();
         ResultAdapterContract.IPresenter getResultsPresenter();
         HistoryAdapterContract.IPresenter getHistoryPresenter();
     }

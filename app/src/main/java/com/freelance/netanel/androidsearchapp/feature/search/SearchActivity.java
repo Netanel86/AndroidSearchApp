@@ -1,6 +1,4 @@
 package com.freelance.netanel.androidsearchapp.feature.search;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -69,20 +67,12 @@ public class SearchActivity extends AppCompatActivity
         initButterknife();
 
         buildUI();
-
-        Uri data = this.getIntent().getData();
-        if(data != null && data.isHierarchical()) {
-            String uri = this.getIntent().getDataString();
-            // TODO: 02/12/2017 add a router to navigate through views
-            toast("My Uri:" + uri,Toast.LENGTH_LONG);
-        }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        viewSwitcher.setDisplayedChild(presenter.getCurrentChild());
+        presenter.onStart();
         listButton.setOnClickListener(this);
         gridButton.setOnClickListener(this);
     }
@@ -206,11 +196,6 @@ public class SearchActivity extends AppCompatActivity
     @Override
     public void showMessageFailed() {
         showLongToast(getResources().getString(R.string.message_load_failed));
-    }
-
-    @Override
-    public void showProductView(Intent intent) {
-        startActivity(intent);
     }
 
     @Override

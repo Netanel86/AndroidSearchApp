@@ -1,19 +1,13 @@
-package com.freelance.netanel.androidsearchapp.ioc_container.module;
+package com.freelance.netanel.androidsearchapp.feature.search;
 
-import android.content.Context;
-
-import com.freelance.netanel.androidsearchapp.feature.product.ProductContract;
-import com.freelance.netanel.androidsearchapp.feature.product.ProductPresenter;
-import com.freelance.netanel.androidsearchapp.feature.search.IProductRepository;
 import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapterContract;
 import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapterPresenter;
+import com.freelance.netanel.androidsearchapp.feature.search.history.repository.HistoryRepository;
 import com.freelance.netanel.androidsearchapp.feature.search.history.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterPresenter;
-import com.freelance.netanel.androidsearchapp.feature.search.SearchContract;
-import com.freelance.netanel.androidsearchapp.feature.search.SearchPresenter;
-import com.freelance.netanel.androidsearchapp.ioc_container.ProductViewScope;
-import com.freelance.netanel.androidsearchapp.ioc_container.SearchViewScope;
+import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
+import com.freelance.netanel.androidsearchapp.service.shared_pref.ISharedPrefRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,7 +17,20 @@ import dagger.Provides;
  */
 
 @Module
-public class PresenterModule {
+public class SearchActivityModule {
+
+    @Provides
+    @SearchViewScope
+    public IHistoryRepository provideHistoryRepository(
+            ISharedPrefRepository sharedPrefRepository, IJsonParser jsonParser) {
+        return new HistoryRepository(sharedPrefRepository, jsonParser);
+    }
+
+    @Provides
+    @SearchViewScope
+    public SearchRouter provideSearchRouter(SearchActivity context, IJsonParser jsonParser) {
+      return new SearchRouter(context,jsonParser);
+    }
 
     @Provides
     @SearchViewScope
@@ -40,16 +47,10 @@ public class PresenterModule {
     @Provides
     @SearchViewScope
     public SearchContract.IPresenter provideSearchPresenter
-            (Context context,
+            (SearchRouter router,
              IProductRepository productRepository,
              ResultAdapterContract.IPresenter resultsPresenter,
              HistoryAdapterContract.IPresenter historyPresenter) {
-        return new SearchPresenter(context, productRepository, resultsPresenter, historyPresenter);
-    }
-
-    @Provides
-    @ProductViewScope
-    public ProductContract.IPresenter provideProductPresenter(Context context) {
-        return new ProductPresenter(context);
+        return new SearchPresenter(router, productRepository, resultsPresenter, historyPresenter);
     }
 }

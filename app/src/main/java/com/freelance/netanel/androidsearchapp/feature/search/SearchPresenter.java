@@ -1,10 +1,6 @@
 package com.freelance.netanel.androidsearchapp.feature.search;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.freelance.netanel.androidsearchapp.feature.search.history.HistoryAdapterContract;
-import com.freelance.netanel.androidsearchapp.feature.product.ProductActivity;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
 import com.freelance.netanel.androidsearchapp.infra.MvpPresenter;
 import com.freelance.netanel.androidsearchapp.model.Product;
@@ -22,29 +18,30 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
 
     private static final boolean ENABLED = true;
 
-    private int currentChild = CHILD_RESULTS;
+    private int currentChild;
 
     private ResultAdapterContract.IPresenter resultsPresenter;
     private HistoryAdapterContract.IPresenter historyPresenter;
     private IProductRepository productRepository;
+    private SearchRouter router;
 
-    public SearchPresenter(Context context,
+    public SearchPresenter(SearchRouter router,
                            IProductRepository productRepository,
                            ResultAdapterContract.IPresenter resultsPresenter,
                            HistoryAdapterContract.IPresenter historyPresenter) {
         this.resultsPresenter = resultsPresenter;
         this.historyPresenter = historyPresenter;
         this.productRepository = productRepository;
+        this.router = router;
 
-        initialize(context);
+        initialize();
     }
 
-    private void initialize(final Context context) {
+    private void initialize() {
         resultsPresenter.setCallback(new ResultAdapterContract.IPresenter.IPresenterCallback() {
             @Override
             public void openProduct(Product product) {
-                Intent intent = ProductActivity.prepareIntent(context, product);
-                getView().showProductView(intent);
+                router.showProductView(product);
             }
         });
 
@@ -55,35 +52,6 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
             }
         });
 
-        productRepository.setDataFetchCallback(new ProductRepository.IDataFetcherCallback() {
-            @Override
-            public void onDataFetch(final List<Product> items) {
-                getView().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getView().hideProgress();
-                        getView().setEnabled(ENABLED);
-                        if (items != null) {
-                            resultsPresenter.clearAndAddAll(items);
-                        } else {
-                            getView().showMessageFailed();
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onDataFetchFail(final IOException exception) {
-                getView().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getView().hideProgress();
-                        getView().setEnabled(ENABLED);
-                        getView().showLongToast(exception.getMessage());
-                    }
-                });
-            }
-        });
     }
 
     private void setViewChild(int childId) {
@@ -91,6 +59,12 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
             this.getView().showViewChild(childId);
             currentChild = childId;
         }
+    }
+
+    @Override
+    public void onStart() {
+        router.parseIntentData();
+        setViewChild(CHILD_RESULTS);
     }
 
     @Override
@@ -119,7 +93,18 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     public void onQuerySubmit(String query) {
         setViewChild(CHILD_RESULTS);
         historyPresenter.onQuerySubmit(query);
-        productRepository.searchData(query);
+        productRepository.searchData(query,
+                new IProductRepository.IDataFetcherCallback<List<Product>>() {
+            @Override
+            public void onDataFetch(final List<Product> data) {
+                onFetch(data);
+            }
+
+            @Override
+            public void onDataFetchFail(final IOException exception) {
+                onFetchFailed(exception);
+            }
+        });
         getView().showProgress();
         getView().clearQueryFocus();
         getView().setEnabled(!ENABLED);
@@ -138,11 +123,6 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     }
 
     @Override
-    public int getCurrentChild() {
-        return currentChild;
-    }
-
-    @Override
     public ResultAdapterContract.IPresenter getResultsPresenter() {
         return resultsPresenter;
     }
@@ -150,5 +130,31 @@ public class SearchPresenter extends MvpPresenter<SearchContract.IView> implemen
     @Override
     public HistoryAdapterContract.IPresenter getHistoryPresenter() {
         return historyPresenter;
+    }
+
+    private void onFetch(final List<Product> results) {
+        getView().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getView().hideProgress();
+                getView().setEnabled(ENABLED);
+                if (results != null) {
+                    resultsPresenter.clearAndAddAll(results);
+                } else {
+                    getView().showMessageFailed();
+                }
+            }
+        });
+    }
+
+    private void onFetchFailed(final IOException exception) {
+        getView().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getView().hideProgress();
+                getView().setEnabled(ENABLED);
+                getView().showLongToast(exception.getMessage());
+            }
+        });
     }
 }
