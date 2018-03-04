@@ -37,26 +37,32 @@ public abstract class MvpCollectionPresenter
         this.items = new ArrayList<>();
     }
 
+    @Override
     public M getItem(int position) {
         return items.get(position);
     }
 
+    @Override
     public List<M> getItems() {
         return items;
     }
 
+    @Override
     public int getItemCount() {
         return items.size();
     }
 
+    @Override
     public boolean isEmpty() {
         return items.size() == 0;
     }
 
+    @Override
     public P getItemPresenter(int position) {
         return presenters.get(getPresenterKey(position));
     }
 
+    @Override
     public abstract int getItemViewType(int position);
 
     protected abstract Object getPresenterKey(int position);

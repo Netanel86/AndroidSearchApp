@@ -2,6 +2,7 @@ package com.freelance.netanel.androidsearchapp;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.v4.app.Fragment;
 
 import com.freelance.netanel.androidsearchapp.ioc_container.AppComponent;
 import com.freelance.netanel.androidsearchapp.ioc_container.DaggerAppComponent;
@@ -12,14 +13,23 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Created by Netanel on 10/12/2017.
  */
 
-public class App extends Application implements HasActivityInjector {
+public class App extends Application implements HasActivityInjector{
     @Inject
-    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+    public DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
+
+//    @Inject
+//    public DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+//
+//    @Override
+//    public AndroidInjector<Fragment> supportFragmentInjector() {
+//        return dispatchingFragmentInjector;
+//    }
 
     private static App instance;
     public static App getInstance() {
@@ -44,6 +54,8 @@ public class App extends Application implements HasActivityInjector {
 
     @Override
     public AndroidInjector<Activity> activityInjector() {
-        return dispatchingAndroidInjector;
+        return dispatchingActivityInjector;
     }
+
+
 }
