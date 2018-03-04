@@ -6,71 +6,94 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-        <ImageView
-            android:id="@+id/activity_product_iv_product"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:background="@color/colorPrimaryLight"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ViewSwitcher
+        android:id="@+id/activity_product_vs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginTop="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline">
-
-        <TextView
-            android:id="@+id/activity_product_tv_name"
-            style="@style/AppTheme.TextView.Title"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Product Name" />
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/activity_product_tv_description"
-            style="@style/AppTheme.TextView.Big"
+            <ImageView
+                android:id="@+id/activity_product_iv_product"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@color/colorPrimaryLight"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline">
+
+                <TextView
+                    android:id="@+id/activity_product_tv_name"
+                    style="@style/AppTheme.TextView.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Product Name" />
+
+                <TextView
+                    android:id="@+id/activity_product_tv_description"
+                    style="@style/AppTheme.TextView.Big"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_product_tv_name"
+                    tools:text="This is the product description, bla bla bla bla bla bla bla" />
+            </android.support.constraint.ConstraintLayout>
+
+            <ImageButton
+                android:id="@+id/activity_product_btn_back"
+                style="@style/AppTheme.LayoutButton"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="21dp"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/activity_product_btn_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin.spacing"
+                android:src="@drawable/ic_add_shopping_cart"
+                app:backgroundTint="@color/colorPrimary"
+                app:rippleColor="@color/colorPrimaryLight"
+                app:layout_constraintBottom_toBottomOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <WebView
+            android:id="@+id/activity_product_wv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/activity_product_tv_name"
-            tools:text="This is the product description, bla bla bla bla bla bla bla" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_height="match_parent"/>
 
-    <ImageButton
-        android:id="@+id/activity_product_btn_back"
-        style="@style/AppTheme.LayoutButton"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="21dp"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/activity_product_btn_buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin.spacing"
-        android:src="@drawable/ic_add_shopping_cart"
-        app:backgroundTint="@color/colorPrimary"
-        app:rippleColor="@color/colorPrimaryLight"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
-
-    <android.support.constraint.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+    </ViewSwitcher>
 
 </android.support.constraint.ConstraintLayout>
