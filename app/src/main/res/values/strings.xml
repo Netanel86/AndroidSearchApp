@@ -11,4 +11,17 @@
     <string name="message.loading">Loading…</string>
     <string name="message.load_finish">Load successful!</string>
     <string name="message.load_failed">Load failed!</string>
+
+    <string name="dev.description">This is the product description, bla bla bla bla bla bla bla
+    hello walking to work on a car and xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"</string>
 </resources>

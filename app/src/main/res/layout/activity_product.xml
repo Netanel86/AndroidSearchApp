@@ -23,22 +23,24 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:background="@color/colorPrimaryLight"
+                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="52dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline">
+                app:layout_constraintTop_toTopOf="@+id/guideline">
 
                 <TextView
                     android:id="@+id/activity_product_tv_name"
@@ -50,13 +52,13 @@
                 <TextView
                     android:id="@+id/activity_product_tv_description"
                     style="@style/AppTheme.TextView.Big"
-                    android:scrollbars="vertical"
-                    android:maxLines="@integer/product_activity.max_viewable_lines"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:maxLines="@integer/product_activity.max_viewable_lines"
+                    android:scrollbars="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/activity_product_tv_name"
-                    tools:text="This is the product description, bla bla bla bla bla bla bla" />
+                    tools:text="@string/dev.description" />
             </android.support.constraint.ConstraintLayout>
 
             <android.support.design.widget.FloatingActionButton

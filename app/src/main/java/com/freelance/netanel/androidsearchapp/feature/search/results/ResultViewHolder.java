@@ -1,5 +1,6 @@
 package com.freelance.netanel.androidsearchapp.feature.search.results;
 
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,18 +48,15 @@ public class ResultViewHolder extends MvpViewHolder<ResultVHContract.IPresenter>
     }
 
     @Override
-    public void bindName(String name) {
-        textViewName.setText(name);
-    }
+    public void bindName(String name) { textViewName.setText(Html.fromHtml(name)); }
 
     @Override
     public void bindImageUrl(String url) {
-        imageLoader.load(url, itemView.getContext(),
-                imageView, PLACE_HOLDER_RES);
+        imageLoader.load(url, itemView.getContext(), imageView, PLACE_HOLDER_RES);
     }
 
     @Override
     public void bindDescription(String description) {
-        textViewDescription.setText(description);
+        textViewDescription.setText(Html.fromHtml(description));
     }
 }
