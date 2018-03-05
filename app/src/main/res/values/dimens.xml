@@ -6,5 +6,5 @@
     <dimen name="text_size.headline">18sp</dimen>
     <dimen name="text_size.title">24sp</dimen>
     <integer name="grid_col_count">2</integer>
-    <integer name="product_activity.max_viewable_lines">9</integer>
+    <integer name="product_activity.max_viewable_lines">8</integer>
 </resources>
