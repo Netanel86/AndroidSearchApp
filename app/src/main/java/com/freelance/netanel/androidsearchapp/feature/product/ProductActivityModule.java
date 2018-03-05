@@ -21,7 +21,7 @@ public class ProductActivityModule {
 
     @Provides
     @PerActivity
-    public ProductActivityRouter provideProductRouter(ProductActivity context, IJsonParser jsonParser) {
+    public IProductActivityRouter provideProductRouter(ProductActivity context, IJsonParser jsonParser) {
         return new ProductActivityRouter(context,jsonParser);
     }
 

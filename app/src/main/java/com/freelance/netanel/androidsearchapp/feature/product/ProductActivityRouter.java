@@ -14,7 +14,7 @@ import java.lang.ref.WeakReference;
  * Created on 25/02/2018
  */
 
-public class ProductActivityRouter {
+public class ProductActivityRouter implements IProductActivityRouter {
     private WeakReference<ProductActivity> contextReference;
     private IJsonParser jsonParser;
 
