@@ -1,5 +1,6 @@
 <resources>
-    <string name="title.app_name">Android Search App</string>v
+    <string name="title.app_name">Android Search App</string>
+    <string name="title.product_page">Product</string>
     <string name="action.search">Search</string>
     <string name="action.clear">CLEAR SEARCH HISTORY</string>
     <string name="btn.buy">Buy</string>

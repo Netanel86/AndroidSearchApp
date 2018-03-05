@@ -38,9 +38,6 @@ public class ProductActivity extends AppCompatActivity
     @BindView(R.id.activity_product_btn_buy)
     public FloatingActionButton btnBuy;
 
-    @BindView(R.id.activity_product_btn_back)
-    public ImageButton btnBack;
-
     @Inject
     public IImageLoader imageLoader;
 
@@ -67,7 +64,6 @@ public class ProductActivity extends AppCompatActivity
 
     @Override
     public boolean onSupportNavigateUp() {
-
         presenter.onButtonBackClicked();
         return true;
     }
@@ -78,7 +74,6 @@ public class ProductActivity extends AppCompatActivity
         presenter.onStart();
 
         btnBuy.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
     }
 
     @Override
@@ -97,11 +92,6 @@ public class ProductActivity extends AppCompatActivity
         switch (v.getId()) {
             case R.id.activity_product_btn_buy:
                 presenter.onButtonBuyClicked();
-                break;
-
-            case R.id.activity_product_btn_back:
-                // TODO: 05/11/2017 send back notification if buy button was pressed
-                presenter.onButtonBackClicked();
                 break;
         }
     }

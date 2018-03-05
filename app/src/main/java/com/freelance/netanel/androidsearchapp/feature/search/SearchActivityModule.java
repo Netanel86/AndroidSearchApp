@@ -6,6 +6,7 @@ import com.freelance.netanel.androidsearchapp.feature.search.history.repository.
 import com.freelance.netanel.androidsearchapp.feature.search.history.repository.IHistoryRepository;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterContract;
 import com.freelance.netanel.androidsearchapp.feature.search.results.ResultAdapterPresenter;
+import com.freelance.netanel.androidsearchapp.injection.PerActivity;
 import com.freelance.netanel.androidsearchapp.service.json_parser.IJsonParser;
 import com.freelance.netanel.androidsearchapp.service.shared_pref.ISharedPrefRepository;
 
@@ -20,32 +21,32 @@ import dagger.Provides;
 public class SearchActivityModule {
 
     @Provides
-    @SearchViewScope
+    @PerActivity
     public IHistoryRepository provideHistoryRepository(
             ISharedPrefRepository sharedPrefRepository, IJsonParser jsonParser) {
         return new HistoryRepository(sharedPrefRepository, jsonParser);
     }
 
     @Provides
-    @SearchViewScope
+    @PerActivity
     public SearchActivityRouter provideSearchRouter(SearchActivity context, IJsonParser jsonParser) {
       return new SearchActivityRouter(context,jsonParser);
     }
 
     @Provides
-    @SearchViewScope
+    @PerActivity
     public ResultAdapterContract.IPresenter provideResultsPresenter() {
         return new ResultAdapterPresenter();
     }
 
     @Provides
-    @SearchViewScope
+    @PerActivity
     public HistoryAdapterContract.IPresenter provideHistoryPresenter(IHistoryRepository historyRepository) {
         return new HistoryAdapterPresenter(historyRepository);
     }
 
     @Provides
-    @SearchViewScope
+    @PerActivity
     public SearchActivityContract.IPresenter provideSearchPresenter
             (SearchActivityRouter router,
              IProductRepository productRepository,

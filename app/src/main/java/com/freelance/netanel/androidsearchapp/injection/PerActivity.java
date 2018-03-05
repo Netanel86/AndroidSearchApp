@@ -1,4 +1,4 @@
-package com.freelance.netanel.androidsearchapp.feature.search;
+package com.freelance.netanel.androidsearchapp.injection;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,5 +11,5 @@ import javax.inject.Scope;
 
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SearchViewScope {
+public @interface PerActivity {
 }

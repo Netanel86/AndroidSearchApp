@@ -57,15 +57,6 @@
                     tools:text="This is the product description, bla bla bla bla bla bla bla" />
             </android.support.constraint.ConstraintLayout>
 
-            <ImageButton
-                android:id="@+id/activity_product_btn_back"
-                style="@style/AppTheme.LayoutButton"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="21dp"
-                android:src="@drawable/ic_arrow_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/activity_product_btn_buy"
                 android:layout_width="wrap_content"
