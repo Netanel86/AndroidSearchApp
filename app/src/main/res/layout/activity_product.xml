@@ -50,6 +50,8 @@
                 <TextView
                     android:id="@+id/activity_product_tv_description"
                     style="@style/AppTheme.TextView.Big"
+                    android:scrollbars="vertical"
+                    android:maxLines="@integer/product_activity.max_viewable_lines"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"

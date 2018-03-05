@@ -3,10 +3,11 @@ package com.freelance.netanel.androidsearchapp.feature.product;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -50,6 +51,11 @@ public class ProductActivity extends AppCompatActivity
     @Inject
     public ProductActivityContract.IPresenter presenter;
 
+    private void buildUI() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tvDescription.setMovementMethod(new ScrollingMovementMethod());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -57,7 +63,7 @@ public class ProductActivity extends AppCompatActivity
         setContentView(R.layout.activity_product);
         ButterKnife.bind(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        buildUI();
 
         presenter.bindView(this);
     }
@@ -77,6 +83,15 @@ public class ProductActivity extends AppCompatActivity
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.activity_product_btn_buy:
+                presenter.onButtonBuyClicked();
+                break;
+        }
+    }
+
+    @Override
     public void showWebView(String url) {
         wvProduct.setWebViewClient(new WebViewClient());
         wvProduct.loadUrl(url);
@@ -88,27 +103,17 @@ public class ProductActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activity_product_btn_buy:
-                presenter.onButtonBuyClicked();
-                break;
-        }
-    }
-
-    @Override
     public void bindName(String name) {
-        tvName.setText(name);
+        tvName.setText(Html.fromHtml(name));
     }
 
     @Override
     public void bindDescription(String description) {
-        tvDescription.setText(description);
+        tvDescription.setText(Html.fromHtml(description));
     }
 
     @Override
     public void bindImage(String url) {
         imageLoader.load(url, this, ivImage, PLACEHOLDER_ID);
     }
-
 }
