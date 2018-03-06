@@ -23,9 +23,9 @@ public class SearchActivityPresenter extends MvpPresenter<SearchActivityContract
     private ResultAdapterContract.IPresenter resultsPresenter;
     private HistoryAdapterContract.IPresenter historyPresenter;
     private IProductRepository productRepository;
-    private SearchActivityRouter router;
+    private ISearchActivityRouter router;
 
-    public SearchActivityPresenter(SearchActivityRouter router,
+    public SearchActivityPresenter(ISearchActivityRouter router,
                                    IProductRepository productRepository,
                                    ResultAdapterContract.IPresenter resultsPresenter,
                                    HistoryAdapterContract.IPresenter historyPresenter) {

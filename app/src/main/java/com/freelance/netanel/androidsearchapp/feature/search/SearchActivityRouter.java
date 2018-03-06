@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  * Created on 25/02/2018
  */
 
-public class SearchActivityRouter {
+public class SearchActivityRouter implements ISearchActivityRouter {
 
     private WeakReference<SearchActivity> contextReference;
     private IJsonParser jsonParser;
@@ -27,7 +27,6 @@ public class SearchActivityRouter {
     public SearchActivityRouter(SearchActivity context, IJsonParser jsonParser) {
         this.contextReference = new WeakReference<>(context);
         this.jsonParser = jsonParser;
-
         parseIntentData();
     }
 

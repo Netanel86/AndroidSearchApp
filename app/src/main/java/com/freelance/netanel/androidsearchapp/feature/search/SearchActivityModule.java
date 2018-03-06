@@ -29,7 +29,7 @@ public class SearchActivityModule {
 
     @Provides
     @PerActivity
-    public SearchActivityRouter provideSearchRouter(SearchActivity context, IJsonParser jsonParser) {
+    public ISearchActivityRouter provideSearchRouter(SearchActivity context, IJsonParser jsonParser) {
       return new SearchActivityRouter(context,jsonParser);
     }
 
