@@ -4,45 +4,44 @@ Powered by Sears Israel, in partnership with: Wix, Gett, Chegg, Inneractive and 
 Main subjects: Android app development, Animations, Gestures and Layouts, Mobile automation and Unit tests.
 #### note: this project is still under development.
 ## Introduction
-A java android search application that utilizes ShopYourWay API to search for and display items, with an option to open an item's url 
+<p>A java android search application that utilizes ShopYourWay API to search for and display items, with an option to open an item's url 
 in a web view. App also handles typing history in shared memory.
-The application is designed in MVP pattern and uses Dependency Injection for dependencies.
-3rd Party libraries used: OkHttp, Picasso, Gson, Dagger.
+The application is designed in MVP pattern and uses Dependency Injection for dependencies. 
+3rd Party libraries used: OkHttp, Picasso, Gson, Dagger.</p>
+
 ## Application Architecture
 ### Dependency Injection
 The app uses dagger library to inject dependencies. 
 
 First layer are global dependencies or singletons which are available throughout the application layers, dagger will instantiate one instance of each global dependency and would provide that instance whenever its requested, e.g `Context`, `INetworkClient`, `ISharedPreferences`, are global dependencies.
 
-Second layer are local dependencies, which are available only on certain views\scopes. dagger instantiates local dependencies only when its corresponding view\scope is active, and destroys them when scope is no longer active, e.g All presenters and `IHistoryRepository` are local dependencies.
+Second layer are local dependencies, which are available only on certain views\scopes. dagger instantiates local dependencies only when its corresponding view\scope is active, and destroys them when scope is no longer active, e.g All presenters, routers and `IHistoryRepository` are local dependencies.
 
 This diagram illustrates the aforementioned dependencies life-cycle in relation to the application's life-cycle:
 <p align="center">
-<img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/depedency_lifecycle.png" width="700" height="280" />
+<img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/depedency_lifecycle.png" width="700" height="352" />
 </p>
 
-The dependency graph contains four modules in its main component, `AppComponent` : 
+The object graph has one main component (`AppComponent`) which contains four modules who provide global dependencies: 
 
-`ActivityInjectionModule` is part of dagger infrastructure and is responsible for injecting dependencies into android framework views.
+* `ActivityInjectionModule` is part of dagger infrastructure and is responsible for injecting dependencies into android activities.
+* `ContextModule` provides application context.
+* `NetworkUtilsModule` provides network utilities e.g. web client and json parser.
+* `DataModule` provides global data repositories.
 
-`ContextModule` provides application context.
+Additionally the graph holds two more modules, one for each activity, which are attached in `ActivityInjectionModule` class using `@ContributesAndroidInjector`, and are bound to there activity's life-cycle:
 
-`NetworkUtilsModule` provides network utilities like web client and json parser.
+* `SearchActivityModule` provides search activity dependencies.
+* `ProductActivityModule` provides product activity dependences.
 
-`DataModule` provides global data repositories.
+these modules act as subcomponents of `AppComponent` class and provide local dependencies.
 
-And two additional modules which are attached when dagger provides an activity for injection through `ActivityInjectionModule` :
-
-`PresenterModule` provides view presenters.
-
-`LocalDataModule` provides local\scoped data repositories.
-
-This diagram illustrates the dagger graph:
+The below diagram illustrates the dagger object graph:
 <p align="center">
-<img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/dependency_graph.png" width="700" height="300" />
+<img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/dagger_object_graph.png" width="700" height="300" />
 </p>
 
 The last diagram illustrates the general scheme of component dependencies:
 <p align="center">
-<img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/dependencies_diagram.png" width="600" height="550" />
+<img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/component_dependencies.png" width="900" height="500" />
 </p>
