@@ -28,7 +28,7 @@ public class ProductActivityModule {
     @Provides
     @PerActivity
     public ProductActivityContract.IPresenter provideProductActivityPresenter(
-            ProductActivityRouter router) {
+            IProductActivityRouter router) {
         return new ProductActivityPresenter(router);
     }
 }

@@ -48,7 +48,7 @@ public class SearchActivityModule {
     @Provides
     @PerActivity
     public SearchActivityContract.IPresenter provideSearchPresenter
-            (SearchActivityRouter router,
+            (ISearchActivityRouter router,
              IProductRepository productRepository,
              ResultAdapterContract.IPresenter resultsPresenter,
              HistoryAdapterContract.IPresenter historyPresenter) {
