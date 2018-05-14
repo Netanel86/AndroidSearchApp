@@ -55,6 +55,21 @@ public class SearchActivity extends AppCompatActivity
     @Inject
     public SearchActivityContract.IPresenter presenter;
 
+    private String lastQuery;
+    private int lastLayout = 0;
+    private static final int LIST = 1;
+    private static final int GRID = 2;
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(lastQuery != null) {
+            outState.putString("query", lastQuery);
+        }
+        if(lastLayout != 0 ) {
+            outState.putInt("layout", lastLayout);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -67,6 +82,11 @@ public class SearchActivity extends AppCompatActivity
         initButterknife();
 
         buildUI();
+
+        if(savedInstanceState != null) {
+            lastLayout = savedInstanceState.getInt("layout");
+            lastQuery = savedInstanceState.getString("query");
+        }
     }
 
     @Override
@@ -75,6 +95,15 @@ public class SearchActivity extends AppCompatActivity
         presenter.onStart();
         listButton.setOnClickListener(this);
         gridButton.setOnClickListener(this);
+
+        switch (lastLayout) {
+            case LIST:
+                presenter.onButtonListClicked();
+                break;
+            case GRID:
+                presenter.onButtonGridClicked();
+                break;
+        }
     }
 
     @Override
@@ -82,6 +111,12 @@ public class SearchActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu, menu);
 
         createSearchView(menu);
+
+        if(lastQuery != null) {
+            this.setSearchQuery(lastQuery,true);
+        }
+
+
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -176,11 +211,13 @@ public class SearchActivity extends AppCompatActivity
     @Override
     public void setLayoutList() {
         rvResults.setLayoutManager(listLayoutManager);
+        lastLayout = LIST;
     }
 
     @Override
     public void setLayoutGrid() {
         rvResults.setLayoutManager(gridLayoutManager);
+        lastLayout = GRID;
     }
 
     @Override
@@ -200,6 +237,7 @@ public class SearchActivity extends AppCompatActivity
 
     @Override
     public void setSearchQuery(String query, boolean submit) {
+        lastQuery = query;
         searchView.setQuery(query,submit);
     }
 
