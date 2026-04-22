@@ -1,47 +1,168 @@
-# Item Search App
-This project is part of an Android Development course which was delivered by Startech Academy School 
-Powered by Sears Israel, in partnership with: Wix, Gett, Chegg, Inneractive and My Heritage.
-Main subjects: Android app development, Animations, Gestures and Layouts, Mobile automation and Unit tests.
+# Android Item Search Application (Java / MVP / Dagger)
 
-## Introduction
-<p>A java android search application that utilizes ShopYourWay API to search for and display items, with an option to open an item's url 
-in a web view. App also handles typing history in shared memory.
-The application is designed in MVP pattern and uses Dependency Injection for dependencies. 
-3rd Party libraries used: OkHttp, Picasso, Gson, Dagger.</p>
+## Overview
+
+This project is an Android application that integrates with the ShopYourWay API to search and display products in real time.
+
+Users can search for items, browse product details and images, and open item pages directly inside the app using an embedded WebView.
+
+The application also stores persistent typing history to improve usability and user experience.
+
+The project was designed using MVP architecture and Dependency Injection with Dagger to support clean separation of concerns, lifecycle-safe dependency management, and maintainable code structure.
+
+---
+
+## My Contribution
+
+I designed and developed the full Android application, focusing on architecture, API integration, and dependency management.
+
+My primary implementation included:
+
+* REST API integration with ShopYourWay
+* Network communication using OkHttp
+* JSON parsing with Gson
+* Dependency Injection using Dagger
+* Image loading optimization using Picasso
+* Persistent search history using shared storage
+* Embedded WebView navigation
+* MVP architecture and presenter logic
+
+---
+
+## Technical Challenges
+
+### Dependency Management
+
+As the project grew, manually managing dependencies across activities and presenters became difficult and error-prone.
+
+### Lifecycle-Safe Architecture
+
+Dependencies needed to respect Android activity lifecycle boundaries without leaking state or creating unstable object ownership.
+
+### User Experience
+
+Frequent repeated searches required persistent search history and responsive UI behavior.
+
+---
+
+## Solution
+
+I used:
+
+* **OkHttp** for efficient network communication
+* **Gson** for JSON serialization and response parsing
+* **Dagger** for dependency injection and cleaner architecture
+* **Picasso** for optimized image loading and caching
+* Local storage for persistent typing history
+
+This improved maintainability, scalability, and overall user experience while keeping the codebase modular and easier to extend.
+
+---
 
 ## Application Architecture
+
 ### Dependency Injection
-The app uses dagger library to inject dependencies. 
 
-First layer are global dependencies or singletons which are available throughout the application layers, dagger will instantiate one instance of each global dependency and would provide that instance whenever its requested, e.g `Context`, `INetworkClient`, `ISharedPreferences`, are global dependencies.
+The app uses the Dagger library to inject dependencies.
 
-Second layer are local dependencies, which are available only on certain views\scopes. dagger instantiates local dependencies only when its corresponding view\scope is active, and destroys them when scope is no longer active, e.g All presenters, routers and `IHistoryRepository` are local dependencies.
+The first layer contains global dependencies (singletons) that are available throughout the application lifecycle. Dagger instantiates one instance of each global dependency and provides that same instance whenever requested.
 
-This diagram illustrates the aforementioned dependencies life-cycle in relation to the application's life-cycle:
+Examples include:
+
+* `Context`
+* `INetworkClient`
+* `ISharedPreferences`
+
+The second layer contains local dependencies that are available only within specific views/scopes. Dagger creates these dependencies only while the corresponding activity is active and destroys them when the scope ends.
+
+Examples include:
+
+* Presenters
+  n- Routers
+* `IHistoryRepository`
+
+This diagram illustrates dependency lifecycle in relation to the application lifecycle:
+
 <p align="center">
 <img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/depedency_lifecycle.png" width="700" height="352" />
 </p>
 
-The object graph has one main component (`AppComponent`) which contains four modules who provide global dependencies: 
+---
 
-* `ActivityInjectionModule` is part of dagger infrastructure and is responsible for injecting dependencies into android activities.
-* `ContextModule` provides application context.
-* `NetworkUtilsModule` provides network utilities e.g. web client and json parser.
-* `DataModule` provides global data repositories.
+## Dagger Object Graph
 
-Additionally the graph holds two more modules, one for each activity, which are attached in `ActivityInjectionModule` class using `@ContributesAndroidInjector`, and are bound to there activity's life-cycle:
+The object graph has one main component (`AppComponent`) which contains four modules that provide global dependencies:
 
-* `SearchActivityModule` provides search activity dependencies.
-* `ProductActivityModule` provides product activity dependences.
+* `ActivityInjectionModule` → Responsible for injecting dependencies into Android activities
+* `ContextModule` → Provides application context
+* `NetworkUtilsModule` → Provides network utilities such as web client and JSON parser
+* `DataModule` → Provides global data repositories
 
-these modules act as subcomponents of `AppComponent` class and provide local dependencies.
+Additionally, the graph contains two activity-specific modules attached using `@ContributesAndroidInjector`, each bound to its activity lifecycle:
 
-The below diagram illustrates the dagger object graph:
+* `SearchActivityModule` → Provides search activity dependencies
+* `ProductActivityModule` → Provides product activity dependencies
+
+These modules act as subcomponents of `AppComponent` and provide local dependencies.
+
+The following diagram illustrates the Dagger object graph:
+
 <p align="center">
 <img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/dagger_object_graph.png" width="700" height="300" />
 </p>
 
-The last diagram illustrates the general scheme of component dependencies:
+---
+
+## Component Dependencies
+
+The following diagram illustrates the general dependency flow between the main application components:
+
 <p align="center">
 <img src="https://github.com/Netanel86/AndroidSearchApp/raw/dev/diagram/component_dependencies.png" width="900" height="500" />
 </p>
+
+---
+
+## Technologies
+
+* Java
+* Android SDK
+* MVP Architecture
+* Dagger
+* OkHttp
+* Gson
+* Picasso
+* WebView
+* SharedPreferences / Local Storage
+* REST APIs
+
+---
+
+## Features
+
+* Real-time item search
+* Product image display
+* Embedded WebView for product pages
+* Persistent search history
+* Efficient image loading
+* Clean dependency injection architecture
+* Lifecycle-aware MVP design
+
+---
+
+## What I Learned
+
+* Android application architecture
+* Dependency injection with Dagger
+* Working with external REST APIs
+* Lifecycle-safe dependency management
+* Network error handling
+* UI responsiveness and user experience improvements
+
+---
+
+## Background
+
+This project was developed as part of an advanced Android Development course delivered by Startech Academy School, powered by Sears Israel, in partnership with companies including Wix, Gett, Chegg, Inneractive, and MyHeritage.
+
+The course focused on Android app development, UI design, animations, gestures, layouts, mobile automation, and unit testing.
